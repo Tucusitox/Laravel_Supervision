@@ -1,0 +1,38 @@
+body {
+    background-image: url('../img/fondoClaro.jpg');
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#header{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 70px;
+    padding: 10px 50px;
+}
+
+#header .logo{
+    margin-right: auto;
+}
+
+#header .logo img{
+    height: 70px;
+    width: auto;
+    transition: all 0.3s;
+}
+
+#header .nav-links a{  
+    text-decoration: none; 
+    color: white;
+    transition: all 0.6s;
+}
+
+#header .nav-links a:hover{
+    color: #ffbc0e;
+}
+
+.cajaIndex{
+    border: 3px solid rgb(141, 138, 138);
+}

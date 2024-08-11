@@ -1,0 +1,117 @@
+/* FORMULARIO CREACION Y ACTUALIZACIÓN DE UN EMPLEADO */
+
+.from-createEmp div select{
+    background: transparent;
+    color: white;
+}
+.from-createEmp div option{
+    background-color: black;
+}
+.from-createEmp input[name="identificacion"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="nombre"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="apellido"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="direccion"]::placeholder{
+    color:white;
+}
+
+.from-createEmp input[type="date"]{
+    width: 100%;
+}
+::-webkit-calendar-picker-indicator{
+    background-color: #ffffff;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.from-createEmp input[name="tlf_celular"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="tlf_local"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="fecha_ingreso"]::placeholder{
+    color:white;
+}
+
+.from-createEmp input[name="fecha_egreso"]::placeholder{
+    color:white;
+}
+
+.from-createEmp textarea[name="direccion"]::placeholder{
+    color:white;
+}
+
+/* FORMULARIO PARA CREAR UN PERMISO DE UN EMPLEADO */
+
+.from-createEmp input[name="permiso_asunto"]::placeholder{
+    color:white;
+}
+
+
+.from-createEmp textarea[name="permiso_descripcion"]::placeholder{
+    color:white;
+}
+
+/* FORMULARIO PARA BUSCAR A UN EMPELADO */
+
+.from-createEmp select{
+    background: transparent;
+    color: white;
+}
+.from-createEmp option{
+    background-color: black;
+}
+
+/* INPUT DE TIPO FILE */
+
+.contenedor-btn-file input[type="file"] {
+    appearance: none;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    z-index: -1;
+}
+.contenedor-btn-file {
+    width: 40%;
+    display: inline-block;
+    position: relative;
+    background-color: transparent;
+    color: #fff;
+    border: 0;
+    padding: 12px 5px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.contenedor-btn-file label {
+    cursor: pointer;
+    margin: 0px 25px;
+}
+
+.contenedor-btn-file.bordeado {
+    background-color: transparent;
+    border: 2px solid white;
+    color: #fff;
+}
+.contenedor-btn-file.bordeado:hover {
+    border: 2px solid #186CC3;
+    color: #186CC3;
+}
+
+#foto {
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 50px;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
