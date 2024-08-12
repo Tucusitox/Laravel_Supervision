@@ -7,8 +7,9 @@ use App\Models\Eventualidade;
 use App\Models\EmpleadosXEventualidade;
 use Illuminate\Http\Request;
 
-class EventualidadesController
+class PermisosController
 {
+    // VER TODOS LOS PERMISOS CREADOS
     public function index()
     {
         $permisos = Eventualidade::select("codigo_event","identificacion","asunto_event","descripcion_event",
@@ -19,9 +20,32 @@ class EventualidadesController
         ->join("personas","personas.id_persona","=","empleados.fk_persona")
         ->get();
 
-        return view("viewsEmps.permisosResumen", compact("permisos"));
+        $bolean = TRUE;
+        return view("viewsEmps.permisosResumen", compact("permisos","bolean"));
     }
 
+    // BUSCAR UN PERMISO POR EL CODIGO
+    public function buscarCodigo(Request $request)
+    {
+        $request->validate([
+            "buscarCodigo" => "required|regex:/^P-\d{6}$/"
+        ]);
+
+        $codigoPermiso = $request->post("buscarCodigo"); 
+        $permisos = Eventualidade::select("codigo_event","identificacion","asunto_event","descripcion_event",
+                                          "fecha_inicioEvent","fecha_finEvent")
+        ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
+        ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
+        ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
+        ->join("personas","personas.id_persona","=","empleados.fk_persona")
+        ->where("codigo_event","=",$codigoPermiso)
+        ->get();
+
+        $bolean = FALSE;
+        return view("viewsEmps.permisosResumen", compact("permisos","bolean"));
+    }
+
+    // CREEAR PERMISO DESDE VISTA DETALLES EMPLEADOS
     public function show($id_persona)
     {
         $ciEmp = Persona::select("id_persona","identificacion")
@@ -31,6 +55,7 @@ class EventualidadesController
         return view("viewsEmps.crearPermiso", compact("ciEmp"));       
     }
 
+    // CREEAR PERMISO DESDE VISTA RESUMEN PERMISOS
     public function create()
     {
         $ciEmp = NULL;
@@ -64,7 +89,7 @@ class EventualidadesController
 
             $permiso = new Eventualidade;
             $permiso->fk_tipoEvent = 1;
-            $permiso->fk_tipoEstatusEvent = 5;
+            $permiso->fk_tipoEstatusEvent = 4;
             $permiso->codigo_event = $codigoEvent;
             $permiso->asunto_event = $request->post("permiso_asunto");
             $permiso->descripcion_event = $request->post("permiso_descripcion");
@@ -84,7 +109,7 @@ class EventualidadesController
                 $empXevent->fk_eventualidad = $idEvent;
                 $empXevent->save();
 
-                return redirect()->route('eventualidades.index')->with("success", "¡Permiso Registrado con Éxito!");
+                return redirect()->route('permisos.index')->with("success", "¡Permiso Registrado con Éxito!");
             }
         }
         else{

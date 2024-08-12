@@ -22,13 +22,16 @@
 
             {{-- BOTONES DE EDIT Y DELETE --}} 
             <div class="text-center">
-                <a href="{{route('eventualidades.show', $detallEmp->first()->id_persona)}}" class="btn btn-warning mx-1 my-1" title="Crear un Permiso">
+                <a href="{{route('emp.viewEmp')}}" class="btn btn-warning mx-1 my-1" title="Volver">
+                    <i class='bx bx-arrow-back'></i>
+                </a>
+                <a href="{{route('permisos.show', $detallEmp->first()->id_persona)}}" class="btn btn-success mx-1 my-1" title="Crear un Permiso">
                     <i class='bx bx-notepad' ></i>
                 </a>
                 <a href="{{route('empleado.edit', $detallEmp->first()->id_persona)}}" class="btn btn-info mx-1 my-1" title="Editar">
                     <i class='bx bx-edit'></i>
                 </a>
-                <a href="{{route('empleado.delete', $detallEmp->first()->id_persona)}}" class="btn btn-danger mx-1" title="Eliminar">
+                <a href="{{route('empleado.delete2', $detallEmp->first()->id_persona)}}" class="btn btn-danger mx-1" title="Eliminar">
                     <i class='bx bx-trash'></i>
                 </a>
             </div>

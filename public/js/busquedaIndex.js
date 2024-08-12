@@ -37,3 +37,4 @@ inputBuscar.addEventListener("keyup", (e) => {
     }
   }
 });
+

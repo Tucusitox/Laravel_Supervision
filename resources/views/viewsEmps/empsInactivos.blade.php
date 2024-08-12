@@ -18,7 +18,7 @@
         <div class="row mt-4 mb-4">
             <div class="col">
                 <input type="text" id="buscar" class="form-control bg-transparent border-white text-white me-2"
-                    placeholder="Busqueda Rápida por Nombre o Apellido" name="buscarUnEmp">
+                    placeholder="Busqueda Rápida por Cédula" name="buscarUnEmp">
             </div>
         </div>
 

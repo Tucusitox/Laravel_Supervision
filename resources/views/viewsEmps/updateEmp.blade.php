@@ -18,12 +18,20 @@
 
             <div class="d-flex justify-content-between align-items-center container">
                 <h4 class="text-white">Actualizar Empleado</h4>
-    
+
                 {{-- BOTONES DEL FORMULARIO --}}
-                <div class="d-flex justify-content-end nav-links">
-                    <a class="btn btn-danger mx-3" href="{{route('empleado.show', $oldEmp->first()->id_persona)}}">Cancelar</a>
-                    <button type="submit" class="btn btn-dark">Guardar</button>
-                </div>
+                @if($bolean == TRUE)
+                    <div class="d-flex justify-content-end nav-links">
+                        <a class="btn btn-danger mx-3" href="{{route('emp.viewEmp')}}">Cancelar</a>
+                        <button type="submit" class="btn btn-dark">Guardar</button>
+                    </div>
+                @else
+                    <div class="d-flex justify-content-end nav-links">
+                        <a class="btn btn-danger mx-3" href="{{route('empleado.show', $oldEmp->first()->id_persona)}}">Cancelar</a>
+                        <button type="submit" class="btn btn-dark">Guardar</button>
+                    </div>
+                @endif
+    
             </div>
             <hr class="text-white">
 

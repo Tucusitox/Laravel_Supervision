@@ -109,13 +109,4 @@ class ViewsController
         }
     }
 
-    public function viewDleteEmp($id_persona)
-    {
-        $deletEmp = Persona::select("id_persona")
-            ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
-            ->where("id_persona","=", $id_persona)  
-            ->get();
-        
-        return view("viewsEmps.deleteEmp", compact("deletEmp"));
-    }
 }

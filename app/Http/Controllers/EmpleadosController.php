@@ -64,9 +64,22 @@ class EmpleadosController
             $persona->foto = $destinoCarpeta.$rutaImg;
         };
 
+
+        $cedulaExis = Persona::select("identificacion")
+        ->where("identificacion","=",$request->post('identificacion'))
+        ->get();
+
+        if($cedulaExis->isNotEmpty()){
+            return back()->withErrors([
+                'identificacion' => '¡La cédula ingresadasda ya se encuentra registrada en el sistema!'
+            ]);
+        }
+        else{
+            $persona->identificacion = $request->post('identificacion');
+        }
+
         // CAPTURAR DATOS DEL FORM PARA LA TABLA PERSONAS
 
-        $persona->identificacion = $request->post('identificacion');
         $persona->nombre = $request->post('nombre');
         $persona->apellido = $request->post('apellido');
         $persona->direccion = $request->post('direccion');
@@ -252,6 +265,7 @@ class EmpleadosController
 
     public function show($id_persona)
     {
+
         $detallEmp = Persona::select("id_persona","tipo_identificacion","identificacion","foto","nombre","apellido",
                     "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
                     "tipo_empleado","nombre_horario","descripcion_horario","estado_laboral","fecha_ingreso",
@@ -271,7 +285,32 @@ class EmpleadosController
         return view("viewsEmps.detallesEmp",compact("detallEmp"));
     }
 
-    // OBTENER EL ID Y DATOS DEL EMPLEADO A ACTUALIZAR
+    // OBTENER EL ID Y DATOS DEL EMPLEADO A ACTUALIZAR DESDE RESUMEN DE EMPLEADOS
+
+    public function editDesdeResum($id_persona)
+    {
+        $oldEmp = Persona::select("id_persona","tipo_identificacion","identificacion","foto","nombre","apellido",
+                "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
+                "tipo_empleado","nombre_horario","descripcion_horario","estado_laboral","fecha_ingreso",
+                "fecha_egreso","nombre_genero")
+        ->join("empleados", "empleados.fk_persona","=","personas.id_persona")
+        ->join("tipos_emps", "tipos_emps.id_tipo_emp","=","empleados.fk_tipo_emp")
+        ->join("cargos", "cargos.id_cargo","=","empleados.fk_cargo")
+        ->join("espacios", "espacios.id_espacio","=","cargos.fk_espacio")
+        ->join("horarios_x_empleados", "horarios_x_empleados.fk_empleado","=","empleados.id_empleado")
+        ->join("horarios", "horarios_x_empleados.fk_horario","=","horarios.id_horario")
+        ->join("tipos_identificaciones", "tipos_identificaciones.id_tipoIde","=","personas.fk_tipoIde")
+        ->join("generos", "generos.id_genero","=","personas.fk_genero")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+
+        $bolean = TRUE;
+
+        return view('viewsEmps.updateEmp', compact('oldEmp',"bolean"));
+
+    }
+
+    // OBTENER EL ID Y DATOS DEL EMPLEADO A ACTUALIZAR DESDE DETALLES DEL EMPLEADO
     
     public function edit($id_persona)
     {
@@ -289,8 +328,10 @@ class EmpleadosController
         ->join("generos", "generos.id_genero","=","personas.fk_genero")
         ->where("id_persona","=", $id_persona)
         ->get();
-        
-        return view('viewsEmps.updateEmp', compact('oldEmp'));
+
+        $bolean = FALSE;
+
+        return view('viewsEmps.updateEmp', compact('oldEmp',"bolean"));
 
     }
 
@@ -298,7 +339,6 @@ class EmpleadosController
 
     public function update(Request $request, $id_persona)
     {
-        $peronaID = $id_persona;
         // VALIDAR LOS DATOS DE LOS FORMULARIOS
 
         $request->validate(
@@ -405,10 +445,8 @@ class EmpleadosController
         // VALIDAR EL GUARDADO EN LA TABLA PERSONAS
         if($persona->save()){
             
-
             // CAPTURAR DATOS DEL FORM PARA LA TABLA EMPLEADOS
-
-            $empleado = Empleado::find($peronaID);
+            $empleado = Empleado::find($id_persona);
 
             // CAPTURAR EL TIPO DE EMPLEADO
 
@@ -497,8 +535,7 @@ class EmpleadosController
         if($empleado->save()){
 
             // CAPTURAR DATOS DEL FORM PARA LA TABLA HORARIOS_X_EMPLEADOS
-
-            $horarioEmp = HorariosXEmpleado::find($peronaID);
+            $horarioEmp = HorariosXEmpleado::find($id_persona);
 
             if ($request->post('nombre_horario') == "Mañana") {
                 $idHorario = 1;
@@ -524,10 +561,7 @@ class EmpleadosController
             if($horarioEmp->save()){
                 return redirect()->route('empleado.show', $id_persona)->with("success", "¡Actualizado con Éxito!");
             }
-
         }
-
-
     }
 
     // CAMBIAR EL ESTATUS A "INACTIVO" DEL EMPLEADO
@@ -554,6 +588,32 @@ class EmpleadosController
         $empleado->fecha_egreso = NULL;
         $empleado->save();
         return redirect()->route('empleado.show', $id_persona)->with("success", "¡Empleado nuevamente Activo!");
+    }
+
+    // IR A LA VISTA DE DELETE EMPLEADO DESDE REDUMEN
+
+    public function viewDeleteEmp1($id_persona)
+    {
+        $deletEmp = Persona::select("id_persona")
+            ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
+            ->where("id_persona", "=", $id_persona)  
+            ->get();
+
+        $bolean = TRUE;
+        return view("viewsEmps.deleteEmp", compact("deletEmp", "bolean"));
+    }
+
+    // IR A LA VISTA DE DELETE EMPLEADO DESDE DETALLES
+
+    public function viewDeleteEmp2($id_persona)
+    {
+        $deletEmp = Persona::select("id_persona")
+            ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
+            ->where("id_persona","=", $id_persona)  
+            ->get();
+        
+        $bolean = FALSE;
+        return view("viewsEmps.deleteEmp", compact("deletEmp","bolean"));
     }
 
     // ELIMINAR PERMANENTEMENTE AL EMPLEADO DE LA BASE DE DATOS

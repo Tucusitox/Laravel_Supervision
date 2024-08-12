@@ -22,7 +22,7 @@
                     <a href="{{ route('emp.viewEmp') }}">Resumen de Empleados</a>
                     <a href="{{ route('crearEmp.index') }}">Crear un Empleado</a>
                     <a href="{{ route('asistencias.index') }}">Asistencias</a> 
-                    <a href="{{ route('eventualidades.index') }}">Permisos</a>
+                    <a href="{{ route('permisos.index') }}">Permisos</a>
                     <a href="#">Evaluar a un Empleado</a>
                     <a href="#">Empleados Destacados</a>
                     <a href="{{ route('emps.inactivos') }}">Empleados Inactivos</a>

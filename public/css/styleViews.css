@@ -40,6 +40,10 @@ body::-webkit-scrollbar-thumb{
     background: black;
 }
 
+.caja3 .thead th{
+    color: #ffbc0e;
+}
+
 .boton:hover{
     color: #ffbc0e;
 }

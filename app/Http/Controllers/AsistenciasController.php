@@ -18,8 +18,9 @@ class AsistenciasController
         ->join("personas", "personas.id_persona","=","empleados.fk_persona")
         ->orderBy("fecha_asistencia","desc")
         ->get();
-        
-        return view("viewsEmps.asistencias", compact("empAsis"));
+
+        $bolean = TRUE;
+        return view("viewsEmps.asistencias", compact("empAsis","bolean"));
     }
 
     public function fecha(Request $request)
@@ -32,6 +33,7 @@ class AsistenciasController
 
         $fechaAsis = Asistencia::select("fecha_asistencia","identificacion","hora_llegada","hora_salida")
         ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
+        ->selectRaw("SEC_TO_TIME(ABS(TIME_TO_SEC(TIMEDIFF(hora_llegada, hora_salida)))) as HorasTotales_Dia")
         ->join("empleados", "empleados.id_empleado","=","asistencias.fk_empleado")
         ->join("personas", "personas.id_persona","=","empleados.fk_persona")
         ->where("fecha_asistencia","=",$fechaIngresada)
@@ -44,7 +46,8 @@ class AsistenciasController
             ]);
         }
         else{
-            return view("viewsEmps.asistenciasXfecha", compact("fechaAsis"));
+            $bolean = FALSE;
+            return view("viewsEmps.asistencias", compact("fechaAsis","bolean"));
         }
     }
 
@@ -175,23 +178,35 @@ class AsistenciasController
 
         if($infoEmpleado->isNotEmpty()){
 
-            // CALCULAR LAS HORAS TRABAJADAS ENMTRE LOS DOS DIAS
+            $horaSalida = Asistencia::select("hora_salida")
+            ->where("fk_empleado","=",$infoEmpleado->first()->id_empleado)
+            ->get();
 
-            $horasTotales = Asistencia::select("fk_empleado")
-                ->selectRaw("SEC_TO_TIME(ABS(SUM(TIME_TO_SEC(TIMEDIFF(hora_llegada, hora_salida))))) as Horas_Totales")
-                ->whereBetween("fecha_asistencia",[$fechaN1,$fechaN2])
-                ->where("fk_empleado","=",$infoEmpleado->first()->id_empleado)
-                ->groupBy("fk_empleado")
-                ->get();
+            if($horaSalida->first()->hora_salida == NULL){
+                return redirect()->route('asistencias.index')->withErrors([
+                    'identificacion' => '¡Complete la asistencia del día del empleado antes de calcular sus Horas Totales!'
+                ]);
+            }
+            else{
+                //CALCULAR LAS HORAS TRABAJADAS ENTRE DOS FECHAS
+                $horasTotales = Asistencia::select("fk_empleado")
+                    ->selectRaw("SEC_TO_TIME(ABS(SUM(TIME_TO_SEC(TIMEDIFF(hora_llegada, hora_salida))))) as Horas_Totales")
+                    ->whereBetween("fecha_asistencia",[$fechaN1,$fechaN2])
+                    ->where("fk_empleado","=",$infoEmpleado->first()->id_empleado)
+                    ->groupBy("fk_empleado")
+                    ->get();
 
-            // SI LA CONSULTA NO ES VACIA
+                // SI LA CONSULTA NO ES VACIA
 
-            return $horasTotales->isNotEmpty() 
-            ? view("viewsEmps.asistenciasXhorasTotales", compact("horasTotales","infoEmpleado","fechaN1","fechaN2"))
-            : redirect()->route('asistencias.index')->withErrors([
-                'identificacion' => '¡No existen asistencias en el rango de días indicado!'
-            ]);
-
+                if($horasTotales->isNotEmpty()){
+                    return view("viewsEmps.asistenciasXhorasTotales", compact("horasTotales","infoEmpleado","fechaN1","fechaN2"));
+                }
+                else {
+                    return redirect()->route('asistencias.index')->withErrors([
+                        'identificacion' => '¡No existen asistencias en el rango de días indicado!'
+                    ]);
+                }
+            } 
         }
         else{
             return redirect()->route('asistencias.index')->withErrors([

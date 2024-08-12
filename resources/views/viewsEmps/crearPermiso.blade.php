@@ -11,7 +11,7 @@
 
         {{-- FOMRULARIO PARA INGRESAR UN NUEVO EMPLEADO --}}
 
-        <form class="w-100 container from-createEmp bg-transparent" action="{{ route('eventualidades.store') }}" method="POST">
+        <form class="w-100 container from-createEmp bg-transparent" action="{{ route('permisos.store') }}" method="POST">
             @csrf
 
             <div class="d-flex justify-content-between align-items-center container">
@@ -20,7 +20,7 @@
                 @if($ciEmp == NULL)
                     {{-- BOTONES DEL FORMULARIO --}}
                     <div class="d-flex justify-content-end nav-links">
-                        <a class="btn btn-danger mx-3" href="{{ route('eventualidades.index') }}">Cancelar</a>
+                        <a class="btn btn-danger mx-3" href="{{ route('permisos.index') }}">Cancelar</a>
                         <button type="submit" class="btn btn-dark">Crear</button>
                     </div>
                 @else

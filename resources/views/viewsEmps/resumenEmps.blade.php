@@ -82,11 +82,11 @@
                                 class="btn btn-warning mx-1 my-1" title="Detalles">
                                 <i class='bx bxs-user-detail'></i>
                             </a>
-                            <a href="{{route('empleado.edit', $item->id_persona)}}" 
+                            <a href="{{route('empleado.editDesdeResum', $item->id_persona)}}" 
                                 class="btn btn-info mx-1 my-1" title="Editar">
                                 <i class='bx bx-edit'></i>
                             </a>
-                            <a href="{{route('empleado.delete', $item->id_persona)}}" 
+                            <a href="{{route('empleado.delete1', $item->id_persona)}}" 
                                 class="btn btn-danger mx-1" title="Eliminar">
                                 <i class='bx bx-trash'></i>
                             </a>

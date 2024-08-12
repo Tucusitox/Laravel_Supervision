@@ -29,8 +29,16 @@
             </div>
         @endif
 
-        <div class="w-100 text-white text-center">
-            <h4>Horas Totales</h4>
+        <div class="d-flex w-100 text-white text-center">
+            <div>
+                <a href="{{route('asistencias.index')}}" class="btn btn-warning mx-1 my-1" title="Resumen Asistencias">
+                    <i class='bx bx-arrow-back'></i>
+                </a>
+            </div>
+
+            <div class="flex-grow-1">
+                <h4>Horas Totales del Empleado</h4>
+            </div>
         </div>
 
         <hr class="text-white">

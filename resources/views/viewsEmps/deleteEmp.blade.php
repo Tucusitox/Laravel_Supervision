@@ -9,8 +9,23 @@
 
     <div class="caja4 container p-5" id="contenedor">
 
-        <div class="w-100 text-center text-white">
-            <h4>¿Qué deseas hacer?</h4>
+        <div class="d-flex align-items-center w-100 text-center text-white">
+            @if ($bolean == TRUE)
+                <div>
+                    <a href="{{route('emp.viewEmp')}}" class="btn btn-warning mx-1 my-1" title="Volver">
+                        <i class='bx bx-arrow-back'></i>
+                    </a>
+                </div>
+            @else
+                <div>
+                    <a href="{{route('empleado.show', $deletEmp->first()->id_persona)}}" class="btn btn-warning mx-1 my-1" title="Volver">
+                        <i class='bx bx-arrow-back'></i>
+                    </a>
+                </div>
+            @endif
+            <div class="flex-grow-1">
+                <h4>¿Qué deseas hacer?</h4>
+            </div>
         </div>
 
         <hr class="text-white">
