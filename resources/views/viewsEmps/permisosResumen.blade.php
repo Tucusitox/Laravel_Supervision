@@ -172,7 +172,7 @@
             }
         });
 
-        // BUSCAR PERMISO POR ASUSTO
+        // BUSCAR PERMISO POR ASUNTO
         const permisos = document.getElementById('asuntoSelect');
         permisos.addEventListener('change', function() {
             const selectedValue = this.value;
