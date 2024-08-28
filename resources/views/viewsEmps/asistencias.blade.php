@@ -28,6 +28,7 @@
                 @endforeach
             </div>
         @endif
+        
         <div class="d-flex w-100 text-center text-white">
             @if ($bolean == FALSE)
                 <div>
@@ -36,10 +37,8 @@
                     </a>
                 </div>
                 <div class="flex-grow-1">
-                    <h4>Asistencias de Empleados en la Fecha:
-                        @if ($fechaAsis->isNotEmpty())
-                            {{$fechaAsis->first()->fecha_asistencia->format('d/m/y')}}
-                        @endif        
+                    <h4>Asistencias de Empleados en la Fecha: 
+                        <b class="text-warning">{{$fechaAsis->first()->fecha_asistencia->format('d/m/y')}}</b>
                     </h4>
                 </div>
             @else
@@ -57,11 +56,10 @@
             </div>
 
             <div class="col">
-                <form class="d-flex from-createEmp" action="{{route("asistencias.fecha")}}" method="POST">
+                <form class="d-flex from-createEmp" id="formBusquedaFecha" action="{{route("asistencias.fecha")}}" method="POST">
                     @csrf
                     <input type="date" class="form-control bg-transparent text-white me-2" 
-                    name="fecha_asistencia" value="{{ old('fecha_asistencia') }}">
-                        
+                    name="fecha_asistencia" value="{{ old('fecha_asistencia') }}">   
                     <button class="btn btn-dark boton" type="submit">
                         <i class='bx bx-search-alt-2'></i>
                     </button>
@@ -146,5 +144,21 @@
 
     {{-- FORMULARIO PARA BUSCAR LAS ASISTENCIAS DE LOS EMPLEADOS ENTRE DOS FECHAS --}}
     <x-FormAsisHorasTotales/>
+
+    {{-- PREVENIR EL ENVIO DEl FORMULARIO DE BUSQUEDA --}}
+    <script>
+        const formBusquedaFecha = document.getElementById("formBusquedaFecha");
+
+        formBusquedaFecha.addEventListener("submit", (e) => {
+            const fechaInput = formBusquedaFecha.querySelector('input[name="fecha_asistencia"]');
+            
+            if (!fechaInput.value) {
+                e.preventDefault(); 
+                alertify.error('¡Ingresa una Fecha para poder Buscar!');
+            } else {
+                console.log("Formulario de fecha enviado");
+            }
+        });
+    </script>
 
 @endsection

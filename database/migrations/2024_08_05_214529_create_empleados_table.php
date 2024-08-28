@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('estado_laboral', 100);
             $table->date('fecha_ingreso');
             $table->date('fecha_egreso')->nullable();
-            $table->timestamps();
         });
     }
 

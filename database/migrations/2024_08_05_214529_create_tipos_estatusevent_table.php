@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tipos_estatusevent', function (Blueprint $table) {
             $table->integer('id_tipoEstatusEvent', true);
             $table->string('tipo_estatu', 100);
-            $table->timestamps();
         });
     }
 

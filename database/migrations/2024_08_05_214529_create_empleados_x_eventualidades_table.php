@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_empleadoEvent', true);
             $table->integer('fk_empleado')->index('fk_empleados_has_eventalidades_empleados1_idx');
             $table->integer('fk_eventualidad')->index('fk_empleados_has_eventalidades_eventalidades1_idx');
-            $table->timestamps();
         });
     }
 

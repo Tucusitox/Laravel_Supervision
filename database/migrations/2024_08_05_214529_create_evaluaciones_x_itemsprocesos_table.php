@@ -16,7 +16,6 @@ return new class extends Migration
             $table->integer('fk_evaluacion')->index('fk_evaluaciones_has_items_procesos_evaluaciones1_idx');
             $table->integer('fk_itemProceso')->index('fk_evaluaciones_has_items_procesos_items_procesos1_idx');
             $table->integer('nota_itemProceso');
-            $table->timestamps();
         });
     }
 

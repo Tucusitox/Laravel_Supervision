@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_elementEvent', true);
             $table->integer('fk_elementInfra')->index('fk_elementos_infraestructuras_has_eventalidades_elementos_i_idx');
             $table->integer('fk_eventualidad')->index('fk_elementos_infraestructuras_has_eventalidades_eventalidad_idx');
-            $table->timestamps();
         });
     }
 

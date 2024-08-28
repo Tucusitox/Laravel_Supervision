@@ -9,6 +9,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
         crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
     <link rel="stylesheet" href="{{ asset('css/styleViews.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/formEmps.css') }}" />
@@ -31,6 +32,7 @@
     <x-Footer/>
 </body>
 
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
     <script src="{{ asset('js/sidebarAnimation.js') }}"  ></script>
     <script src="{{ asset('js/busquedaIndex.js') }}"  ></script>
     <script src="{{ asset('js/preViewImg.js') }}"  ></script>

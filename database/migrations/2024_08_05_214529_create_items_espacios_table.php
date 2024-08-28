@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('items_espacios', function (Blueprint $table) {
             $table->integer('id_itemEspa', true);
             $table->string('item_espacio', 100);
-            $table->timestamps();
         });
     }
 

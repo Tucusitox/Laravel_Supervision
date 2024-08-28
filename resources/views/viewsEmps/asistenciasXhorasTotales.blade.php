@@ -2,7 +2,7 @@
 
 @extends('layout/layout_interfaces') {{-- AQUI SE INVOCA AL LAYOUT --}}
 
-@section('Modulo Supervision', 'Asistencias de Empleados') {{-- AQUI SE DEFINE EL NOMBRE DE LA PAGINA --}}
+@section('Modulo Supervision', 'Horas Totales Trabajadas') {{-- AQUI SE DEFINE EL NOMBRE DE LA PAGINA --}}
 
 
 @section('ContenidoInterfaces') {{-- AQUI SE INDICA LO QUE PONDREMOS DENTRO DEL LAYOUT --}}
@@ -37,33 +37,17 @@
             </div>
 
             <div class="flex-grow-1">
-                <h4>Horas Totales del Empleado</h4>
+                <h4>Horas Totales del Empleado:
+                    <b class="text-warning">{{$infoEmpleado->first()->Nombre_Apellido}}</b>
+                </h4>
             </div>
         </div>
 
         <hr class="text-white">
 
-        <div class="d-flex flex-column"> 
-            <div class="col">
-                <a class="btn btn-dark mb-3 boton" data-bs-toggle="modal" data-bs-target="#exampleModal_4">Calcular Horas Totales de un Empleado</a>
-            </div>
-
-            <div class="col">
-                <form class="d-flex from-createEmp mb-3" action="{{route("asistencias.fecha")}}" method="POST">
-                    @csrf
-                    <input type="date" class="form-control bg-transparent text-white me-2" 
-                    name="fecha_asistencia" value="{{ old('fecha_asistencia') }}">
-                        
-                    <button class="btn btn-dark boton" type="submit">
-                        <i class='bx bx-search-alt-2'></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-
         <!-- TABLA PARA MOSTRAR LA INFO DE LOS EMPLEADOS -->
 
-        <table class="table table-bordered table-dark border-white text-center mt-2">
+        <table class="table table-bordered table-dark border-white text-center mt-4">
             <thead class="thead">
                 <tr id="trFifo">
                     <th>Fechas</th>
@@ -84,8 +68,5 @@
         </table>
 
     </div>
-
-    {{-- FORMULARIO PARA BUSCAR LAS ASISTENCIAS DE LOS EMPLEADOS ENTRE DOS FECHAS --}}
-    <x-FormAsisHorasTotales/>
 
 @endsection

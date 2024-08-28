@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_horario', true);
             $table->string('nombre_horario', 100);
             $table->string('descripcion_horario', 100);
-            $table->timestamps();
         });
     }
 

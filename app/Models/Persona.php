@@ -24,8 +24,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $direccion
  * @property string $tlf_celular
  * @property string $tlf_local
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Genero $genero
  * @property TiposIdentificacione $tipos_identificacione
@@ -37,6 +35,7 @@ class Persona extends Model
 {
 	protected $table = 'personas';
 	protected $primaryKey = 'id_persona';
+	public $timestamps = false;
 
 	protected $casts = [
 		'fk_genero' => 'int',

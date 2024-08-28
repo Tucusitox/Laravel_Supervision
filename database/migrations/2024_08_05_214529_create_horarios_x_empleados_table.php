@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_horarioEmp', true);
             $table->integer('fk_horario')->index('fk_horarios_has_empleados_horarios1_idx');
             $table->integer('fk_empleado')->index('fk_horarios_has_empleados_empleados1_idx');
-            $table->timestamps();
         });
     }
 

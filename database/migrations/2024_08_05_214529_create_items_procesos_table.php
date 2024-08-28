@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('items_procesos', function (Blueprint $table) {
             $table->integer('id_itemProceso', true);
             $table->string('item_Proceso', 100);
-            $table->timestamps();
         });
     }
 

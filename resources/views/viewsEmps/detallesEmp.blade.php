@@ -41,7 +41,7 @@
         <div class="d-flex container">
             <div class="mt-4 mx-5">
                 <img src="{{ asset($detallEmp->first()->foto) }}" 
-                style="max-height: 300px; border-radius: 10px; border: 3px solid #ffff;" id="img"/>
+                style="max-width: 350px; max-height: 300px; border-radius: 10px; border: 3px solid #ffff;" id="img"/>
             </div>
             <div class="detalleEmp border-end mt-3 px-1 w-50">
                 <p><b>Cédula:</b>{{" ".$detallEmp->first()->identificacion}}</p>

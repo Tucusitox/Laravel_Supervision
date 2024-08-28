@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_empEval', true);
             $table->integer('fk_empleado')->index('fk_empleados_has_evaluaciones_empleados1_idx');
             $table->integer('fk_evaluacion')->index('fk_empleados_has_evaluaciones_evaluaciones1_idx');
-            $table->timestamps();
         });
     }
 

@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_elementEvent
  * @property int $fk_elementInfra
  * @property int $fk_eventualidad
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property ElementosInfraestructura $elementos_infraestructura
  * @property Eventualidade $eventualidade
@@ -27,6 +24,7 @@ class ElementosXEventalidade extends Model
 {
 	protected $table = 'elementos_x_eventalidades';
 	protected $primaryKey = 'id_elementEvent';
+	public $timestamps = false;
 
 	protected $casts = [
 		'fk_elementInfra' => 'int',

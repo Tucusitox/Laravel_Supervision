@@ -1,33 +1,3 @@
-// PARA ABRIR Y CERRAR EL SIDEBAR
-
-// const btnAbrir = document.getElementById("btnAbrir");
-// const btnCerrar = document.getElementById("btnCerrar"); 
-// const contenedor = document.getElementById("contenedor"); 
-// const sideBar = document.getElementById("sideBar");
-
-// btnAbrir.addEventListener("click",() =>{
-    
-
-//     if (btnCerrar.style.display = "none") {
-
-//         btnAbrir.style.display = "none";
-//         btnCerrar.style.display = "block";
-//         sideBar.classList.remove("sideBarCerrado");
-//         contenedor.classList.add("margenCaja3");
-//     }
-// });
-
-// btnCerrar.addEventListener("click",() =>{
-
-//     if (btnCerrar.style.display = "block") {
-
-//         btnAbrir.style.display = "block";
-//         btnCerrar.style.display = "none";
-//         sideBar.classList.add("sideBarCerrado");
-//         contenedor.classList.remove("margenCaja3");
-//     }
-// });
-
 // LISTA DESPLEGABLE PARA CADA SECCION DE LAS INTERFACEZ
 
 const iconAbrir = document.querySelectorAll(".abrirLista");

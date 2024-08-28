@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,8 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_cargo
  * @property int $fk_espacio
  * @property string $nombre_car
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Espacio $espacio
  * @property Collection|Empleado[] $empleados
@@ -28,6 +25,7 @@ class Cargo extends Model
 {
 	protected $table = 'cargos';
 	protected $primaryKey = 'id_cargo';
+	public $timestamps = false;
 
 	protected $casts = [
 		'fk_espacio' => 'int'

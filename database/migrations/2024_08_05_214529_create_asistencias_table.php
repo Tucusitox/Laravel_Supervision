@@ -17,7 +17,6 @@ return new class extends Migration
             $table->date('fecha_asistencia');
             $table->time('hora_llegada');
             $table->time('hora_salida')->nullable();
-            $table->timestamps();
         });
     }
 

@@ -17,8 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $fecha_asistencia
  * @property Carbon $hora_llegada
  * @property Carbon|null $hora_salida
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Empleado $empleado
  *
@@ -28,6 +26,7 @@ class Asistencia extends Model
 {
 	protected $table = 'asistencias';
 	protected $primaryKey = 'id_asistencia';
+	public $timestamps = false;
 
 	protected $casts = [
 		'fk_empleado' => 'int',

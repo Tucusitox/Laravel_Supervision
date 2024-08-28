@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id_itemProceso
  * @property string $item_Proceso
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Collection|EvaluacionesXItemsproceso[] $evaluaciones_x_itemsprocesos
  *
@@ -26,6 +23,7 @@ class ItemsProceso extends Model
 {
 	protected $table = 'items_procesos';
 	protected $primaryKey = 'id_itemProceso';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'item_Proceso'

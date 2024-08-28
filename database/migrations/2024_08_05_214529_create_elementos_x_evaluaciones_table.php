@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_evalElement', true);
             $table->integer('fk_elementInfra')->index('fk_evaluaciones_has_elementos_infraestructuras_elementos_in_idx');
             $table->integer('fk_evaluacion')->index('fk_evaluaciones_has_elementos_infraestructuras_evaluaciones_idx');
-            $table->timestamps();
         });
     }
 

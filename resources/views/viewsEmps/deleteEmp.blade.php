@@ -59,7 +59,7 @@
                         @method("PUT")
 
                         <div class="container text-center">
-                            <p>El estatus del empelado
+                            <p>El estatus del empleado
                                 <b class="text-warning">{{$deletEmp->first()->Nombre_Apellido}}</b>
                                 será cambiado a <b class="text-warning">"Inactivo"</b>
                                 y se le asignara la fecha de egreso

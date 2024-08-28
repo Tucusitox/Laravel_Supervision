@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_evalElement
  * @property int $fk_elementInfra
  * @property int $fk_evaluacion
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property ElementosInfraestructura $elementos_infraestructura
  * @property Evaluacione $evaluacione
@@ -27,6 +24,7 @@ class ElementosXEvaluacione extends Model
 {
 	protected $table = 'elementos_x_evaluaciones';
 	protected $primaryKey = 'id_evalElement';
+	public $timestamps = false;
 
 	protected $casts = [
 		'fk_elementInfra' => 'int',

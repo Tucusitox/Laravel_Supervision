@@ -20,7 +20,6 @@
     
                 <nav class="nav-links d-none opciones">
                     <a href="{{ route('emp.viewEmp') }}">Resumen de Empleados</a>
-                    <a href="{{ route('crearEmp.index') }}">Crear un Empleado</a>
                     <a href="{{ route('asistencias.index') }}">Asistencias</a> 
                     <a href="{{ route('permisos.index') }}">Permisos</a>
                     <a href="#">Evaluar a un Empleado</a>
@@ -45,7 +44,21 @@
                 </nav>
             </div>
             <hr class="text-white">
+
+            <div class="cajaPadre my-3">
+                <div class="sidebarHeader mx-3 p-2">
+                    <h5>Infraestructura</h5>
+                    <i class='bx bxs-down-arrow abrirLista'></i>
+                    <i class='bx bxs-up-arrow d-none cerrarLista'></i>
+                </div>
     
+                <nav class="nav-links d-none opciones">
+                    <a href="#">Resumen</a>
+                    <a href="#">Solicitar un Reporte</a>
+                </nav>
+            </div>
+            <hr class="text-white">
+
         </div>
 
     </div>

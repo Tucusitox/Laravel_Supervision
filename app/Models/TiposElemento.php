@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id_tipoElement
  * @property string $tipo_elemento
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Collection|ElementosInfraestructura[] $elementos_infraestructuras
  *
@@ -26,6 +23,7 @@ class TiposElemento extends Model
 {
 	protected $table = 'tipos_elementos';
 	protected $primaryKey = 'id_tipoElement';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'tipo_elemento'

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_espaProces', true);
             $table->integer('fk_espacio')->index('fk_areas_has_procesos_areas1_idx');
             $table->integer('fk_proceso')->index('fk_areas_has_procesos_procesos1_idx');
-            $table->timestamps();
         });
     }
 

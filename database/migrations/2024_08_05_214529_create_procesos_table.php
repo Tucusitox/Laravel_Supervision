@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('descripcion_proces', 700);
             $table->time('tiempo_duracion');
             $table->date('fecha_proceso');
-            $table->timestamps();
         });
     }
 

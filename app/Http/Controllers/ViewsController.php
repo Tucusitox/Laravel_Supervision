@@ -56,20 +56,19 @@ class ViewsController
         return view("viewsEmps.empsInactivos", compact("empInactivo"));
     }
 
+    // BUSQUEDA POR CEDULA DEL EMPLEADO
+
     public function findUnEmp(Request $request)
     {
-        // BUSQUEDA POR CEDULA DEL EMPLEADO
-
         if($request->post('buscarUnEmp')){
 
             $cedula = $request->post('buscarUnEmp');
 
-            $empActivo = Persona::join("empleados", "empleados.fk_persona","=","personas.id_persona")
+            $empExist = Persona::join("empleados", "empleados.fk_persona","=","personas.id_persona")
                         ->where("identificacion","=", $cedula)  
-                        ->where("estado_laboral","=", "Activo")  
                         ->get();
 
-            if(!$empActivo->isEmpty()){
+            if($empExist->isNotEmpty()){
 
                 $detallEmp = Persona::select("id_persona","tipo_identificacion","identificacion","foto","nombre","apellido",
                                 "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
@@ -85,20 +84,21 @@ class ViewsController
                 ->join("tipos_identificaciones", "tipos_identificaciones.id_tipoIde","=","personas.fk_tipoIde")
                 ->join("generos", "generos.id_genero","=","personas.fk_genero")
                 ->where("identificacion","=", $cedula)  
+                ->where("estado_laboral","=", "Activo")  
                 ->get();
             
-                if(!$detallEmp->isEmpty()) {
+                if($detallEmp->isNotEmpty()) {
                     return view("viewsEmps.detallesEmp", compact("detallEmp"));
                 } 
                 else{
                     return redirect()->route('emp.viewEmp')->withErrors([
-                        'buscarUnEmp' => '¡Este Empleado no existe en el Sistema!'
+                        'buscarUnEmp' => '¡Empleado Inactivo! Búscalo en la Sección de "Empleados Inactivos"'
                     ]);
                 }
             }
             else{
                 return redirect()->route('emp.viewEmp')->withErrors([
-                    'buscarUnEmp' => '¡Empleado Inactivo! Búscalo en la Sección de "Empleados Inactivos"'
+                    'buscarUnEmp' => '¡Este Empleado no existe en el Sistema!'
                 ]);
             }
         }

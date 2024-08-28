@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_procesEvent', true);
             $table->integer('fk_proceso')->index('fk_procesos_has_eventalidades_procesos1_idx');
             $table->integer('fk_eventualidad')->index('fk_procesos_has_eventalidades_eventalidades1_idx');
-            $table->timestamps();
         });
     }
 

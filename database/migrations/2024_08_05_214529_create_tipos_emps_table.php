@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tipos_emps', function (Blueprint $table) {
             $table->integer('id_tipo_emp', true);
             $table->string('tipo_empleado', 100);
-            $table->timestamps();
         });
     }
 

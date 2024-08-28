@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('direccion', 200);
             $table->string('tlf_celular', 100);
             $table->string('tlf_local', 100);
-            $table->timestamps();
         });
     }
 

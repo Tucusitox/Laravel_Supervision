@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_espaEvent', true);
             $table->integer('fk_espacio')->index('fk_areas_has_eventualidades_areas1_idx');
             $table->integer('fk_eventualidad')->index('fk_areas_has_eventualidades_eventualidades1_idx');
-            $table->timestamps();
         });
     }
 

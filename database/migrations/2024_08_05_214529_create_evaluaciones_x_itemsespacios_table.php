@@ -16,7 +16,6 @@ return new class extends Migration
             $table->integer('fk_evaluacion')->index('fk_evaluaciones_has_items_areas_evaluaciones1_idx');
             $table->integer('fk_itemEspa')->index('fk_evaluaciones_has_items_areas_items_areas1_idx');
             $table->integer('nota_itemEspacio');
-            $table->timestamps();
         });
     }
 

@@ -35,7 +35,7 @@ Route::get('/delete/2{id_persona}', [EmpleadosController::class,'viewDeleteEmp2'
 Route::delete('/destroyEmp/{id_persona}', [EmpleadosController::class,'destroy'])->name('empleado.destroy');
 Route::put('/devolverEstatus/{id_persona}', [EmpleadosController::class,'statusActivo'])->name('empleado.cambioActivo');
 
-// RUTAS PARA CONTROLADOR DE EVENTUALIDADES:
+// RUTAS PARA CONTROLADOR DE PERMISOS:
 
 Route::get('/permisos/empleados', [PermisosController::class,'index'])->name('permisos.index');
 Route::post('un/permiso/', [PermisosController::class,'buscarCodigo'])->name('permisos.buscarCodigo');

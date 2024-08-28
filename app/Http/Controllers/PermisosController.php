@@ -13,11 +13,12 @@ class PermisosController
     public function index()
     {
         $permisos = Eventualidade::select("codigo_event","identificacion","asunto_event","descripcion_event",
-                                          "fecha_inicioEvent","fecha_finEvent")
+                                          "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event")
         ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
         ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
         ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
         ->join("personas","personas.id_persona","=","empleados.fk_persona")
+        ->orderBy("fechaCreacion_event","desc")
         ->get();
 
         $bolean = TRUE;
@@ -28,12 +29,12 @@ class PermisosController
     public function buscarCodigo(Request $request)
     {
         $request->validate([
-            "buscarCodigo" => "required|regex:/^P-\d{6}$/"
+            "buscarCodigo" => "required|regex:/^P-\d{4}$/"
         ]);
 
         $codigoPermiso = $request->post("buscarCodigo"); 
         $permisos = Eventualidade::select("codigo_event","identificacion","asunto_event","descripcion_event",
-                                          "fecha_inicioEvent","fecha_finEvent")
+                                          "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event")
         ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
         ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
         ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
@@ -42,6 +43,7 @@ class PermisosController
         ->get();
 
         $bolean = FALSE;
+
         return view("viewsEmps.permisosResumen", compact("permisos","bolean"));
     }
 
@@ -68,14 +70,14 @@ class PermisosController
     {
         $request->validate([
             'identificacion' => 'required|string|regex:/^[0-9]{2}[0-9]{3}[0-9]{3}$/',
-            "permiso_asunto" => "required|string",
+            'permiso_asunto' => 'required|in:Reposo Médico,Maternidad,Lactancia,Matrimonio,Mudanza,Asuntos Personales,Otros',
             "permiso_descripcion" => "required|string",
             "fecha_inicioEvent" => 'required|string|regex:/^\d{4}\-\d{2}\-\d{2}$/',
             "fecha_finEvent" => 'required|string|regex:/^\d{4}\-\d{2}\-\d{2}$/',
         ]);
 
         // CREAR EL CODIGO DEL PERMISO
-        $numeroAleatorio = rand(100000, 999999);
+        $numeroAleatorio = rand(1000, 9999);
         $codigoEvent = "P-".$numeroAleatorio;
         
         // CAPTURAR EL ID DEL EMPLEADO
@@ -91,16 +93,48 @@ class PermisosController
             $permiso->fk_tipoEvent = 1;
             $permiso->fk_tipoEstatusEvent = 4;
             $permiso->codigo_event = $codigoEvent;
-            $permiso->asunto_event = $request->post("permiso_asunto");
+
+            // CAPTURAR EL TIPO DE PERMISO INDICADO POR LE USUARIO
+            
+            if ($request->post("permiso_asunto") == "Reposo Médico") {
+
+                $permiso->asunto_event = 'Reposo Médico';
+            } 
+            if ($request->post("permiso_asunto") == "Maternidad") {
+
+                $permiso->asunto_event = 'Maternidad';
+            } 
+            if ($request->post("permiso_asunto") == "Lactancia") {
+
+                $permiso->asunto_event = 'Lactancia';
+            } 
+            if ($request->post("permiso_asunto") == "Matrimonio") {
+
+                $permiso->asunto_event = 'Matrimonio';
+            } 
+            if ($request->post("permiso_asunto") == "Mudanza") {
+
+                $permiso->asunto_event = 'Mudanza';
+            } 
+            if ($request->post("permiso_asunto") == "Asuntos Personales") {
+
+                $permiso->asunto_event = 'Asuntos Personales';
+            } 
+            if ($request->post("permiso_asunto") == "Salida Temprana") {
+
+                $permiso->asunto_event = 'Salida Temprana';
+            }
+
             $permiso->descripcion_event = $request->post("permiso_descripcion");
             $permiso->fecha_inicioEvent = $request->post("fecha_inicioEvent");
             $permiso->fecha_finEvent = $request->post("fecha_finEvent");
+            $permiso->fechaCreacion_event = NOW();
             $permiso->save();
 
             if($permiso->save()){
 
                 // CAPTURAR EL ULTIMO ID GENERADO EN LA TABLA PERSONAS
-                $ultimoRegistro = Eventualidade::latest()->first();
+                $ultimoRegistro = Eventualidade::orderBy('id_eventualidad', 'desc')->first();
                 $idEvent = $ultimoRegistro->id_eventualidad;
 
                 // INSERT EN LA TABLA "empleados_x_eventualidades"
@@ -117,20 +151,5 @@ class PermisosController
                 'empNoExiste' => '¡Este Empleado no existe en el Sistema!'
             ]);
         }
-    }
-
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
-        //
     }
 }

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->integer('fk_tipoElement')->index('fk_elementos_infraestructuras_tipos_elementos1_idx');
             $table->integer('fk_espacio')->index('fk_elementos_infraestructuras_areas1_idx');
             $table->string('descripcion_element', 500);
-            $table->timestamps();
         });
     }
 

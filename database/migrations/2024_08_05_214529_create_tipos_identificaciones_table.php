@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tipos_identificaciones', function (Blueprint $table) {
             $table->integer('id_tipoIde', true);
             $table->string('tipo_identificacion', 100);
-            $table->timestamps();
         });
     }
 

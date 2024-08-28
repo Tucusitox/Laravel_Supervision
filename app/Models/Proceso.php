@@ -19,8 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $descripcion_proces
  * @property Carbon $tiempo_duracion
  * @property Carbon $fecha_proceso
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Collection|Espacio[] $espacios
  * @property Collection|Empleado[] $empleados
@@ -34,6 +32,7 @@ class Proceso extends Model
 {
 	protected $table = 'procesos';
 	protected $primaryKey = 'id_proceso';
+	public $timestamps = false;
 
 	protected $casts = [
 		'tiempo_duracion' => 'datetime',
@@ -51,35 +50,30 @@ class Proceso extends Model
 	public function espacios()
 	{
 		return $this->belongsToMany(Espacio::class, 'espacios_x_procesos', 'fk_proceso', 'fk_espacio')
-					->withPivot('id_espaProces')
-					->withTimestamps();
+					->withPivot('id_espaProces');
 	}
 
 	public function empleados()
 	{
 		return $this->belongsToMany(Empleado::class, 'procesos_x_empleados', 'fk_proceso', 'fk_empleado')
-					->withPivot('id_procesoEmp')
-					->withTimestamps();
+					->withPivot('id_procesoEmp');
 	}
 
 	public function evaluaciones()
 	{
 		return $this->belongsToMany(Evaluacione::class, 'procesos_x_evaluaciones', 'fk_proceso', 'fk_evaluacion')
-					->withPivot('id_procesEval')
-					->withTimestamps();
+					->withPivot('id_procesEval');
 	}
 
 	public function eventualidades()
 	{
 		return $this->belongsToMany(Eventualidade::class, 'procesos_x_eventualidades', 'fk_proceso', 'fk_eventualidad')
-					->withPivot('id_procesEvent')
-					->withTimestamps();
+					->withPivot('id_procesEvent');
 	}
 
 	public function horarios()
 	{
 		return $this->belongsToMany(Horario::class, 'procesos_x_horarios', 'fk_proceso', 'fk_horario')
-					->withPivot('id_procesoHorario')
-					->withTimestamps();
+					->withPivot('id_procesoHorario');
 	}
 }

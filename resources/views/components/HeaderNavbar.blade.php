@@ -9,6 +9,6 @@
         <a class="btn btn-dark mx-2" href="{{route("emp.viewEmp")}}">Empleados</a>
         <a class="btn btn-dark mx-2">Procesos</a>
         <a class="btn btn-dark mx-2">Infraestructuras</a>
-        <a class="btn btn-dark mx-2" href="{{route("welcome.index")}}">Home</a>
+        <a class="btn btn-dark mx-2" href="{{route("welcome.index")}}">Modulo Supervisión</a>
     </nav>
 </header>

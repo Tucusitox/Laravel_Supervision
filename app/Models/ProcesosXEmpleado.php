@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_procesoEmp
  * @property int $fk_proceso
  * @property int $fk_empleado
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Empleado $empleado
  * @property Proceso $proceso
@@ -27,6 +24,7 @@ class ProcesosXEmpleado extends Model
 {
 	protected $table = 'procesos_x_empleados';
 	protected $primaryKey = 'id_procesoEmp';
+	public $timestamps = false;
 
 	protected $casts = [
 		'fk_proceso' => 'int',

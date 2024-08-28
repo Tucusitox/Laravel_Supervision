@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('descripcion_event', 700);
             $table->date('fecha_inicioEvent');
             $table->date('fecha_finEvent')->nullable();
-            $table->timestamps();
+            $table->date('fechaCreacion_event');
         });
     }
 

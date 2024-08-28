@@ -17,8 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $codigo_eval
  * @property int $calificacion_total
  * @property Carbon $fecha_eval
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Collection|ElementosXEvaluacione[] $elementos_x_evaluaciones
  * @property Collection|Empleado[] $empleados
@@ -35,6 +33,7 @@ class Evaluacione extends Model
 {
 	protected $table = 'evaluaciones';
 	protected $primaryKey = 'id_evaluacion';
+	public $timestamps = false;
 
 	protected $casts = [
 		'calificacion_total' => 'int',
@@ -55,15 +54,13 @@ class Evaluacione extends Model
 	public function empleados()
 	{
 		return $this->belongsToMany(Empleado::class, 'empleados_x_evaluaciones', 'fk_evaluacion', 'fk_empleado')
-					->withPivot('id_empEval')
-					->withTimestamps();
+					->withPivot('id_empEval');
 	}
 
 	public function espacios()
 	{
 		return $this->belongsToMany(Espacio::class, 'espacios_x_evaluaciones', 'fk_evaluacion', 'fk_espacio')
-					->withPivot('id_espaEval')
-					->withTimestamps();
+					->withPivot('id_espaEval');
 	}
 
 	public function evaluaciones_x_itemselementosinfras()
@@ -89,7 +86,6 @@ class Evaluacione extends Model
 	public function procesos()
 	{
 		return $this->belongsToMany(Proceso::class, 'procesos_x_evaluaciones', 'fk_evaluacion', 'fk_proceso')
-					->withPivot('id_procesEval')
-					->withTimestamps();
+					->withPivot('id_procesEval');
 	}
 }

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_cargo', true);
             $table->integer('fk_espacio')->index('fk_cargos_areas1_idx');
             $table->string('nombre_car', 100);
-            $table->timestamps();
         });
     }
 

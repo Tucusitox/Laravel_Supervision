@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id_itemEmp
  * @property string $item_Empleado
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Collection|EvaluacionesXItemsemp[] $evaluaciones_x_itemsemps
  *
@@ -26,6 +23,7 @@ class ItemsEmp extends Model
 {
 	protected $table = 'items_emps';
 	protected $primaryKey = 'id_itemEmp';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'item_Empleado'

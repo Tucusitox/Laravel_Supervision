@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id_genero
  * @property string $nombre_genero
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Collection|Persona[] $personas
  *
@@ -26,6 +23,7 @@ class Genero extends Model
 {
 	protected $table = 'generos';
 	protected $primaryKey = 'id_genero';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'nombre_genero'

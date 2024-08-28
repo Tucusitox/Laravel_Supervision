@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('espacios', function (Blueprint $table) {
             $table->integer('id_espacio', true);
             $table->string('nombre_espacio', 100);
-            $table->timestamps();
         });
     }
 

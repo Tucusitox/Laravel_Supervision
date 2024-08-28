@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('codigo_eval', 100)->unique('codigo_eval_unique');
             $table->integer('calificacion_total');
             $table->date('fecha_eval');
-            $table->timestamps();
         });
     }
 

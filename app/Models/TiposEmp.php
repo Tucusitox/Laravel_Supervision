@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,8 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id_tipo_emp
  * @property string $tipo_empleado
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
  * @property Collection|Empleado[] $empleados
  *
@@ -26,6 +23,7 @@ class TiposEmp extends Model
 {
 	protected $table = 'tipos_emps';
 	protected $primaryKey = 'id_tipo_emp';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'tipo_empleado'

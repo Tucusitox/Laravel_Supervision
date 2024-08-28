@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('items_elementos_infraestructuras', function (Blueprint $table) {
             $table->integer('id_itemElement', true);
             $table->string('item_Elemento', 100);
-            $table->timestamps();
         });
     }
 

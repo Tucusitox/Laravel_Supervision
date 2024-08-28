@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Models\Empleado;
 use App\Models\HorariosXEmpleado;
-use Illuminate\Http\Request;
+use App\Models\Asistencia;
+use App\Models\Eventualidade;
+use App\Models\EmpleadosXEventualidade;
+
 
 class EmpleadosController
 {
@@ -129,11 +133,11 @@ class EmpleadosController
         if($persona->save()){
 
             // CAPTURAR EL ULTIMO ID GENERADO EN LA TABLA PERSONAS
-            $ultimoRegistro = Persona::latest()->first();
+            $ultimoRegistro = Persona::orderBy('id_persona', 'desc')->first();
             $idPersona = $ultimoRegistro->id_persona;
 
-            // CAPTURAR DATOS DEL FORM PARA LA TABLA EMPLEADOS
 
+            // CAPTURAR DATOS DEL FORM PARA LA TABLA EMPLEADOS
             $empleado = new Empleado();
             $empleado->fk_persona = $idPersona;
 
@@ -225,7 +229,7 @@ class EmpleadosController
 
             // CAPTURAR EL ULTIMO ID GENERADO EN LA TABLA EMPLEADOS
             
-            $ultimoRegistro = Empleado::latest()->first();
+            $ultimoRegistro = Empleado::orderBy('id_empleado', 'desc')->first();
             $idEmpleado = $ultimoRegistro->id_empleado;
 
             // CAPTURAR DATOS DEL FORM PARA LA TABLA HORARIOS_X_EMPLEADOS
@@ -257,7 +261,6 @@ class EmpleadosController
             if($horarioEmp->save()){
                 return redirect()->route('emp.viewEmp')->with("success", "¡Empleado Registrado con Éxito!");
             }
-
         }
     }
 
@@ -625,17 +628,21 @@ class EmpleadosController
         $persona = Persona::find($id_persona);
         $empleado = Empleado::find($id_persona);
         $horarioEmp = HorariosXEmpleado::find($id_persona);
-        
-        // REALIZAR EL DELETE EN LAS TABLAS DE LA BASE DE DATOS
+        $asistencia = Asistencia::where("fk_empleado", $id_persona);
+        $eventEmp = EmpleadosXEventualidade::select("id_empleadoEvent")->where("fk_empleado", $id_persona);
+        $permisosEmp = Eventualidade::select("id_eventualidad")
+        ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
+        ->where("fk_empleado", $id_persona);
 
+        // REALIZAR EL DELETE EN LAS TABLAS DE LA BASE DE DATOS
+        $eventEmp->delete();
+        $permisosEmp->delete();
         $horarioEmp->delete();
+        $asistencia->delete();
         $empleado->delete();
         $persona->delete();
 
-
         // SI TODO SALE BIEN REDIRECCIONAR A LA VISTA resumenEmps
-
         return redirect()->route('emp.viewEmp')->with("success", "¡Empleado Eliminado del Sistema con Éxito!");
-
     }
 }

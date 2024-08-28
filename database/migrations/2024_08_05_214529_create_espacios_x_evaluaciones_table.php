@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('id_espaEval', true);
             $table->integer('fk_espacio')->index('fk_areas_has_evaluaciones_areas1_idx');
             $table->integer('fk_evaluacion')->index('fk_areas_has_evaluaciones_evaluaciones1_idx');
-            $table->timestamps();
         });
     }
 

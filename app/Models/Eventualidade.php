@@ -21,8 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $descripcion_event
  * @property Carbon $fecha_inicioEvent
  * @property Carbon|null $fecha_finEvent
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $fechaCreacion_event
  * 
  * @property TiposEventualidade $tipos_eventualidade
  * @property TiposEstatusevent $tipos_estatusevent
@@ -37,12 +36,14 @@ class Eventualidade extends Model
 {
 	protected $table = 'eventualidades';
 	protected $primaryKey = 'id_eventualidad';
+	public $timestamps = false;
 
 	protected $casts = [
 		'fk_tipoEvent' => 'int',
 		'fk_tipoEstatusEvent' => 'int',
 		'fecha_inicioEvent' => 'datetime',
-		'fecha_finEvent' => 'datetime'
+		'fecha_finEvent' => 'datetime',
+		'fechaCreacion_event' => 'datetime'
 	];
 
 	protected $fillable = [
@@ -52,7 +53,8 @@ class Eventualidade extends Model
 		'asunto_event',
 		'descripcion_event',
 		'fecha_inicioEvent',
-		'fecha_finEvent'
+		'fecha_finEvent',
+		'fechaCreacion_event'
 	];
 
 	public function tipos_eventualidade()
@@ -73,21 +75,18 @@ class Eventualidade extends Model
 	public function empleados()
 	{
 		return $this->belongsToMany(Empleado::class, 'empleados_x_eventualidades', 'fk_eventualidad', 'fk_empleado')
-					->withPivot('id_empleadoEvent')
-					->withTimestamps();
+					->withPivot('id_empleadoEvent');
 	}
 
 	public function espacios()
 	{
 		return $this->belongsToMany(Espacio::class, 'espacios_x_eventualidades', 'fk_eventualidad', 'fk_espacio')
-					->withPivot('id_espaEvent')
-					->withTimestamps();
+					->withPivot('id_espaEvent');
 	}
 
 	public function procesos()
 	{
 		return $this->belongsToMany(Proceso::class, 'procesos_x_eventualidades', 'fk_eventualidad', 'fk_proceso')
-					->withPivot('id_procesEvent')
-					->withTimestamps();
+					->withPivot('id_procesEvent');
 	}
 }

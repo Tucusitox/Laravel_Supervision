@@ -46,24 +46,29 @@
                             <input type="number" class="form-control bg-transparent text-white"
                             name="identificacion" placeholder="Sin Símbolos" value="{{ old('identificacion') }}">
                         </div>
-                        @error('identificacion')
-                            <div class="alert alert-danger mt-3">{{ $message }}</div>
-                        @enderror
                     @else
                         <div class="mb-3 text-white">
                             <label class="form-label"><b>Cédula del Empleado:</b></label>
                             <input type="number" class="form-control bg-transparent text-white"
                             name="identificacion" value="{{ $ciEmp->first()->identificacion }}">
                         </div>
+                    @endif
                         @error('identificacion')
                             <div class="alert alert-danger mt-3">{{ $message }}</div>
                         @enderror
-                    @endif
 
-                    <div class="mb-3 text-white">
-                        <label class="form-label bg-transparent text-white"><b>Asunto del Permiso:</b></label>
-                        <input type="text" class="form-control bg-transparent text-white" placeholder="Asunto Breve"
-                        name="permiso_asunto" value="{{ old('permiso_asunto') }}">
+                    <div class="mb-3 text-start text-white">
+                        <label class="form-label bg-transparent text-white"><b>Tipo de Permiso:</b></label>
+                        <select class="form-select" name="permiso_asunto">
+                            <option value="" {{ old('permiso_asunto') == '' ? 'selected' : '' }}>Selecciona Uno</option>
+                            <option value="Reposo Médico" {{ old('permiso_asunto') == 'Reposo Médico' ? 'selected' : '' }}>Reposo Médico</option>
+                            <option value="Maternidad" {{ old('permiso_asunto') == 'Maternidad' ? 'selected' : '' }}>Maternidad</option>
+                            <option value="Lactancia" {{ old('permiso_asunto') == 'Lactancia' ? 'selected' : '' }}>Lactancia</option>
+                            <option value="Matrimonio" {{ old('permiso_asunto') == 'Matrimonio' ? 'selected' : '' }}>Matrimonio</option>
+                            <option value="Mudanza" {{ old('permiso_asunto') == 'Mudanza' ? 'selected' : '' }}>Mudanza</option>
+                            <option value="Asuntos Personales" {{ old('permiso_asunto') == 'Asuntos Personales' ? 'selected' : '' }}>Asuntos Personales</option>
+                            <option value="Salida Temprana" {{ old('permiso_asunto') == 'Salida Temprana' ? 'selected' : '' }}>Salida Temprana</option>
+                        </select>
                     </div>
                     @error('permiso_asunto')
                         <div class="alert alert-danger mt-3">{{ $message }}</div>
