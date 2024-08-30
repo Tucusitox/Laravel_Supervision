@@ -5,7 +5,7 @@ PASO N1 ---------------------------------------------------------
 Abre el XAMPP y activa los Serrvicios apache y mysql.
 
 Despúes configura el archivo ".env" correctamente en el puerto 3306
-y el nombre de la base de datos que es "modulo_delivery"
+y el nombre de la base de datos que es "modulo_supervision"
 con el gestor "Mysql".
 
 En el archivo .env el SESSION_DRIVER debe estar en "file", así:
