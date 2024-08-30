@@ -54,4 +54,4 @@ Route::get("/evaluacion/crear",[EvaluacionesEmpsController::class,"create"])->na
 Route::post("/evaluacion/store",[EvaluacionesEmpsController::class,"store"])->name("evaluaciones.store");
 Route::get("/evaluacion/show/{id_persona}",[EvaluacionesEmpsController::class,"show"])->name("evaluaciones.show");
 Route::post("/evaluacion/find/",[EvaluacionesEmpsController::class,"find"])->name("evaluaciones.find");
-Route::get("/empleado/{id_persona}",[EvaluacionesEmpsController::class,"showEmp"])->name("evaluaciones.showEmp");
+Route::get("/empleado/evaluacion/{id_persona}",[EvaluacionesEmpsController::class,"showEmp"])->name("evaluaciones.showEmp");
