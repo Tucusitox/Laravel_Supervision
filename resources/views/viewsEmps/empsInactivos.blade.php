@@ -21,6 +21,7 @@
                     placeholder="Busqueda Rápida por Cédula" name="buscarUnEmp">
             </div>
         </div>
+        <hr class="text-white">
 
         <!-- TABLA PARA MOSTRAR LA INFO DE LOS EMPLEADOS -->
 

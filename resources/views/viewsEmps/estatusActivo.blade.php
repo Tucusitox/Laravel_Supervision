@@ -14,14 +14,14 @@
         </div>
 
         <hr class="text-white">
-
         <p class="mb-4 text-white">¿Seguro que deseas colocar <b class="text-warning">"Activo"</b> a este antiguo empleado?</p>
         <p class="mb-4 text-white"><b class="text-warning">Nota:</b> La fecha de ingreso y esgreso seran eliminadas ya que el 
             empelado se estará reincorporando. Además se le creara una nueva fecha de ingreso con el día: 
             <b class="text-warning">{{ now()->setTimezone('America/Caracas')->format('Y/m/d') }}</b>
         </p>
-            
-        <table class="table mt-2 table-bordered table-dark border-white text-center">
+        <hr class="text-white">
+
+        <table class="table table-bordered table-dark border-white text-center">
             <thead >
                 <tr>
                     <th scope="col">Identificación</th>
@@ -37,6 +37,7 @@
                 </tr>
             </tbody>
         </table>
+        <hr class="text-white">
 
         <form action="{{route('empleado.cambioActivo', $empInactivo->first()->id_persona)}}" method="POST">
             @csrf
@@ -50,9 +51,7 @@
             </div>
 
         </form>
-
-
-
+        
     </div>
 
 @endsection

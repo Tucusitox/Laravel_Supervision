@@ -6,14 +6,16 @@ use App\Models\Persona;
 use App\Models\Eventualidade;
 use App\Models\EmpleadosXEventualidade;
 use Illuminate\Http\Request;
+use Mockery\Undefined;
 
 class PermisosController
 {
     // VER TODOS LOS PERMISOS CREADOS
     public function index()
     {
-        $permisos = Eventualidade::select("codigo_event","identificacion","asunto_event","descripcion_event",
-                                          "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event")
+        $permisos = Eventualidade::select("id_persona","codigo_event","identificacion","asunto_event",
+                                          "descripcion_event","fecha_inicioEvent","fecha_finEvent",
+                                          "fechaCreacion_event")
         ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
         ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
         ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
@@ -51,6 +53,7 @@ class PermisosController
     public function show($id_persona)
     {
         $ciEmp = Persona::select("id_persona","identificacion")
+        ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
         ->where("id_persona",$id_persona)
         ->get();
 
@@ -81,7 +84,6 @@ class PermisosController
         $codigoEvent = "P-".$numeroAleatorio;
         
         // CAPTURAR EL ID DEL EMPLEADO
-
         $cedulaEmp = $request->post("identificacion");
         $idEmp = Persona::select("id_persona")
             ->where("identificacion","=",$cedulaEmp)
@@ -147,9 +149,32 @@ class PermisosController
             }
         }
         else{
-            return redirect()->route('eventualidades.index')->withErrors([
-                'empNoExiste' => '¡Este Empleado no existe en el Sistema!'
+            return redirect()->back()->withErrors([
+                'identificacion' => '¡Este Empleado no existe en el Sistema!'
             ]);
         }
+    }
+
+    // IR A DETALLES DE EMPLEADOS DESDE PERMISOS
+    public function permisoEmp($id_persona)
+    {
+        $bolean = "permiso";
+        $detallEmp = Persona::select("id_persona","tipo_identificacion","identificacion","foto","nombre","apellido",
+                    "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
+                    "tipo_empleado","nombre_horario","descripcion_horario","estado_laboral","fecha_ingreso",
+                    "fecha_egreso","nombre_genero")
+        ->selectRaw("TIMESTAMPDIFF(YEAR, fecha_nacimiento, NOW()) AS edad_empleado")
+        ->join("empleados", "empleados.fk_persona","=","personas.id_persona")
+        ->join("tipos_emps", "tipos_emps.id_tipo_emp","=","empleados.fk_tipo_emp")
+        ->join("cargos", "cargos.id_cargo","=","empleados.fk_cargo")
+        ->join("espacios", "espacios.id_espacio","=","cargos.fk_espacio")
+        ->join("horarios_x_empleados", "horarios_x_empleados.fk_empleado","=","empleados.id_empleado")
+        ->join("horarios", "horarios_x_empleados.fk_horario","=","horarios.id_horario")
+        ->join("tipos_identificaciones", "tipos_identificaciones.id_tipoIde","=","personas.fk_tipoIde")
+        ->join("generos", "generos.id_genero","=","personas.fk_genero")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+
+        return view("viewsEmps.detallesEmp",compact("detallEmp","bolean"));
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ViewsController;
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\AsistenciasController;
 use App\Http\Controllers\PermisosController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EvaluacionesEmpsController;
+
 
 // RUTAS PARA REDIRECCIONAR ENTRE LAS INTERFACERS Y SECCIONES:
 
@@ -13,6 +15,7 @@ Route::get("/resumen/empelados",[ViewsController::class,"viewEmp"])->name("emp.v
 Route::get("/resumen/empeladosInactivos",[ViewsController::class,"empsInactivos"])->name("emps.inactivos");
 Route::post("/resumen/un/empelado",[ViewsController::class,"findUnEmp"])->name("unEmp.findUnEmp");
 Route::get('/activo/{id_persona}', [ViewsController::class,'activo'])->name('empleado.activo');
+Route::get("/empelados/destacados/",[EvaluacionesEmpsController::class,"empsDest"])->name("evaluaciones.empsDest");
 
 // RUTAS PARA REDIRECCIONAR ENTRE LAS ASISTENCIAS Y CALCULO DE HORAS TOTALES:
 
@@ -42,4 +45,13 @@ Route::post('un/permiso/', [PermisosController::class,'buscarCodigo'])->name('pe
 Route::get('/permiso/crear', [PermisosController::class,'create'])->name('permisos.create');
 Route::post('/permiso/store', [PermisosController::class,'store'])->name('permisos.store');
 Route::get('/permiso/{id_persona}', [PermisosController::class,'show'])->name('permisos.show');
+Route::get("/empleado/permiso/{id_persona}",[PermisosController::class,"permisoEmp"])->name("permisos.permisoEmp");
 
+// RUTAS PARA EVALUACIONES
+
+Route::get("/evaluacion/index",[EvaluacionesEmpsController::class,"index"])->name("evaluaciones.index");
+Route::get("/evaluacion/crear",[EvaluacionesEmpsController::class,"create"])->name("evaluaciones.create");
+Route::post("/evaluacion/store",[EvaluacionesEmpsController::class,"store"])->name("evaluaciones.store");
+Route::get("/evaluacion/show/{id_persona}",[EvaluacionesEmpsController::class,"show"])->name("evaluaciones.show");
+Route::post("/evaluacion/find/",[EvaluacionesEmpsController::class,"find"])->name("evaluaciones.find");
+Route::get("/empleado/{id_persona}",[EvaluacionesEmpsController::class,"showEmp"])->name("evaluaciones.showEmp");

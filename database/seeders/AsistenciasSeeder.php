@@ -24,16 +24,10 @@ class AsistenciasSeeder extends Seeder
                 'hora_salida' => '22:00:00',
             ],
             [
-                'fk_empleado' => 3,
-                'fecha_asistencia' => '2024-07-05',
-                'hora_llegada' => '08:00:00',
-                'hora_salida' => NULL,
-            ],
-            [
                 'fk_empleado' => 4,
-                'fecha_asistencia' => '2024-08-01',
+                'fecha_asistencia' => '2024-07-05',
                 'hora_llegada' => '01:00:00',
-                'hora_salida' => NULL,
+                'hora_salida' => '08:00:00',
             ],
             [
                 'fk_empleado' => 1,

@@ -1,4 +1,4 @@
-{{-- VISTA PARA REGISTRAR O INICIAR LA SESION --}}
+{{-- VISTA PARA ELIMINAR EMPLEADOS --}}
 
 @extends('layout/layout_interfaces') {{-- AQUI SE INVOCA AL LAYOUT --}}
 

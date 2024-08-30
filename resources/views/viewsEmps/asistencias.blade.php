@@ -49,7 +49,7 @@
         </div>
         <hr class="text-white">
 
-        <div class="d-flex flex-column mb-4"> 
+        <div class="d-flex flex-column mb-3"> 
             <div class="col">
                 <a class="btn btn-dark mb-3 boton" data-bs-toggle="modal" data-bs-target="#exampleModal_3">Crear Asistencia</a>
                 <a class="btn btn-dark mb-3 boton mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal_4">Calcular Horas Totales de un Empleado</a>
@@ -70,10 +70,11 @@
                 @endif
             </div>
         </div>
+        <hr class="text-white">
 
         <!-- TABLA PARA MOSTRAR LA INFO DE LOS EMPLEADOS -->
 
-        <table class="table table-bordered table-dark border-white text-center mt-2">
+        <table class="table table-bordered table-dark border-white text-center">
             <thead class="thead">
                 <tr id="trFifo">
                     <th>Fecha</th>

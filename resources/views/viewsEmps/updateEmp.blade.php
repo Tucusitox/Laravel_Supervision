@@ -98,7 +98,7 @@
 
                     <div class="mb-3 text-white">
                         <label class="form-label"><b>Tipo de Cédula:</b></label>
-                        <select class="form-select" name="tipo_identificacion">
+                        <select class="form-select text-white bg-transparent" name="tipo_identificacion">
                             <option value="Venezolana" {{ $oldEmp->first()->tipo_identificacion == 'Venezolana' ? 'selected' : '' }}>Venezolana</option>
                             <option value="Extranjera" {{ $oldEmp->first()->tipo_identificacion == 'Extranjera' ? 'selected' : '' }}>Extranjera</option>
                         </select>
@@ -132,7 +132,7 @@
 
                     <div class="mb-3 text-white">
                         <label class="form-label"><b>Cargo de Empleado:</b></label> 
-                        <select class="form-select" name="cargo_emp">
+                        <select class="form-select text-white bg-transparent" name="cargo_emp">
                             <option value="Gerente" {{ $oldEmp->first()->nombre_car == 'Gerente' ? 'selected' : '' }}>Gerente</option>
                             <option value="Maître" {{ $oldEmp->first()->nombre_car == 'Maître' ? 'selected' : '' }}>Maître</option>
                             <option value="Mesero" {{ $oldEmp->first()->nombre_car == 'Mesero' ? 'selected' : '' }}>Mesero</option>
@@ -155,7 +155,7 @@
                     
                     <div class="mb-3 text-white">
                         <label class="form-label"><b>Tipo de Empleado:</b></label>
-                        <select class="form-select" name="tipo_emp">
+                        <select class="form-select text-white bg-transparent" name="tipo_emp">
                             <option value="Fijo" {{ $oldEmp->first()->tipo_empleado == 'Fijo' ? 'selected' : '' }}>Fijo</option>
                             <option value="Contratado" {{ $oldEmp->first()->tipo_empleado == 'Contratado' ? 'selected' : '' }}>Contratado</option>
                             <option value="A Destajo" {{ $oldEmp->first()->tipo_empleado == 'A Destajo' ? 'selected' : '' }}>A Destajo</option>
@@ -168,7 +168,7 @@
                     <div class="mb-3 text-white">
                         <label class="form-label"><b>Horario del Empleado:</b></label>
                         <p>(Para Abogado marque "No Aplica")</p> 
-                        <select class="form-select" name="nombre_horario">
+                        <select class="form-select text-white bg-transparent" name="nombre_horario">
                             <option value="Mañana" {{ $oldEmp->first()->nombre_horario == 'Mañana' ? 'selected' : '' }}>Mañana</option>
                             <option value="Tarde/Noche" {{ $oldEmp->first()->nombre_horario == 'Tarde/Noche' ? 'selected' : '' }}>Tarde/Noche</option>
                             <option value="Completo" {{ $oldEmp->first()->nombre_horario == 'Completo' ? 'selected' : '' }}>Completo</option>
@@ -199,7 +199,7 @@
 
                     <div class="mb-3 text-white">
                         <label class="form-label"><b>Género:</b></label>
-                        <select class="form-select" name="genero">
+                        <select class="form-select text-white bg-transparent" name="genero">
                             <option value="Masculino" {{ $oldEmp->first()->nombre_genero == 'Masculino' ? 'selected' : '' }}>Masculino</option>
                             <option value="Femenino" {{ $oldEmp->first()->nombre_genero == 'Femenino' ? 'selected' : '' }}>Femenino</option>
                         </select>

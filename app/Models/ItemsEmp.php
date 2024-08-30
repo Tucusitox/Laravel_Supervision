@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class ItemsEmp
  * 
  * @property int $id_itemEmp
- * @property string $item_Empleado
+ * @property string $item_empleado
  * 
  * @property Collection|EvaluacionesXItemsemp[] $evaluaciones_x_itemsemps
  *
@@ -26,7 +26,7 @@ class ItemsEmp extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
-		'item_Empleado'
+		'item_empleado'
 	];
 
 	public function evaluaciones_x_itemsemps()

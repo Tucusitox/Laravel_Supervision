@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
     <link rel="stylesheet" href="{{ asset('css/styleViews.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/formEmps.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/formularios.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}" />
     <title>@yield('Modulo Supervision')</title>
 </head>

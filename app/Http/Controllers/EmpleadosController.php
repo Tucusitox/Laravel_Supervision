@@ -9,6 +9,9 @@ use App\Models\HorariosXEmpleado;
 use App\Models\Asistencia;
 use App\Models\Eventualidade;
 use App\Models\EmpleadosXEventualidade;
+use App\Models\Evaluacione;
+use App\Models\EmpleadosXEvaluacione;
+use App\Models\EvaluacionesXItemsemp;
 
 
 class EmpleadosController
@@ -65,7 +68,7 @@ class EmpleadosController
             $rutaImg = "/" . $foto->getClientOriginalName();
             $request->file("foto")->move($destinoCarpeta,$rutaImg);
 
-            $persona->foto = $destinoCarpeta.$rutaImg;
+            $persona->foto = $destinoCarpeta.$rutaImg; //DEFINIMOS LA RUTA DE LA IMAGEN
         };
 
 
@@ -268,7 +271,7 @@ class EmpleadosController
 
     public function show($id_persona)
     {
-
+        $bolean = TRUE;
         $detallEmp = Persona::select("id_persona","tipo_identificacion","identificacion","foto","nombre","apellido",
                     "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
                     "tipo_empleado","nombre_horario","descripcion_horario","estado_laboral","fecha_ingreso",
@@ -285,13 +288,14 @@ class EmpleadosController
         ->where("id_persona","=", $id_persona)
         ->get();
 
-        return view("viewsEmps.detallesEmp",compact("detallEmp"));
+        return view("viewsEmps.detallesEmp",compact("detallEmp","bolean"));
     }
 
     // OBTENER EL ID Y DATOS DEL EMPLEADO A ACTUALIZAR DESDE RESUMEN DE EMPLEADOS
 
     public function editDesdeResum($id_persona)
     {
+        $bolean = TRUE;
         $oldEmp = Persona::select("id_persona","tipo_identificacion","identificacion","foto","nombre","apellido",
                 "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
                 "tipo_empleado","nombre_horario","descripcion_horario","estado_laboral","fecha_ingreso",
@@ -307,10 +311,7 @@ class EmpleadosController
         ->where("id_persona","=", $id_persona)
         ->get();
 
-        $bolean = TRUE;
-
         return view('viewsEmps.updateEmp', compact('oldEmp',"bolean"));
-
     }
 
     // OBTENER EL ID Y DATOS DEL EMPLEADO A ACTUALIZAR DESDE DETALLES DEL EMPLEADO
@@ -593,7 +594,7 @@ class EmpleadosController
         return redirect()->route('empleado.show', $id_persona)->with("success", "¡Empleado nuevamente Activo!");
     }
 
-    // IR A LA VISTA DE DELETE EMPLEADO DESDE REDUMEN
+    // IR A LA VISTA DE DELETE EMPLEADO DESDE RESUMEN EMPLEADO
 
     public function viewDeleteEmp1($id_persona)
     {
@@ -623,18 +624,33 @@ class EmpleadosController
     
     public function destroy($id_persona)
     {
-        // CAPTURAR LOPS OBJETOS A ELIMINAR CON LOS SOGUIENTES MODELOS
-
+        // CAPTURAR LOPS REGISTROS A ELIMINAR CON LOS SIGUIENTES MODELOS
         $persona = Persona::find($id_persona);
         $empleado = Empleado::find($id_persona);
         $horarioEmp = HorariosXEmpleado::find($id_persona);
         $asistencia = Asistencia::where("fk_empleado", $id_persona);
+
         $eventEmp = EmpleadosXEventualidade::select("id_empleadoEvent")->where("fk_empleado", $id_persona);
         $permisosEmp = Eventualidade::select("id_eventualidad")
         ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
         ->where("fk_empleado", $id_persona);
 
+        $notasEmp = EvaluacionesXItemsemp::select("id_eval_itemEmp")
+        ->join("evaluaciones","evaluaciones_x_itemsEmps.fk_evaluacion","=","evaluaciones.id_evaluacion")
+        ->join("empleados_x_evaluaciones","empleados_x_evaluaciones.fk_evaluacion","=","evaluaciones.id_evaluacion")
+        ->where("fk_empleado", $id_persona);
+
+        $empsEvals = EmpleadosXEvaluacione::select("id_empEval")
+        ->where("fk_empleado", $id_persona);
+
+        $evaluacionesEmp = Evaluacione::select("id_evaluacion")
+        ->join("empleados_x_evaluaciones","empleados_x_evaluaciones.fk_evaluacion","=","evaluaciones.id_evaluacion")
+        ->where("fk_empleado", $id_persona);
+
         // REALIZAR EL DELETE EN LAS TABLAS DE LA BASE DE DATOS
+        $notasEmp->delete();
+        $empsEvals->delete();
+        $evaluacionesEmp->delete();
         $eventEmp->delete();
         $permisosEmp->delete();
         $horarioEmp->delete();

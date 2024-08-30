@@ -15,15 +15,13 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id_evaluacion
  * @property string $codigo_eval
- * @property int $calificacion_total
- * @property Carbon $fecha_eval
+ * @property int $calificacion_eval
+ * @property Carbon $fecha_evaluacion
  * 
  * @property Collection|ElementosXEvaluacione[] $elementos_x_evaluaciones
  * @property Collection|Empleado[] $empleados
- * @property Collection|Espacio[] $espacios
  * @property Collection|EvaluacionesXItemselementosinfra[] $evaluaciones_x_itemselementosinfras
  * @property Collection|EvaluacionesXItemsemp[] $evaluaciones_x_itemsemps
- * @property Collection|EvaluacionesXItemsespacio[] $evaluaciones_x_itemsespacios
  * @property Collection|EvaluacionesXItemsproceso[] $evaluaciones_x_itemsprocesos
  * @property Collection|Proceso[] $procesos
  *
@@ -36,14 +34,14 @@ class Evaluacione extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'calificacion_total' => 'int',
-		'fecha_eval' => 'datetime'
+		'calificacion_eval' => 'int',
+		'fecha_evaluacion' => 'datetime'
 	];
 
 	protected $fillable = [
 		'codigo_eval',
-		'calificacion_total',
-		'fecha_eval'
+		'calificacion_eval',
+		'fecha_evaluacion'
 	];
 
 	public function elementos_x_evaluaciones()
@@ -57,12 +55,6 @@ class Evaluacione extends Model
 					->withPivot('id_empEval');
 	}
 
-	public function espacios()
-	{
-		return $this->belongsToMany(Espacio::class, 'espacios_x_evaluaciones', 'fk_evaluacion', 'fk_espacio')
-					->withPivot('id_espaEval');
-	}
-
 	public function evaluaciones_x_itemselementosinfras()
 	{
 		return $this->hasMany(EvaluacionesXItemselementosinfra::class, 'fk_evaluacion');
@@ -71,11 +63,6 @@ class Evaluacione extends Model
 	public function evaluaciones_x_itemsemps()
 	{
 		return $this->hasMany(EvaluacionesXItemsemp::class, 'fk_evaluacion');
-	}
-
-	public function evaluaciones_x_itemsespacios()
-	{
-		return $this->hasMany(EvaluacionesXItemsespacio::class, 'fk_evaluacion');
 	}
 
 	public function evaluaciones_x_itemsprocesos()

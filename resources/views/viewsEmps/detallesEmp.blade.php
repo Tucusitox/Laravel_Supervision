@@ -10,7 +10,6 @@
     <div class="caja3 container p-5" id="contenedor">
 
         {{-- ALERTA CUANDO HAY UNA ACTUALIZACION EXITOSA --}}
-
         @if ($mensaje = Session::get('success'))
             <div class="alert alert-success text-center container w-50" role="alert">
             {{$mensaje}}
@@ -18,15 +17,28 @@
         @endif
 
         <div class="d-flex justify-content-between align-items-center container">
-            <h4 class="text-white">{{$detallEmp->first()->nombre." ".$detallEmp->first()->apellido}}</h4>
+            <h4 class="text-white">{{$detallEmp->first()->nombre." ".$detallEmp->first()->apellido}}</h4> 
 
             {{-- BOTONES DE EDIT Y DELETE --}} 
             <div class="text-center">
-                <a href="{{route('emp.viewEmp')}}" class="btn btn-warning mx-1 my-1" title="Volver">
-                    <i class='bx bx-arrow-back'></i>
-                </a>
+                @if ($bolean === TRUE)
+                    <a href="{{route('emp.viewEmp')}}" class="btn btn-warning mx-1 my-1" title="Volver">
+                        <i class='bx bx-arrow-back'></i>
+                    </a> 
+                @elseif($bolean === FALSE)
+                    <a href="{{route('evaluaciones.index')}}" class="btn btn-warning mx-1 my-1" title="Volver">
+                        <i class='bx bx-arrow-back'></i>
+                    </a> 
+                @elseif($bolean === "permiso")
+                    <a href="{{route('permisos.index')}}" class="btn btn-warning mx-1 my-1" title="Volver">
+                        <i class='bx bx-arrow-back'></i>
+                    </a> 
+                @endif
                 <a href="{{route('permisos.show', $detallEmp->first()->id_persona)}}" class="btn btn-success mx-1 my-1" title="Crear un Permiso">
                     <i class='bx bx-notepad' ></i>
+                </a>
+                <a href="{{route('evaluaciones.show', $detallEmp->first()->id_persona)}}" class="btn btn-primary mx-1 my-1" title="Crear una Evaluación">
+                    <i class='bx bxs-user-check'></i>
                 </a>
                 <a href="{{route('empleado.edit', $detallEmp->first()->id_persona)}}" class="btn btn-info mx-1 my-1" title="Editar">
                     <i class='bx bx-edit'></i>

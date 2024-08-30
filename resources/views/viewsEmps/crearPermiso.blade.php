@@ -1,4 +1,4 @@
-{{-- VISTA PARA REGISTRAR O INICIAR LA SESION --}}
+{{-- VISTA PARA CREAR UN PERMISO --}}
 
 @extends('layout/layout_interfaces') {{-- AQUI SE INVOCA AL LAYOUT --}}
 
@@ -9,28 +9,27 @@
 
     <div class="caja3 container p-5" id="contenedor">
 
-        {{-- FOMRULARIO PARA INGRESAR UN NUEVO EMPLEADO --}}
+        {{-- FOMRULARIO PARA INGRESAR UN NUEVO PERMISO --}}
 
         <form class="w-100 container from-createEmp bg-transparent" action="{{ route('permisos.store') }}" method="POST">
             @csrf
 
             <div class="d-flex justify-content-between align-items-center container">
-                <h4 class="text-white">Ingresa los Datos Solicitados para  Generar el Permiso</h4>
-
                 @if($ciEmp == NULL)
+                    <h4 class="text-white">Ingresa los Datos Solicitados para  Generar el Permiso</h4>
                     {{-- BOTONES DEL FORMULARIO --}}
                     <div class="d-flex justify-content-end nav-links">
                         <a class="btn btn-danger mx-3" href="{{ route('permisos.index') }}">Cancelar</a>
                         <button type="submit" class="btn btn-dark">Crear</button>
                     </div>
                 @else
+                    <h4 class="text-white">Generar Permiso para el Empleado: <b class="text-warning">{{$ciEmp->first()->Nombre_Apellido}}</b></h4>
                     {{-- BOTONES DEL FORMULARIO --}}
                     <div class="d-flex justify-content-end nav-links">
                         <a class="btn btn-danger mx-2" href="{{ route('empleado.show',$ciEmp->first()->id_persona) }}">Cancelar</a>
                         <button type="submit" class="btn btn-dark">Crear</button>
                     </div>
                 @endif
-
             </div>
             <hr class="text-white">
 
@@ -59,7 +58,7 @@
 
                     <div class="mb-3 text-start text-white">
                         <label class="form-label bg-transparent text-white"><b>Tipo de Permiso:</b></label>
-                        <select class="form-select" name="permiso_asunto">
+                        <select class="form-select text-white bg-transparent" name="permiso_asunto">
                             <option value="" {{ old('permiso_asunto') == '' ? 'selected' : '' }}>Selecciona Uno</option>
                             <option value="Reposo Médico" {{ old('permiso_asunto') == 'Reposo Médico' ? 'selected' : '' }}>Reposo Médico</option>
                             <option value="Maternidad" {{ old('permiso_asunto') == 'Maternidad' ? 'selected' : '' }}>Maternidad</option>
@@ -78,7 +77,7 @@
                         <label class="form-label"><b>Descripción del Permiso:</b></label>
                         <textarea type="text" class="form-control bg-transparent text-white" 
                         placeholder="Máximo 2000 Caracteres" name="permiso_descripcion" 
-                        rows="8" maxlength="2000"></textarea>
+                        rows="8" maxlength="2000">{{old('permiso_descripcion')}}</textarea>
                     </div>
                     @error('permiso_descripcion')
                         <div class="alert alert-danger mt-3">{{ $message }}</div>

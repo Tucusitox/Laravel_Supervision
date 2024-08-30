@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('evaluaciones', function (Blueprint $table) {
             $table->integer('id_evaluacion', true);
             $table->string('codigo_eval', 100)->unique('codigo_eval_unique');
-            $table->integer('calificacion_total');
-            $table->date('fecha_eval');
+            $table->integer('calificacion_eval');
+            $table->date('fecha_evaluacion');
         });
     }
 

@@ -1,9 +1,5 @@
 /* FORMULARIO CREACION Y ACTUALIZACIÓN DE UN EMPLEADO */
 
-.from-createEmp div select{
-    background: transparent;
-    color: white;
-}
 .from-createEmp div option{
     background-color: black;
 }
@@ -58,16 +54,6 @@
     color:white;
 }
 
-/* FORMULARIO PARA BUSCAR A UN EMPELADO */
-
-.from-createEmp select{
-    background: transparent;
-    color: white;
-}
-.from-createEmp option{
-    background-color: black;
-}
-
 /* INPUT DE TIPO FILE */
 
 .contenedor-btn-file input[type="file"] {
@@ -114,4 +100,25 @@
     left: 0;
     opacity: 0;
     cursor: pointer;
+}
+
+/* ESTILOS PARA FORMULARIO DE CREACION DE EVALUACIONES */
+
+.inputsEvaluaciones input[name="higiene"]::placeholder{
+    color: white;
+}
+.inputsEvaluaciones input[name="vestimenta"]::placeholder{
+    color: white;
+}
+.inputsEvaluaciones input[name="buenTrato_cliente"]::placeholder{
+    color: white;
+}
+.inputsEvaluaciones input[name="conocimiento_menus"]::placeholder{
+    color: white;
+}
+.inputsEvaluaciones input[name="eficiencia"]::placeholder{
+    color: white;
+}
+.inputsEvaluaciones input[name="trabajo_equipo"]::placeholder{
+    color: white;
 }

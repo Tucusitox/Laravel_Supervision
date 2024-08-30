@@ -78,7 +78,7 @@
 
             <div class="mb-3 text-white">
                 <label class="form-label"><b>Tipo de Cédula:</b></label>
-                <select class="form-select" name="tipo_identificacion">
+                <select class="form-select text-white bg-transparent" name="tipo_identificacion">
                     <option value="" {{ old('tipo_identificacion') == '' ? 'selected' : '' }}>Selecciona Uno</option>
                     <option value="Venezolana" {{ old('tipo_identificacion') == 'Venezolana' ? 'selected' : '' }}>Venezolana</option>
                     <option value="Extranjera" {{ old('tipo_identificacion') == 'Extranjera' ? 'selected' : '' }}>Extranjera</option>
@@ -113,7 +113,7 @@
 
             <div class="mb-3 text-white">
                 <label class="form-label"><b>Cargo de Empleado:</b></label> 
-                <select class="form-select" name="cargo_emp">
+                <select class="form-select text-white bg-transparent" name="cargo_emp">
                     <option value="" {{ old('cargo_emp') == '' ? 'selected' : '' }}>Selecciona Uno</option>
                     <option value="Gerente" {{ old('cargo_emp') == 'Gerente' ? 'selected' : '' }}>Gerente</option>
                     <option value="Maître" {{ old('cargo_emp') == 'Maître' ? 'selected' : '' }}>Maître</option>
@@ -137,7 +137,7 @@
             
             <div class="mb-3 text-white">
                 <label class="form-label"><b>Tipo de Empleado:</b></label>
-                <select class="form-select" name="tipo_emp">
+                <select class="form-select text-white bg-transparent" name="tipo_emp">
                     <option value="" {{ old('tipo_emp') == '' ? 'selected' : '' }}>Selecciona Uno</option>
                     <option value="Fijo" {{ old('tipo_emp') == 'Fijo' ? 'selected' : '' }}>Fijo</option>
                     <option value="Contratado" {{ old('tipo_emp') == 'Contratado' ? 'selected' : '' }}>Contratado</option>
@@ -150,7 +150,7 @@
 
             <div class="mb-3 text-white">
                 <label class="form-label"><b>Horario del Empleado:</b></label>
-                <select class="form-select" name="nombre_horario">
+                <select class="form-select text-white bg-transparent" name="nombre_horario">
                     <option value="" {{ old('nombre_horario') == '' ? 'selected' : '' }}>Abogado marque "No Aplica"</option>
                     <option value="Mañana" {{ old('nombre_horario') == 'Mañana' ? 'selected' : '' }}>Mañana</option>
                     <option value="Tarde/Noche" {{ old('nombre_horario') == 'Tarde/Noche' ? 'selected' : '' }}>Tarde/Noche</option>
@@ -182,7 +182,7 @@
 
             <div class="mb-3 text-white">
                 <label class="form-label"><b>Género:</b></label>
-                <select class="form-select" name="genero">
+                <select class="form-select text-white bg-transparent" name="genero">
                     <option value="" {{ old('genero') == '' ? 'selected' : '' }}>Selecciona Uno</option>
                     <option value="Masculino" {{ old('genero') == 'Masculino' ? 'selected' : '' }}>Masculino</option>
                     <option value="Femenino" {{ old('genero') == 'Femenino' ? 'selected' : '' }}>Femenino</option>

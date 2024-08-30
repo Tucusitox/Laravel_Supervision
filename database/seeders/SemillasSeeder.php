@@ -79,17 +79,15 @@ class SemillasSeeder extends Seeder
         ItemsEmp::insert([
             ['item_empleado' => 'Higiene'],
             ['item_empleado' => 'Vestimenta'],
-            ['item_empleado' => 'Buen trato al cliente'],
-            ['item_empleado' => 'Conocimiento de los menús'],
-            ['item_empleado' => 'Eficiencia/Rapidez'],
-            ['item_empleado' => 'Trabajo en equipo'],
+            ['item_empleado' => 'Buen trato al Cliente'],
+            ['item_empleado' => 'Conocimiento de los Menús'],
+            ['item_empleado' => 'Trabajo en Equipo'],
         ]);
 
         // INSERTAR DATOS EN LA TABLA "tipos_eventualidades"
         TiposEventualidade::insert([
             ['tipo_eventualidad' => 'Permiso'],
             ['tipo_eventualidad' => 'Incidencia'],
-            ['tipo_eventualidad' => 'Amonestación'],
             ['tipo_eventualidad' => 'Falla'],
         ]);
 

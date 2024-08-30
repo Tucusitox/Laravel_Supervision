@@ -60,15 +60,20 @@
             </div>
         </div>
 
-        <div class="mb-3 text-start text-white from-createEmp">
-            <select class="form-select" id="asuntoSelect">
-                <option value="">Todos los Permisos</option>
-                @foreach ($permisos as $item)
-                    <option value="{{$item->asunto_event}}">{{$item->asunto_event}}</option>
-                @endforeach
-            </select>
-
-        </div>
+        @if ($bolean == FALSE)
+            <div class="mb-3 text-start text-white">
+            </div>
+        @else
+            {{-- BUSCADOR POR TIPO DE PERMISO --}}
+            <div class="mb-3 text-start text-white">
+                <select class="form-select text-white bg-black" id="asuntoSelect">
+                    <option value="">Todos los Permisos</option>
+                    @foreach ($permisos as $item)
+                        <option value="{{$item->asunto_event}}">{{$item->asunto_event}}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endif
         <hr class="text-white mb-4">
         
         {{-- MOSTRAR LA INFORMACIÓN CON LA CONDICIONAL DE UN BOLEANO --}}
@@ -102,10 +107,17 @@
                                         <b class="text-warning">C.I:</b> {{$item->identificacion}}
                                     </p>
                                 </div>
-                                <div class="mt-1">
-                                    <h6 class="card-subtitle mb-2 "><b class="text-warning">Fecha de Creación:</b>
+                                <div class="text-center mt-1">
+                                    <h6 class="card-subtitle mb-4"><b class="text-warning">Fecha de Creación:</b>
                                         {{$item->fechaCreacion_event->format("d/m/Y")}}
                                     </h6>
+                                    <div class="text-warning">
+                                        <h6>Empleado:</h6>
+                                        <a href="{{route('permisos.permisoEmp', $item->id_persona)}}"
+                                            class="btn btn-warning mx-1 my-1" title="Detalles">
+                                            <i class='bx bxs-user-detail'></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +184,7 @@
             }
         });
 
-        // BUSCAR PERMISO POR ASUSTO
+        // BUSCAR PERMISO POR ASUNTO
         const permisos = document.getElementById('asuntoSelect');
         permisos.addEventListener('change', function() {
             const selectedValue = this.value;
