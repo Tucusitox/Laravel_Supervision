@@ -19,12 +19,12 @@
                 </div>
     
                 <nav class="nav-links d-none opciones">
-                    <a href="{{ route('emp.viewEmp') }}">Resumen de Empleados</a>
-                    <a href="{{ route('asistencias.index') }}">Asistencias</a> 
-                    <a href="{{ route('permisos.index') }}">Permisos</a>
-                    <a href="{{ route("evaluaciones.index") }}">Evaluaciones</a>
-                    <a href="{{ route("evaluaciones.empsDest") }}">Empleados Destacados</a>
-                    <a href="{{ route('emps.inactivos') }}">Empleados Inactivos</a>
+                    <a href="{{route('emp.viewEmp')}}">Resumen de Empleados</a>
+                    <a href="{{route('asistencias.index')}}">Asistencias</a> 
+                    <a href="{{route('permisos.index')}}">Permisos</a>
+                    <a href="{{route("evaluaciones.index")}}">Evaluaciones de Empleados</a>
+                    <a href="{{route("evaluaciones.empsDest")}}">Empleados Destacados</a>
+                    <a href="{{route('emps.inactivos')}}">Empleados Inactivos</a>
                 </nav>
             </div>
             <hr class="text-white">
@@ -37,10 +37,10 @@
                 </div>
     
                 <nav class="nav-links d-none opciones">
-                    <a href="#">Eventualidades</a>
-                    <a href="#">Evaluar a un Empleado</a>
-                    <a href="#">Calculo de Horas</a>
-                    <a href="#">Empleados Destacados</a>
+                    <a href="{{route("procesos.index")}}">Resumen de Procesos</a>
+                    <a href="#">Incidencias</a>
+                    <a href="#">Evaluaciones de Procesos</a>
+                    <a href="#">Procesos Destacados</a>
                 </nav>
             </div>
             <hr class="text-white">

@@ -15,7 +15,7 @@
             </a>
         </div>
 
-        <a href="#" class="my-1 text-decoration-none"><b>Tu Dirección Aquí</b></a>
+        <a class="my-1 text-decoration-none"><b>@ Todos los Derechos Reservados</b></a>
 
     </div>
 </footer>

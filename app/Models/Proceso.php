@@ -14,12 +14,14 @@ use Illuminate\Database\Eloquent\Model;
  * Class Proceso
  * 
  * @property int $id_proceso
+ * @property int $fk_tipoProces
  * @property string $codigo_proces
- * @property string $nombre_proces
+ * @property string $asunto_proceso
  * @property string $descripcion_proces
  * @property Carbon $tiempo_duracion
  * @property Carbon $fecha_proceso
  * 
+ * @property TiposProceso $tipos_proceso
  * @property Collection|Espacio[] $espacios
  * @property Collection|Empleado[] $empleados
  * @property Collection|Evaluacione[] $evaluaciones
@@ -35,17 +37,24 @@ class Proceso extends Model
 	public $timestamps = false;
 
 	protected $casts = [
+		'fk_tipoProces' => 'int',
 		'tiempo_duracion' => 'datetime',
 		'fecha_proceso' => 'datetime'
 	];
 
 	protected $fillable = [
+		'fk_tipoProces',
 		'codigo_proces',
-		'nombre_proces',
+		'asunto_proceso',
 		'descripcion_proces',
 		'tiempo_duracion',
 		'fecha_proceso'
 	];
+
+	public function tipos_proceso()
+	{
+		return $this->belongsTo(TiposProceso::class, 'fk_tipoProces');
+	}
 
 	public function espacios()
 	{

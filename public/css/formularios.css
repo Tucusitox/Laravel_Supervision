@@ -1,4 +1,4 @@
-/* FORMULARIO CREACION Y ACTUALIZACIÓN DE UN EMPLEADO */
+/*  ESTILOS PARA FORMULARIOS */
 
 .from-createEmp div option{
     background-color: black;
@@ -49,8 +49,19 @@
     color:white;
 }
 
-
 .from-createEmp textarea[name="permiso_descripcion"]::placeholder{
+    color:white;
+}
+.from-createEmp textarea[name="descripcion_proceso"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="asunto_proceso"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="tiempo_proceso"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="fecha_proceso"]::placeholder{
     color:white;
 }
 

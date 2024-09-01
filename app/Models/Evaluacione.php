@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id_evaluacion
  * @property string $codigo_eval
- * @property int $calificacion_eval
+ * @property float $calificacion_eval
  * @property Carbon $fecha_evaluacion
  * 
  * @property Collection|ElementosXEvaluacione[] $elementos_x_evaluaciones
@@ -34,7 +34,7 @@ class Evaluacione extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'calificacion_eval' => 'int',
+		'calificacion_eval' => 'float',
 		'fecha_evaluacion' => 'datetime'
 	];
 

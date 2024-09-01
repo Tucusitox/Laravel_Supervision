@@ -27,7 +27,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property TiposEstatusevent $tipos_estatusevent
  * @property Collection|ElementosXEventalidade[] $elementos_x_eventalidades
  * @property Collection|Empleado[] $empleados
- * @property Collection|Espacio[] $espacios
  * @property Collection|Proceso[] $procesos
  *
  * @package App\Models
@@ -76,12 +75,6 @@ class Eventualidade extends Model
 	{
 		return $this->belongsToMany(Empleado::class, 'empleados_x_eventualidades', 'fk_eventualidad', 'fk_empleado')
 					->withPivot('id_empleadoEvent');
-	}
-
-	public function espacios()
-	{
-		return $this->belongsToMany(Espacio::class, 'espacios_x_eventualidades', 'fk_eventualidad', 'fk_espacio')
-					->withPivot('id_espaEvent');
 	}
 
 	public function procesos()

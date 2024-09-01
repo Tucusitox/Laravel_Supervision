@@ -32,10 +32,8 @@
 
             <form class="d-flex from-createEmp flex-grow-1" action="{{ route('unEmp.findUnEmp') }}" method="POST">
                 @csrf
-
                 <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2"
                     placeholder="Buscar por Cédula" name="buscarUnEmp">
-                    
                 <button class="btn btn-dark boton" type="submit">
                     <i class='bx bx-search-alt-2'></i>
                 </button>

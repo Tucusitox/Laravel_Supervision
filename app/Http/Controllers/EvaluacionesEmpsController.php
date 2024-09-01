@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Evaluacione;
-use App\Models\ItemsEmp;
 use App\Models\Persona;
 use App\Models\EmpleadosXEvaluacione;
 use App\Models\EvaluacionesXItemsemp;
@@ -208,13 +207,36 @@ class EvaluacionesEmpsController
         ->having(DB::raw("AVG(ev.calificacion_eval)"), ">=", 80)
         ->get();
 
-        return view("viewsEmps.empeladosDestacados",compact("empsDestac"));
+        return view("viewsEmps.empleadosDestacados",compact("empsDestac"));
     }
 
     // IR A LA VISTA DETALLES EMPLEADOS DESDE EVALUACIONES
     public function showEmp($id_persona)
     {
         $bolean = FALSE;
+        $detallEmp = Persona::select("id_persona","tipo_identificacion","identificacion","foto","nombre","apellido",
+                    "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
+                    "tipo_empleado","nombre_horario","descripcion_horario","estado_laboral","fecha_ingreso",
+                    "fecha_egreso","nombre_genero")
+        ->selectRaw("TIMESTAMPDIFF(YEAR, fecha_nacimiento, NOW()) AS edad_empleado")
+        ->join("empleados", "empleados.fk_persona","=","personas.id_persona")
+        ->join("tipos_emps", "tipos_emps.id_tipo_emp","=","empleados.fk_tipo_emp")
+        ->join("cargos", "cargos.id_cargo","=","empleados.fk_cargo")
+        ->join("espacios", "espacios.id_espacio","=","cargos.fk_espacio")
+        ->join("horarios_x_empleados", "horarios_x_empleados.fk_empleado","=","empleados.id_empleado")
+        ->join("horarios", "horarios_x_empleados.fk_horario","=","horarios.id_horario")
+        ->join("tipos_identificaciones", "tipos_identificaciones.id_tipoIde","=","personas.fk_tipoIde")
+        ->join("generos", "generos.id_genero","=","personas.fk_genero")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+
+        return view("viewsEmps.detallesEmp",compact("detallEmp","bolean"));
+    }
+
+    // IR A LA VISTA DETALLES EMPLEADOS DESDE EMPLEADOS DESTACADOS
+    public function empDestac($id_persona)
+    {
+        $bolean = "destacado";
         $detallEmp = Persona::select("id_persona","tipo_identificacion","identificacion","foto","nombre","apellido",
                     "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
                     "tipo_empleado","nombre_horario","descripcion_horario","estado_laboral","fecha_ingreso",

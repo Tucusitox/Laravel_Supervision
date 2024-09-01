@@ -6,6 +6,7 @@ use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\AsistenciasController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\EvaluacionesEmpsController;
+use App\Http\Controllers\ProcesosController;
 
 
 // RUTAS PARA REDIRECCIONAR ENTRE LAS INTERFACERS Y SECCIONES:
@@ -15,7 +16,6 @@ Route::get("/resumen/empelados",[ViewsController::class,"viewEmp"])->name("emp.v
 Route::get("/resumen/empeladosInactivos",[ViewsController::class,"empsInactivos"])->name("emps.inactivos");
 Route::post("/resumen/un/empelado",[ViewsController::class,"findUnEmp"])->name("unEmp.findUnEmp");
 Route::get('/activo/{id_persona}', [ViewsController::class,'activo'])->name('empleado.activo');
-Route::get("/empelados/destacados/",[EvaluacionesEmpsController::class,"empsDest"])->name("evaluaciones.empsDest");
 
 // RUTAS PARA REDIRECCIONAR ENTRE LAS ASISTENCIAS Y CALCULO DE HORAS TOTALES:
 
@@ -55,3 +55,16 @@ Route::post("/evaluacion/store",[EvaluacionesEmpsController::class,"store"])->na
 Route::get("/evaluacion/show/{id_persona}",[EvaluacionesEmpsController::class,"show"])->name("evaluaciones.show");
 Route::post("/evaluacion/find/",[EvaluacionesEmpsController::class,"find"])->name("evaluaciones.find");
 Route::get("/empleado/evaluacion/{id_persona}",[EvaluacionesEmpsController::class,"showEmp"])->name("evaluaciones.showEmp");
+Route::get("/empelados/destacados/",[EvaluacionesEmpsController::class,"empsDest"])->name("evaluaciones.empsDest");
+Route::get("/empleado/destacado/detalles/{id_persona}",[EvaluacionesEmpsController::class,"empDestac"])->name("evaluaciones.empDestac");
+
+// RUTAS PARA CRUD DE LOS PROCESOS
+
+Route::get('/procesos/resumen', [ProcesosController::class,'index'])->name('procesos.index');
+Route::get('/procesos/create', [ProcesosController::class,'create'])->name('procesos.create');
+Route::post('/procesos/store', [ProcesosController::class,'store'])->name('procesos.store');
+Route::get('/procesos/edit/{id_proceso}', [ProcesosController::class,'edit'])->name('procesos.edit');
+Route::put('/procesos/update/{id_proceso}', [ProcesosController::class,'update'])->name('procesos.update');
+Route::get('/procesos/delete/{id_proceso}', [ProcesosController::class,'delete'])->name('procesos.delete');
+Route::delete('/procesos/destroy/{id_proceso}', [ProcesosController::class,'destroy'])->name('procesos.destroy');
+Route::post('/procesos/show', [ProcesosController::class,'show'])->name('procesos.show');

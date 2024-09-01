@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('evaluaciones', function (Blueprint $table) {
-            $table->integer('id_evaluacion', true);
-            $table->string('codigo_eval', 100)->unique('codigo_eval_unique');
-            $table->integer('calificacion_eval');
-            $table->date('fecha_evaluacion');
+        Schema::create('tipos_procesos', function (Blueprint $table) {
+            $table->integer('id_tipoProces', true);
+            $table->string('nombre_tipoProces', 100);
         });
     }
 
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evaluaciones');
+        Schema::dropIfExists('tipos_procesos');
     }
 };

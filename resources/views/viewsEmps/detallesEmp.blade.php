@@ -29,6 +29,10 @@
                     <a href="{{route('evaluaciones.index')}}" class="btn btn-warning mx-1 my-1" title="Volver">
                         <i class='bx bx-arrow-back'></i>
                     </a> 
+                @elseif($bolean === "destacado")
+                    <a href="{{route('evaluaciones.empsDest')}}" class="btn btn-warning mx-1 my-1" title="Volver">
+                        <i class='bx bx-arrow-back'></i>
+                    </a> 
                 @elseif($bolean === "permiso")
                     <a href="{{route('permisos.index')}}" class="btn btn-warning mx-1 my-1" title="Volver">
                         <i class='bx bx-arrow-back'></i>

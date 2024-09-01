@@ -12,6 +12,7 @@ use App\Models\Horario;
 use App\Models\ItemsEmp;
 use App\Models\TiposEventualidade;
 use App\Models\TiposEstatusevent;
+use App\Models\TiposProceso;
 
 class SemillasSeeder extends Seeder
 {
@@ -97,6 +98,14 @@ class SemillasSeeder extends Seeder
             ['tipo_estatu' => 'En Proceso'],
             ['tipo_estatu' => 'Finalizado'],
             ['tipo_estatu' => 'No Aplica'],
+        ]);
+
+        // INSERTAR DATOS EN LA TABLA "tipos_procesos"
+        TiposProceso::insert([
+            ['nombre_tipoProces' => 'Planificación'],
+            ['nombre_tipoProces' => 'Gestión de Recursos'],
+            ['nombre_tipoProces' => 'Producción'],
+            ['nombre_tipoProces' => 'Medición'],
         ]);
     }
 }

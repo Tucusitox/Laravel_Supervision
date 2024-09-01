@@ -42,22 +42,17 @@
             @endif
         </div>
         <hr class="text-white">
+        <div class="d-flex justify-content-between my-4">
+            <a class="btn btn-dark boton me-3" href="{{route("permisos.create")}}">Crear Permiso</a>
 
-        <div class="row mt-4 mb-2">
-            <div class="col mt-3">
-                <a class="btn btn-dark mb-3 boton" href="{{route("permisos.create")}}">Crear Permiso</a>
-            </div>
-
-            <div class="col mt-3">
-                <form class="d-flex from-createEmp mb-3" id="formBusquedaCodigo" action="{{ route('permisos.buscarCodigo') }}" method="POST">
-                    @csrf
-                    <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2"
-                    placeholder="Buscar por Código" name="buscarCodigo" value="{{ old('buscarCodigo') }}">   
-                    <button class="btn btn-dark boton" type="submit">
-                        <i class='bx bx-search-alt-2'></i>
-                    </button>
-                </form>
-            </div>
+            <form class="d-flex from-createEmp flex-grow-1" id="formBusquedaCodigo" action="{{ route('permisos.buscarCodigo') }}" method="POST">
+                @csrf
+                <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2"
+                placeholder="Buscar por Código" name="buscarCodigo" value="{{ old('buscarCodigo') }}">   
+                <button class="btn btn-dark boton" type="submit">
+                    <i class='bx bx-search-alt-2'></i>
+                </button>
+            </form>
         </div>
 
         @if ($bolean == FALSE)
@@ -101,7 +96,7 @@
                             <hr class="text-white">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h5 class="text-warning">Datos del Empleado Solicitante:</h5><br>
+                                    <h5 class="text-warning">Datos del Empleado Solicitante:</h5>
                                     <p>
                                         <b class="text-warning">Nombre y Apellido:</b> {{$item->Nombre_Apellido}}<br>
                                         <b class="text-warning">C.I:</b> {{$item->identificacion}}

@@ -14,7 +14,7 @@ En el archivo .env el SESSION_DRIVER debe estar en "file", así:
 PASO N2 ---------------------------------------------------------
 
 Entra a phpMyAdmin y crea una nueva base de datos
-con el nombre "modulo_delivery".
+con el nombre "modulo_supervision".
 
 PASO N3 ----------------------------------------------------------
 

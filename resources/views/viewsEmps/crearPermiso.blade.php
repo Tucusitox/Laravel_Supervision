@@ -2,7 +2,7 @@
 
 @extends('layout/layout_interfaces') {{-- AQUI SE INVOCA AL LAYOUT --}}
 
-@section('Modulo Supervision', 'Actualización del Empleado') {{-- AQUI SE DEFINE EL NOMBRE DE LA PAGINA --}}
+@section('Modulo Supervision', 'Crear Permiso para Empleado') {{-- AQUI SE DEFINE EL NOMBRE DE LA PAGINA --}}
 
 
 @section('ContenidoInterfaces') {{-- AQUI SE INDICA LO QUE PONDREMOS DENTRO DEL LAYOUT --}}

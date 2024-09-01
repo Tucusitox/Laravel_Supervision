@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Collection|Cargo[] $cargos
  * @property Collection|ElementosInfraestructura[] $elementos_infraestructuras
- * @property Collection|Eventualidade[] $eventualidades
  * @property Collection|Proceso[] $procesos
  *
  * @package App\Models
@@ -40,12 +39,6 @@ class Espacio extends Model
 	public function elementos_infraestructuras()
 	{
 		return $this->hasMany(ElementosInfraestructura::class, 'fk_espacio');
-	}
-
-	public function eventualidades()
-	{
-		return $this->belongsToMany(Eventualidade::class, 'espacios_x_eventualidades', 'fk_espacio', 'fk_eventualidad')
-					->withPivot('id_espaEvent');
 	}
 
 	public function procesos()

@@ -13,7 +13,7 @@
     </div>
     <nav class="nav-links">
         <a class="btn btn-dark mx-2" href="{{route("emp.viewEmp")}}">Empleados</a>
-        <a class="btn btn-dark mx-2" href="">Procesos</a>
+        <a class="btn btn-dark mx-2" href="{{route("procesos.index")}}">Procesos</a>
         <a class="btn btn-dark mx-2" href="">Infraestructuras</a>     
     </nav>
 </header>

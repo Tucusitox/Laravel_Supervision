@@ -231,7 +231,6 @@ class EmpleadosController
         if($empleado->save()){
 
             // CAPTURAR EL ULTIMO ID GENERADO EN LA TABLA EMPLEADOS
-            
             $ultimoRegistro = Empleado::orderBy('id_empleado', 'desc')->first();
             $idEmpleado = $ultimoRegistro->id_empleado;
 

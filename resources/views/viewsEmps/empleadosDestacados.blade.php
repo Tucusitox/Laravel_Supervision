@@ -51,7 +51,7 @@
                         <td class="tdNombres">{{$item->Nombre_Apellido}}</td>
                         <td>{{number_format($item->promedio_empleado)}}%</td>
                         <td>
-                            <a href="{{route('empleado.show', $item->id_persona)}}"
+                            <a href="{{route('evaluaciones.empDestac', $item->id_persona)}}"
                                 class="btn btn-warning mx-1 my-1" title="Detalles">
                                 <i class='bx bxs-user-detail'></i>
                             </a>
