@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class EvaluacionesEmpsController
 {
-    // VISTA PARA VER TODAS LAS EVALUACIONES Y SUS NOTASA
+    // VISTA PARA VER TODAS LAS EVALUACIONES DE LOS EMPLEADOS Y SUS NOTAS
     public function index()
     {
         $bolean = TRUE;
@@ -104,7 +104,7 @@ class EvaluacionesEmpsController
             // INSTANCIAR EL MODELO PARA REALIZAR EL INSERT
             $evaluacion = new Evaluacione;
             $evaluacion->codigo_eval = $codigEval;
-            $evaluacion->calificacion_eval = array_sum($itemsEmps);;
+            $evaluacion->calificacion_eval = array_sum($itemsEmps);
             $evaluacion->fecha_evaluacion = $request->post("fecha_evaluacion");
             $evaluacion->save();
 

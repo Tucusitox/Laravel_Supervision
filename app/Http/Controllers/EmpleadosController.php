@@ -86,7 +86,6 @@ class EmpleadosController
         }
 
         // CAPTURAR DATOS DEL FORM PARA LA TABLA PERSONAS
-
         $persona->nombre = $request->post('nombre');
         $persona->apellido = $request->post('apellido');
         $persona->direccion = $request->post('direccion');
@@ -101,32 +100,29 @@ class EmpleadosController
         if ($edad >= 18) {
             $persona->fecha_nacimiento = $request->post('fecha_nacimiento');
         } else {
-
             return back()->withErrors([
                 'fecha_nacimiento' => '¡El empleado debe ser mayor de edad!'
             ]);
         }
         
         // CAPTURAR EL GENERO DEL EMPLEADO
-        if ($request->post('genero') == "Masculino") {
-            $idGenero = 1;
-            $persona->fk_genero = $idGenero;
-        } 
-        else if ($request->post('genero') == "Femenino") {
-            $idGenero = 2;
-            $persona->fk_genero = $idGenero;
+        $arrayGeneros = [
+            "Masculino" => 1,
+            "Femenino" => 2,
+        ];
+        $genero = $request->post('genero');
+        if (array_key_exists($genero, $arrayGeneros)) {
+            $persona->fk_genero = $arrayGeneros[$genero];
         }
 
         // VALIDACION DE LA CEDULA V o E
-        if ($request->post('tipo_identificacion') == "Venezolana") {
-
-            $idTipoIde = 1;
-            $persona->fk_tipoIde = $idTipoIde;
-        } 
-        else if ($request->post('tipo_identificacion') == "Extranjera") {
-
-            $idTipoIde = 2;
-            $persona->fk_tipoIde = $idTipoIde;
+        $arrayTiposIdentificacion = [
+            "Venezolana" => 1,
+            "Extranjera" => 2,
+        ];
+        $tipoIdentificacion = $request->post('tipo_identificacion');
+        if (array_key_exists($tipoIdentificacion, $arrayTiposIdentificacion)) {
+            $persona->fk_tipoIde = $arrayTiposIdentificacion[$tipoIdentificacion];
         }
 
         // REALIZAR INSERSION EN TABLA PERSONAS
@@ -145,77 +141,37 @@ class EmpleadosController
             $empleado->fk_persona = $idPersona;
 
             // CAPTURAR EL TIPO DE EMPLEADO
-
-            if ($request->post('tipo_emp') == "Fijo") {
-                $idTipoEmp = 1;
-                $empleado->fk_tipo_emp = $idTipoEmp;
-            }
-            elseif ($request->post('tipo_emp') == "Contratado") {
-                $idTipoEmp = 2;
-                $empleado->fk_tipo_emp = $idTipoEmp;
-            } 
-            elseif ($request->post('tipo_emp') == "A Destajo") {
-                $idTipoEmp = 3;
-                $empleado->fk_tipo_emp = $idTipoEmp;
+            $arrayTiposEmpleados = [
+                "Fijo" => 1,
+                "Contratado" => 2,
+                "A Destajo" => 3,
+            ];
+            $tipoEmp = $request->post('tipo_emp');
+            if (array_key_exists($tipoEmp, $arrayTiposEmpleados)) {
+                $empleado->fk_tipo_emp = $arrayTiposEmpleados[$tipoEmp];
             }
 
             // CAPTURAR EL CARGO DEL EMPELADO
-
-            if($request->post('cargo_emp') == "Gerente") {
-                $idCargoEmp = 1;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Maître") {
-                $idCargoEmp = 2;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Mesero") {
-                $idCargoEmp = 3;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Bartender") {
-                $idCargoEmp = 4;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Recepcionista") {
-                $idCargoEmp = 5;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Cheft ejecutivo") {
-                $idCargoEmp = 6;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Jefe de cocina") {
-                $idCargoEmp = 7;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Sous chef") {
-                $idCargoEmp = 8;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Cocinero") {
-                $idCargoEmp = 9;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Asistente de cocina") {
-                $idCargoEmp = 10;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Almacenista") {
-                $idCargoEmp = 11;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Conserje") {
-                $idCargoEmp = 12;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Repartidor") {
-                $idCargoEmp = 13;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Abogado") {
-                $idCargoEmp = 14;
-                $empleado->fk_cargo = $idCargoEmp;
+            $arrayCargos = [
+                "Gerente" => 1,
+                "Maître" => 2,
+                "Mesero" => 3,
+                "Bartender" => 4,
+                "Recepcionista" => 5,
+                "Cheft ejecutivo" => 6,
+                "Jefe de cocina" => 7,
+                "Sous chef" => 8,
+                "Cocinero" => 9,
+                "Asistente de cocina" => 10,
+                "Almacenista" => 11,
+                "Conserje" => 12,
+                "Repartidor" => 13,
+                "Abogado" => 14,
+            ];
+            
+            $cargoEmp = $request->post('cargo_emp');
+            if (array_key_exists($cargoEmp, $arrayCargos)) {
+                $empleado->fk_cargo = $arrayCargos[$cargoEmp];
             }
 
             $empleado->estado_laboral = "Activo";
@@ -239,21 +195,18 @@ class EmpleadosController
             $horarioEmp = new HorariosXEmpleado();
             $horarioEmp ->fk_empleado = $idEmpleado;
 
-            if ($request->post('nombre_horario') == "Mañana") {
-                $idHorario = 1;
-                $horarioEmp->fk_horario = $idHorario;
-            }
-            elseif ($request->post('nombre_horario') == "Tarde/Noche") {
-                $idHorario = 2;
-                $horarioEmp->fk_horario = $idHorario;
-            } 
-            elseif ($request->post('nombre_horario') == "Completo") {
-                $idHorario = 3;
-                $horarioEmp->fk_horario = $idHorario;
-            }
-            elseif ($request->post('nombre_horario') == "No Aplica") {
-                $idHorario = 4;
-                $horarioEmp->fk_horario = $idHorario;
+            // CREAMOS UN ARRAY ASOCIATIVO PARA MAPEARLO
+            $arrayHorarios = [
+                "Mañana" => 1,
+                "Tarde/Noche" => 2,
+                "Completo" => 3,
+                "No Aplica" => 4,
+            ];
+
+            // ASIGNACION DEL HORARIO
+            $nombreHorario = $request->post('nombre_horario');
+            if (array_key_exists($nombreHorario, $arrayHorarios)) {
+                $horarioEmp->fk_horario = $arrayHorarios[$nombreHorario];
             }
 
             // REALIZAR INSERSION EN TABLA HORARIOS_X_EMPLEADOS
@@ -267,7 +220,6 @@ class EmpleadosController
     }
 
     // OBTENER LOS DATOS DE UN SOLO EMPLEADO
-
     public function show($id_persona)
     {
         $bolean = TRUE;
@@ -339,7 +291,6 @@ class EmpleadosController
     }
 
     // ACTUALIZAR LA INFORMACION DEL EMPLEADO
-
     public function update(Request $request, $id_persona)
     {
         // VALIDAR LOS DATOS DE LOS FORMULARIOS
@@ -406,7 +357,6 @@ class EmpleadosController
                 // ELIMINAR LA RUTA DE LA IMG ANTERIOR PARA AHORRAR ESPACIO
                 unlink($rutaImagenAnterior);
             }
-
             $persona->foto = $destinoCarpeta.$rutaImg;
         };
 
@@ -420,26 +370,23 @@ class EmpleadosController
         $persona->tlf_local = $request->post('tlf_local');
 
         // CAPTURAR EL GENERO DEL EMPLEADO
-
-        if ($request->post('genero') == "Masculino") {
-            $idGenero = 1;
-            $persona->fk_genero = $idGenero;
-        } 
-        else if ($request->post('genero') == "Femenino") {
-            $idGenero = 2;
-            $persona->fk_genero = $idGenero;
+        $arrayGeneros = [
+            "Masculino" => 1,
+            "Femenino" => 2,
+        ];
+        $genero = $request->post('genero');
+        if (array_key_exists($genero, $arrayGeneros)) {
+            $persona->fk_genero = $arrayGeneros[$genero];
         }
 
-        // VALIDACION DE LA CEDULA V O E
-        if ($request->post('tipo_identificacion') == "Venezolana") {
-
-            $idTipoIde = 1;
-            $persona->fk_tipoIde = $idTipoIde;
-        } 
-        else if ($request->post('tipo_identificacion') == "Extranjera") {
-
-            $idTipoIde = 2;
-            $persona->fk_tipoIde = $idTipoIde;
+        // VALIDACION DE LA CEDULA V o E
+        $arrayTiposIdentificacion = [
+            "Venezolana" => 1,
+            "Extranjera" => 2,
+        ];
+        $tipoIdentificacion = $request->post('tipo_identificacion');
+        if (array_key_exists($tipoIdentificacion, $arrayTiposIdentificacion)) {
+            $persona->fk_tipoIde = $arrayTiposIdentificacion[$tipoIdentificacion];
         }
 
         // REALIZAR UPDATE EN TABLA PERSONAS
@@ -447,82 +394,41 @@ class EmpleadosController
 
         // VALIDAR EL GUARDADO EN LA TABLA PERSONAS
         if($persona->save()){
-            
-            // CAPTURAR DATOS DEL FORM PARA LA TABLA EMPLEADOS
+
             $empleado = Empleado::find($id_persona);
 
             // CAPTURAR EL TIPO DE EMPLEADO
-
-            if ($request->post('tipo_emp') == "Fijo") {
-                $idTipoEmp = 1;
-                $empleado->fk_tipo_emp = $idTipoEmp;
-            }
-            elseif ($request->post('tipo_emp') == "Contratado") {
-                $idTipoEmp = 2;
-                $empleado->fk_tipo_emp = $idTipoEmp;
-            } 
-            elseif ($request->post('tipo_emp') == "A Destajo") {
-                $idTipoEmp = 3;
-                $empleado->fk_tipo_emp = $idTipoEmp;
+            $arrayTiposEmpleados = [
+                "Fijo" => 1,
+                "Contratado" => 2,
+                "A Destajo" => 3,
+            ];
+            $tipoEmp = $request->post('tipo_emp');
+            if (array_key_exists($tipoEmp, $arrayTiposEmpleados)) {
+                $empleado->fk_tipo_emp = $arrayTiposEmpleados[$tipoEmp];
             }
 
-            // CAPTURAR EL CARGO DEL EMPLEADO
-
-            if($request->post('cargo_emp') == "Gerente") {
-                $idCargoEmp = 1;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Maître") {
-                $idCargoEmp = 2;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Mesero") {
-                $idCargoEmp = 3;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Bartender") {
-                $idCargoEmp = 4;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Recepcionista") {
-                $idCargoEmp = 5;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if($request->post('cargo_emp') == "Cheft ejecutivo") {
-                $idCargoEmp = 6;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Jefe de cocina") {
-                $idCargoEmp = 7;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Sous chef") {
-                $idCargoEmp = 8;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Cocinero") {
-                $idCargoEmp = 9;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Asistente de cocina") {
-                $idCargoEmp = 10;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Almacenista") {
-                $idCargoEmp = 11;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Conserje") {
-                $idCargoEmp = 12;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Repartidor") {
-                $idCargoEmp = 13;
-                $empleado->fk_cargo = $idCargoEmp;
-            }
-            else if ($request->post('cargo_emp') == "Abogado") {
-                $idCargoEmp = 14;
-                $empleado->fk_cargo = $idCargoEmp;
+            // CAPTURAR EL CARGO DEL EMPELADO
+            $arrayCargos = [
+                "Gerente" => 1,
+                "Maître" => 2,
+                "Mesero" => 3,
+                "Bartender" => 4,
+                "Recepcionista" => 5,
+                "Cheft ejecutivo" => 6,
+                "Jefe de cocina" => 7,
+                "Sous chef" => 8,
+                "Cocinero" => 9,
+                "Asistente de cocina" => 10,
+                "Almacenista" => 11,
+                "Conserje" => 12,
+                "Repartidor" => 13,
+                "Abogado" => 14,
+            ];
+            
+            $cargoEmp = $request->post('cargo_emp');
+            if (array_key_exists($cargoEmp, $arrayCargos)) {
+                $empleado->fk_cargo = $arrayCargos[$cargoEmp];
             }
 
             $empleado->fecha_ingreso = $request->post('fecha_ingreso');
@@ -540,21 +446,18 @@ class EmpleadosController
             // CAPTURAR DATOS DEL FORM PARA LA TABLA HORARIOS_X_EMPLEADOS
             $horarioEmp = HorariosXEmpleado::find($id_persona);
 
-            if ($request->post('nombre_horario') == "Mañana") {
-                $idHorario = 1;
-                $horarioEmp->fk_horario = $idHorario;
-            }
-            elseif ($request->post('nombre_horario') == "Tarde/Noche") {
-                $idHorario = 2;
-                $horarioEmp->fk_horario = $idHorario;
-            } 
-            elseif ($request->post('nombre_horario') == "Completo") {
-                $idHorario = 3;
-                $horarioEmp->fk_horario = $idHorario;
-            }
-            elseif ($request->post('nombre_horario') == "No Aplica") {
-                $idHorario = 4;
-                $horarioEmp->fk_horario = $idHorario;
+            // CREAMOS UN ARRAY ASOCIATIVO PARA MAPEARLO
+            $arrayHorarios = [
+                "Mañana" => 1,
+                "Tarde/Noche" => 2,
+                "Completo" => 3,
+                "No Aplica" => 4,
+            ];
+
+            // ASIGNACION DEL HORARIO
+            $nombreHorario = $request->post('nombre_horario');
+            if (array_key_exists($nombreHorario, $arrayHorarios)) {
+                $horarioEmp->fk_horario = $arrayHorarios[$nombreHorario];
             }
 
             // REALIZAR ACTUALIZACIÓN EN LA TABLA HORARIOS_X_EMPLEADOS

@@ -22,9 +22,27 @@
         @enderror
 
         <div class="d-flex w-100 text-center text-white">
-            @if ($bolean == TRUE)
+            @if ($bolean === TRUE)
                 <div class="flex-grow-1">
                     <h4>Resumen de Procesos</h4>
+                </div>
+            @elseif ($bolean === "evaluado")
+                <div>
+                    <a href="{{route('procesos.evaluaciones')}}" class="btn btn-warning mx-1 my-1" title="Resumen Evaluaciones">
+                        <i class='bx bx-arrow-back'></i>
+                    </a>
+                </div>
+                <div class="flex-grow-1">
+                    <h4>¡Proceso Encontrado con Éxito!</h4>
+                </div>
+            @elseif ($bolean === "procesDestac")
+                <div>
+                    <a href="{{route('procesos.procesDestac')}}" class="btn btn-warning mx-1 my-1" title="Procesos Destacados">
+                        <i class='bx bx-arrow-back'></i>
+                    </a>
+                </div>
+                <div class="flex-grow-1">
+                    <h4>¡Proceso Encontrado con Éxito!</h4>
                 </div>
             @else
                 <div>
@@ -59,100 +77,51 @@
         <hr class="text-white">
 
         {{-- MOSTRAR LOS PROCESOS EN CARDS COON UN CONDICIONAL --}}
-        @if ($bolean == TRUE)
-                @foreach ($procesos as $item)
-                <div class="card w-100 my-3 bg-transparent border border-white text-white p-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h5 class="codigo card-title mb-2 text-warning">{{$item->codigo_proces}}</h5>
-                                <h5>{{$item->asunto_proceso}}</h5>
-                            </div>
-                            <div class="mt-1">
-                                <h6 class="card-subtitle mb-2 "><b class="text-warning">Tipo de Proceso:</b>
-                                    {{$item->nombre_tipoProces}}
-                                </h6>
-                                <h6 class="card-subtitle mb-2"><b class="text-warning">Tiempo de Duración:</b>
-                                    {{\Carbon\Carbon::parse($item->tiempo_duracion)->format('h:i:s')}}
-                                </h6>
-                            </div>
+        @foreach ($procesos as $item)
+            <div class="card w-100 my-3 bg-transparent border border-white text-white p-2">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="codigo card-title mb-2 text-warning">{{$item->codigo_proces}}</h5>
+                            <h5>{{$item->asunto_proceso}}</h5>
                         </div>
-                        <hr class="text-white">
-                        <p class="card-text">{{$item->descripcion_proces}}</p>
-                        <hr class="text-white">
-                        <div class="d-flex justify-content-between">
-                            <div class="mt-1">
-                                <h6 class="card-subtitle mb-2"><b class="text-warning">Espacio del Proceso:</b>
-                                    {{$item->nombre_espacio}}
-                                </h6>
-                                <h6 class="card-subtitle mb-2 "><b class="text-warning">Fecha de Creación:</b>
-                                    {{\Carbon\Carbon::parse($item->fecha_proceso)->format('d/m/Y')}}
-                                </h6>
-                            </div>
-                            <div class="text-center">
-                                <a href="{{$item->id_proceso}}" class="btn btn-primary mx-1 my-1" title="Crear una Evaluación">
-                                    <i class='bx bxs-user-check'></i>
-                                </a>
-                                <a href="{{route("procesos.edit", $item->id_proceso)}}" 
-                                    class="btn btn-info mx-1 my-1" title="Editar">
-                                    <i class='bx bx-edit'></i>
-                                </a>
-                                <a href="{{route("procesos.delete",$item->id_proceso)}}" class="btn btn-danger mx-1" title="Eliminar">
-                                    <i class='bx bx-trash'></i>
-                                </a>
-                            </div>
+                        <div class="mt-1">
+                            <h6 class="card-subtitle mb-2 "><b class="text-warning">Tipo de Proceso:</b>
+                                {{$item->nombre_tipoProces}}
+                            </h6>
+                            <h6 class="card-subtitle mb-2"><b class="text-warning">Tiempo de Duración:</b>
+                                {{\Carbon\Carbon::parse($item->tiempo_duracion)->format('h:i:s')}}
+                            </h6>
+                        </div>
+                    </div>
+                    <hr class="text-white">
+                    <p class="card-text">{{$item->descripcion_proces}}</p>
+                    <hr class="text-white">
+                    <div class="d-flex justify-content-between">
+                        <div class="mt-1">
+                            <h6 class="card-subtitle mb-2"><b class="text-warning">Espacio del Proceso:</b>
+                                {{$item->nombre_espacio}}
+                            </h6>
+                            <h6 class="card-subtitle mb-2 "><b class="text-warning">Fecha de Creación:</b>
+                                {{\Carbon\Carbon::parse($item->fecha_proceso)->format('d/m/Y')}}
+                            </h6>
+                        </div>
+                        <div class="text-center">
+                            <a href="{{route("procesos.evaluacionShow",$item->id_proceso)}}" class="btn btn-primary mx-1 my-1" title="Crear una Evaluación">
+                                <i class='bx bxs-user-check'></i>
+                            </a>
+                            <a href="{{route("procesos.edit", $item->id_proceso)}}" 
+                                class="btn btn-info mx-1 my-1" title="Editar">
+                                <i class='bx bx-edit'></i>
+                            </a>
+                            <a href="{{route("procesos.delete",$item->id_proceso)}}" class="btn btn-danger mx-1" title="Eliminar">
+                                <i class='bx bx-trash'></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            @endforeach
-        @else
-            @foreach ($procesos as $item)
-                <div class="card w-100 my-3 bg-transparent border border-white text-white p-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h5 class="codigo card-title mb-2 text-warning">{{$item->codigo_proces}}</h5>
-                                <h5>{{$item->asunto_proceso}}</h5>
-                            </div>
-                            <div class="mt-1">
-                                <h6 class="card-subtitle mb-2 "><b class="text-warning">Tipo de Proceso:</b>
-                                    {{$item->nombre_tipoProces}}
-                                </h6>
-                                <h6 class="card-subtitle mb-2"><b class="text-warning">Tiempo de Duración:</b>
-                                    {{\Carbon\Carbon::parse($item->tiempo_duracion)->format('h:i:s')}}
-                                </h6>
-                            </div>
-                        </div>
-                        <hr class="text-white">
-                        <p class="card-text">{{$item->descripcion_proces}}</p>
-                        <hr class="text-white">
-                        <div class="d-flex justify-content-between">
-                            <div class="mt-1">
-                                <h6 class="card-subtitle mb-2"><b class="text-warning">Espacio del Proceso:</b>
-                                    {{$item->nombre_espacio}}
-                                </h6>
-                                <h6 class="card-subtitle mb-2 "><b class="text-warning">Fecha de Creación:</b>
-                                    {{\Carbon\Carbon::parse($item->fecha_proceso)->format('d/m/Y')}}
-                                </h6>
-                            </div>
-                            <div class="text-center">
-                                <a href="{{$item->id_proceso}}" class="btn btn-primary mx-1 my-1" title="Crear una Evaluación">
-                                    <i class='bx bxs-user-check'></i>
-                                </a>
-                                <a href="{{route("procesos.edit", $item->id_proceso)}}" 
-                                    class="btn btn-info mx-1 my-1" title="Editar">
-                                    <i class='bx bx-edit'></i>
-                                </a>
-                                <a href="{{route("procesos.delete",$item->id_proceso)}}" class="btn btn-danger mx-1" title="Eliminar">
-                                    <i class='bx bx-trash'></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        @endif
-
+            </div>
+        @endforeach
     </div>
 
     {{-- SCRIPTS URILIZADOS EN ESTA VISTA --}}

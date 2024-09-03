@@ -7,6 +7,7 @@ use App\Http\Controllers\AsistenciasController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\EvaluacionesEmpsController;
 use App\Http\Controllers\ProcesosController;
+use App\Http\Controllers\ProcesEvaluacionesController;
 
 
 // RUTAS PARA REDIRECCIONAR ENTRE LAS INTERFACERS Y SECCIONES:
@@ -48,7 +49,6 @@ Route::get('/permiso/{id_persona}', [PermisosController::class,'show'])->name('p
 Route::get("/empleado/permiso/{id_persona}",[PermisosController::class,"permisoEmp"])->name("permisos.permisoEmp");
 
 // RUTAS PARA EVALUACIONES
-
 Route::get("/evaluacion/index",[EvaluacionesEmpsController::class,"index"])->name("evaluaciones.index");
 Route::get("/evaluacion/crear",[EvaluacionesEmpsController::class,"create"])->name("evaluaciones.create");
 Route::post("/evaluacion/store",[EvaluacionesEmpsController::class,"store"])->name("evaluaciones.store");
@@ -58,7 +58,7 @@ Route::get("/empleado/evaluacion/{id_persona}",[EvaluacionesEmpsController::clas
 Route::get("/empelados/destacados/",[EvaluacionesEmpsController::class,"empsDest"])->name("evaluaciones.empsDest");
 Route::get("/empleado/destacado/detalles/{id_persona}",[EvaluacionesEmpsController::class,"empDestac"])->name("evaluaciones.empDestac");
 
-// RUTAS PARA CRUD DE LOS PROCESOS
+// RUTAS PARA CRUD DE LOS PROCESOS Y SUS EVALUACIONES
 
 Route::get('/procesos/resumen', [ProcesosController::class,'index'])->name('procesos.index');
 Route::get('/procesos/create', [ProcesosController::class,'create'])->name('procesos.create');
@@ -68,3 +68,14 @@ Route::put('/procesos/update/{id_proceso}', [ProcesosController::class,'update']
 Route::get('/procesos/delete/{id_proceso}', [ProcesosController::class,'delete'])->name('procesos.delete');
 Route::delete('/procesos/destroy/{id_proceso}', [ProcesosController::class,'destroy'])->name('procesos.destroy');
 Route::post('/procesos/show', [ProcesosController::class,'show'])->name('procesos.show');
+Route::get('/procesos/un/proceso/{id_proceso}', [ProcesosController::class,'unProceso'])->name('procesos.unProceso');
+
+// RUTAS PARA EVALUACIONES DE PROCESOS
+
+Route::get('/procesos/evaluaciones', [ProcesEvaluacionesController::class,'index'])->name('procesos.evaluaciones');
+Route::get('/procesos/evaluaciones/create', [ProcesEvaluacionesController::class,'create'])->name('procesos.evaluacionCreate');
+Route::post('/procesos/evaluaciones/store', [ProcesEvaluacionesController::class,'store'])->name('procesos.evaluacionStore');
+Route::get('/procesos/destacados', [ProcesEvaluacionesController::class,'procesDestac'])->name('procesos.procesDestac');
+Route::get('/procesos/find/{id_proceso}', [ProcesEvaluacionesController::class,'find'])->name('procesos.evaluacionFind');
+Route::get('/procesos/show/{id_proceso}', [ProcesEvaluacionesController::class,'show'])->name('procesos.evaluacionShow');
+Route::post('/procesos/filtro', [ProcesEvaluacionesController::class,'filtro'])->name('procesos.evaluacionFiltro');

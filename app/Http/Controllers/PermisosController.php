@@ -97,36 +97,22 @@ class PermisosController
             $permiso->codigo_event = $codigoEvent;
 
             // CAPTURAR EL TIPO DE PERMISO INDICADO POR LE USUARIO
-            
-            if ($request->post("permiso_asunto") == "Reposo Médico") {
+            $arrayTiposPermisos = [
+                "Reposo Médico" => 'Reposo Médico',
+                "Maternidad" => 'Maternidad',
+                "Lactancia" => 'Lactancia',
+                "Matrimonio" => 'Matrimonio',
+                "Mudanza" => 'Mudanza',
+                "Asuntos Personales" => 'Asuntos Personales',
+                "Salida Temprana" => 'Salida Temprana',
+            ];
 
-                $permiso->asunto_event = 'Reposo Médico';
-            } 
-            if ($request->post("permiso_asunto") == "Maternidad") {
-
-                $permiso->asunto_event = 'Maternidad';
-            } 
-            if ($request->post("permiso_asunto") == "Lactancia") {
-
-                $permiso->asunto_event = 'Lactancia';
-            } 
-            if ($request->post("permiso_asunto") == "Matrimonio") {
-
-                $permiso->asunto_event = 'Matrimonio';
-            } 
-            if ($request->post("permiso_asunto") == "Mudanza") {
-
-                $permiso->asunto_event = 'Mudanza';
-            } 
-            if ($request->post("permiso_asunto") == "Asuntos Personales") {
-
-                $permiso->asunto_event = 'Asuntos Personales';
-            } 
-            if ($request->post("permiso_asunto") == "Salida Temprana") {
-
-                $permiso->asunto_event = 'Salida Temprana';
+            // ASIGNACION DEL TIPO DE PERMISO
+            $permisoAsunto = $request->post("permiso_asunto");
+            if (array_key_exists($permisoAsunto, $arrayTiposPermisos)) {
+                $permiso->asunto_event = $arrayTiposPermisos[$permisoAsunto];
             }
-
+            
             $permiso->descripcion_event = $request->post("permiso_descripcion");
             $permiso->fecha_inicioEvent = $request->post("fecha_inicioEvent");
             $permiso->fecha_finEvent = $request->post("fecha_finEvent");

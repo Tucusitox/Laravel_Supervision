@@ -64,6 +64,24 @@
 .from-createEmp input[name="fecha_proceso"]::placeholder{
     color:white;
 }
+.from-createEmp input[name="proceso_codigo"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="eficiencia"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="efectividad"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="flexibilidad"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="consistencia"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="mejora_continua"]::placeholder{
+    color:white;
+}
 
 /* INPUT DE TIPO FILE */
 

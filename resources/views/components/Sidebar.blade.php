@@ -38,9 +38,8 @@
     
                 <nav class="nav-links d-none opciones">
                     <a href="{{route("procesos.index")}}">Resumen de Procesos</a>
-                    <a href="#">Incidencias</a>
-                    <a href="#">Evaluaciones de Procesos</a>
-                    <a href="#">Procesos Destacados</a>
+                    <a href="{{route("procesos.evaluaciones")}}">Evaluaciones de Procesos</a>
+                    <a href="{{route("procesos.procesDestac")}}">Procesos Destacados</a>
                 </nav>
             </div>
             <hr class="text-white">

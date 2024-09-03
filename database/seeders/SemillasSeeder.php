@@ -10,6 +10,7 @@ use App\Models\Espacio;
 use App\Models\Cargo;
 use App\Models\Horario;
 use App\Models\ItemsEmp;
+use App\Models\ItemsProceso;
 use App\Models\TiposEventualidade;
 use App\Models\TiposEstatusevent;
 use App\Models\TiposProceso;
@@ -83,6 +84,15 @@ class SemillasSeeder extends Seeder
             ['item_empleado' => 'Buen trato al Cliente'],
             ['item_empleado' => 'Conocimiento de los Menús'],
             ['item_empleado' => 'Trabajo en Equipo'],
+        ]);
+
+        // INSERTAR DATOS EN LA TABLA "items_procesos"
+        ItemsProceso::insert([
+            ['item_Proceso' => 'Eficiencia'],
+            ['item_Proceso' => 'Efectividad'],
+            ['item_Proceso' => 'Flexibilidad'],
+            ['item_Proceso' => 'Consistencia'],
+            ['item_Proceso' => 'Mejora Continua'],
         ]);
 
         // INSERTAR DATOS EN LA TABLA "tipos_eventualidades"

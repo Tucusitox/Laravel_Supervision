@@ -1,8 +1,8 @@
-{{-- VISTA RESUMEN DE EVALUACIONES DE EMPLEADOS --}}
+{{-- VISTA RESUMEN DE EVALUACIONES DE PROCESOS --}}
 
 @extends('layout/layout_interfaces') {{-- AQUI SE INVOCA AL LAYOUT --}}
 
-@section('Modulo Supervision', 'Resumen Evaluciones') {{-- AQUI SE DEFINE EL NOMBRE DE LA PAGINA --}}
+@section('Modulo Supervision', 'Evaluaciones de Procesos') {{-- AQUI SE DEFINE EL NOMBRE DE LA PAGINA --}}
 
 
 @section('ContenidoInterfaces') {{-- AQUI SE INDICA LO QUE PONDREMOS DENTRO DEL LAYOUT --}}
@@ -24,11 +24,11 @@
         <div class="d-flex w-100 text-center text-white">
             @if ($bolean == TRUE)
                 <div class="flex-grow-1">
-                    <h4>Evaluaciones de los Empleados</h4>
+                    <h4>Evaluaciones de los Procesos</h4>
                 </div>
             @else
                 <div>
-                    <a href="{{route('evaluaciones.index')}}" class="btn btn-warning mx-1 my-1" title="Resumen Permisos">
+                    <a href="{{route('procesos.evaluaciones')}}" class="btn btn-warning mx-1 my-1" title="Evaluaciones Procesos">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
@@ -41,12 +41,12 @@
 
         {{-- FORMULARIO PARA BUSCAR EVALUACION POR FECHA O CODIGO --}}
         <div class="d-flex justify-content-between align-items-center py-2">
-            <a class="btn btn-dark boton me-3" href="{{route("evaluaciones.create")}}">Crear Evaluación</a>
+            <a class="btn btn-dark boton me-3" href="{{route("procesos.evaluacionCreate")}}">Crear Evaluación</a>
 
-            <form class="d-flex flex-grow-1 from-createEmp" id="formBusquedaCodigo" action="{{ route('evaluaciones.find') }}" method="POST">
+            <form class="d-flex flex-grow-1 from-createEmp" id="formBusquedaCodigo" action="{{ route('procesos.evaluacionFiltro') }}" method="POST">
                 @csrf
                 <input type="date" class="form-control bg-transparent text-white me-2" 
-                    name="fecha_evaluacion" value="{{ old('fecha_evaluacion') }}">
+                    name="fecha_proceso" value="{{ old('fecha_proceso') }}">
 
                 <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2" placeholder="Buscar por Código" 
                     name="buscarCodigo" value="{{ old('buscarCodigo') }}"> 
@@ -58,20 +58,20 @@
         </div>
         <hr class="text-white mb-4">
 
-        <!-- TABLA PARA MOSTRAR LAS EVALUACIONES DE LOS EMPLEADOS -->
+        <!-- TABLA PARA MOSTRAR LAS EVALUACIONES DE LOS PROCESOS -->
 
         <table class="table table-bordered table-dark border-white text-center mt-2">
             <thead class="thead">
                 <tr id="trFifo">
                     <th>Código</th>
                     <th>Fecha</th>
-                    <th>Higiene</th>
-                    <th>Vestimenta</th>
-                    <th>Buen Trato->Cliente</th>
-                    <th>Conocimiento->Menús</th>
-                    <th>Trabajo en Equipo</th>
+                    <th>Eficiencia</th>
+                    <th>Efectividad</th>
+                    <th>Flexibilidad</th>
+                    <th>Consistencia</th>
+                    <th>Mejora Continua</th>
                     <th>Calificación</th>
-                    <th>Empleado</th>
+                    <th>Proceso</th>
                 </tr>
             </thead>
             {{-- PARA MOSTRAR LA INFORMCION ITERAMOS CON UN BUCLE FOREACH --}}
@@ -87,9 +87,9 @@
                         <td>{{$notas[$index]->nota5}}</td>
                         <td>{{$notas[$index]->suma_notas}}</td>
                         <td>
-                            <a href="{{route('evaluaciones.showEmp', $item->id_persona)}}"
-                                class="btn btn-warning mx-1 my-1" title="Detalles">
-                                <i class='bx bxs-user-detail'></i>
+                            <a href="{{route('procesos.unProceso', $item->id_proceso)}}"
+                                class="btn btn-primary mx-1 my-1" title="Detalles">
+                                <i class='bx bx-cog'></i>
                             </a>
                         </td>
                     </tr>
@@ -106,7 +106,7 @@
 
         formBusquedaCodigo.addEventListener("submit", (e) => {
             const codigoInput = formBusquedaCodigo.querySelector('input[name="buscarCodigo"]');
-            const fechaInput = formBusquedaCodigo.querySelector('input[name="fecha_evaluacion"]');
+            const fechaInput = formBusquedaCodigo.querySelector('input[name="fecha_proceso"]');
             
             if (!codigoInput.value && !fechaInput.value) {
                 e.preventDefault(); 
