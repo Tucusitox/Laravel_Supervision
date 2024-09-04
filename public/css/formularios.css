@@ -82,6 +82,21 @@
 .from-createEmp input[name="mejora_continua"]::placeholder{
     color:white;
 }
+.from-createEmp input[name="nombre_equipo"]::placeholder{
+    color:white;
+}
+.from-createEmp textarea[name="descripcion_equipo"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="id_elemento"]::placeholder{
+    color:white;
+}
+.from-createEmp input[name="mantenimiento_asunto"]::placeholder{
+    color:white;
+}
+.from-createEmp textarea[name="mantenimiento_descripcion"]::placeholder{
+    color:white;
+}
 
 /* INPUT DE TIPO FILE */
 

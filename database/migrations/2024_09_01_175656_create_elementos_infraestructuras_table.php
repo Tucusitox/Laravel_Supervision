@@ -15,7 +15,8 @@ return new class extends Migration
             $table->integer('id_elementInfra', true);
             $table->integer('fk_tipoElement')->index('fk_elementos_infraestructuras_tipos_elementos1_idx');
             $table->integer('fk_espacio')->index('fk_elementos_infraestructuras_areas1_idx');
-            $table->string('descripcion_element', 500);
+            $table->string('nombre_element', 200);
+            $table->string('descripcion_element', 1000);
         });
     }
 

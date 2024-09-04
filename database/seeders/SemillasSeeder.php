@@ -14,6 +14,7 @@ use App\Models\ItemsProceso;
 use App\Models\TiposEventualidade;
 use App\Models\TiposEstatusevent;
 use App\Models\TiposProceso;
+use App\Models\TiposElemento;
 
 class SemillasSeeder extends Seeder
 {
@@ -104,9 +105,9 @@ class SemillasSeeder extends Seeder
 
         // INSERTAR DATOS EN LA TABLA "tipos_estatusEvent"
         TiposEstatusevent::insert([
-            ['tipo_estatu' => 'Iniciado'],
+            ['tipo_estatu' => 'Iniciada'],
             ['tipo_estatu' => 'En Proceso'],
-            ['tipo_estatu' => 'Finalizado'],
+            ['tipo_estatu' => 'Solucionada'],
             ['tipo_estatu' => 'No Aplica'],
         ]);
 
@@ -116,6 +117,15 @@ class SemillasSeeder extends Seeder
             ['nombre_tipoProces' => 'Gestión de Recursos'],
             ['nombre_tipoProces' => 'Producción'],
             ['nombre_tipoProces' => 'Medición'],
+        ]);
+
+        // INSERTAR DATOS EN LA TABLA "tipos_elementos"
+        TiposElemento::insert([
+            ['tipo_elemento' => 'Físico'],
+            ['tipo_elemento' => 'Tecnológicos'],
+            ['tipo_elemento' => 'Mobiliarios'],
+            ['tipo_elemento' => 'Seguridad'],
+            ['tipo_elemento' => 'Salud'],
         ]);
     }
 }

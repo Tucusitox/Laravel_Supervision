@@ -17,6 +17,8 @@ class SupervisionSeeder extends Seeder
             AsistenciasSeeder::class, 
             PermisosSeeder::class, 
             ProcesosSeeder::class, 
+            InfraestructuraSeeder::class, 
+            MantenimientosSeeder::class, 
         ]);
     }
 }

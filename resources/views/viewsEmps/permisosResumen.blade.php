@@ -12,15 +12,12 @@
         {{-- ALERTA CUANDO HAY UN REGISTRO EXITOSO --}}
 
         @if ($mensaje = Session::get('success'))
-
             <div class="alert alert-success text-center container w-50" role="alert">
                 {{$mensaje}}
             </div>
-
         @endif
 
         {{-- ALERTA PARA ERRORES DE VALIDACION AL BUSCAR POR CODIGO--}}
-
         @error('buscarCodigo')
             <div class="alert alert-danger text-center container w-50">{{ $message }}</div>
         @enderror
@@ -75,88 +72,77 @@
         @if ($bolean == TRUE)
             <div id="eventCards">
                 @foreach ($permisos as $item)
-                    <div class="card w-100 my-3 bg-transparent border border-white text-white p-2" data-asunto="{{$item->asunto_event}}">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h5 class="codigo card-title mb-2 text-warning">{{$item->codigo_event}}</h5>
-                                    <h5>{{$item->asunto_event}}</h5>
-                                </div>
-                                <div class="mt-1">
-                                    <h6 class="card-subtitle mb-2 "><b class="text-warning">Fecha de Inicio:</b>
-                                        {{$item->fecha_inicioEvent->format("d/m/Y")}}
-                                    </h6>
-                                    <h6 class="card-subtitle mb-2"><b class="text-warning">Fecha de Culminación:</b>
-                                        {{$item->fecha_finEvent->format("d/m/Y")}}
-                                    </h6>
-                                </div>
+                    <div class="card bg-transparent text-white border my-3 py-2"  data-asunto="{{$item->asunto_event}}">
+                        <div class="card-header border-bottom d-flex justify-content-between">
+                            <h5>Código de Permiso: <b class="text-warning">{{$item->codigo_event}}</b></h5>
+                            <h5 class="card-title">Fecha de Creación: <b class="text-warning">{{$item->fechaCreacion_event->format("d/m/Y")}}</b></h5>
+                        </div>
+                        <div class="card-body border-bottom">
+                            <h5 class="card-title text-warning">{{$item->asunto_event}}</h5>
+                            <p class="card-text">
+                                {{$item->descripcion_event}}
+                            </p>
+                        </div>
+                        <div class="card-body border-bottom">
+                            <h6 class="text-warning">Datos del Empleado Solicitante:</h6>
+                            <p>
+                                <b class="text-warning">Nombre y Apellido:</b> {{$item->Nombre_Apellido}}<br>
+                                <b class="text-warning">C.I:</b> {{$item->identificacion}}
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center py-2">
+                            <div class="card-footer">
+                                <h6 class="card-title">Fecha de Incio de la Falla: <b class="text-warning">{{$item->fecha_inicioEvent->format("d/m/Y")}}</b></h6>
+                                @if ($item->fecha_finEvent !== NULL)
+                                    <h6 class="card-title">Fecha de Solución de la Falla: <b class="text-warning">{{$item->fecha_inicioEvent->format("d/m/Y")}}</b></h6>
+                                @else
+                                    <h6 class="card-title">Fecha de Solución de la Falla: <b class="text-warning">Por Definir</b></h6>
+                                @endif
                             </div>
-                            <hr class="text-white">
-                            <p class="card-text">{{$item->descripcion_event}}</p>
-                            <hr class="text-white">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <h5 class="text-warning">Datos del Empleado Solicitante:</h5>
-                                    <p>
-                                        <b class="text-warning">Nombre y Apellido:</b> {{$item->Nombre_Apellido}}<br>
-                                        <b class="text-warning">C.I:</b> {{$item->identificacion}}
-                                    </p>
-                                </div>
-                                <div class="text-center mt-1">
-                                    <h6 class="card-subtitle mb-4"><b class="text-warning">Fecha de Creación:</b>
-                                        {{$item->fechaCreacion_event->format("d/m/Y")}}
-                                    </h6>
-                                    <div class="text-warning">
-                                        <h6>Empleado:</h6>
-                                        <a href="{{route('permisos.permisoEmp', $item->id_persona)}}"
-                                            class="btn btn-warning mx-1 my-1" title="Detalles">
-                                            <i class='bx bxs-user-detail'></i>
-                                        </a>
-                                    </div>
-                                </div>
+                            <div class="card-footer mx-5">
+                                <a href="{{route('permisos.permisoEmp', $item->id_persona)}}"
+                                    class="btn btn-outline-warning" title="Detalles">
+                                    <i class='bx bxs-user-detail'></i>
+                                </a>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div> 
         @else
-            <div class="card w-100 my-3 bg-transparent border border-white text-white p-2">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5 class="codigo card-title mb-2 text-warning">{{$permisos->first()->codigo_event}}</h5>
-                            <h5>{{$permisos->first()->asunto_event}}</h5>
-                        </div>
-                        <div class="mt-1">
-                            <h6 class="card-subtitle mb-2 "><b class="text-warning">Fecha de Inicio:</b>
-                                {{$permisos->first()->fecha_inicioEvent->format("Y-m-d")}}
-                            </h6>
-                            <h6 class="card-subtitle mb-2"><b class="text-warning">Fecha de Culminación:</b>
-                                {{$permisos->first()->fecha_finEvent->format("Y-m-d")}}
-                            </h6>
-                        </div>
+            <div class="card bg-transparent text-white border my-3 py-2">
+                <div class="card-header border-bottom d-flex justify-content-between">
+                    <h5>Código de Permiso: <b class="text-warning">{{$permisos->first()->codigo_event}}</b></h5>
+                    <h5 class="card-title">Fecha de Creación: <b class="text-warning">{{$permisos->first()->fechaCreacion_event->format("d/m/Y")}}</b></h5>
+                </div>
+                <div class="card-body border-bottom">
+                    <h5 class="card-title text-warning">{{$permisos->first()->asunto_event}}</h5>
+                    <p class="card-text">
+                        {{$permisos->first()->descripcion_event}}
+                    </p>
+                </div>
+                <div class="card-body border-bottom">
+                    <h6 class="text-warning">Datos del Empleado Solicitante:</h6>
+                    <p>
+                        <b class="text-warning">Nombre y Apellido:</b> {{$permisos->first()->Nombre_Apellido}}<br>
+                        <b class="text-warning">C.I:</b> {{$permisos->first()->identificacion}}
+                    </p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center py-2">
+                    <div class="card-footer">
+                        <h6 class="card-title">Fecha de Incio de la Falla: <b class="text-warning">{{$permisos->first()->fecha_inicioEvent->format("Y-m-d")}}</b></h6>
+                        @if ($permisos->first()->fecha_finEvent !== NULL)
+                            <h6 class="card-title">Fecha de Inicio: <b class="text-warning">{{$permisos->first()->fecha_finEvent->format("Y-m-d")}}</b></h6>
+                        @else
+                            <h6 class="card-title">Fecha de Culminación: <b class="text-warning">Por Definir</b></h6>
+                        @endif
                     </div>
-                    <hr class="text-white">
-
-                    <p class="card-text">{{$permisos->first()->descripcion_event}}</p>
-                    
-                    <hr class="text-white">
-
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="text-warning">Datos del Empleado Solicitante:</h5><br>
-                            <p>
-                                <b class="text-warning">Nombre y Apellido:</b> {{$permisos->first()->Nombre_Apellido}}<br>
-                                <b class="text-warning">C.I:</b> {{$permisos->first()->identificacion}}
-                            </p>
-                        </div>
-                        <div class="mt-1">
-                            <h6 class="card-subtitle mb-2 "><b class="text-warning">Fecha de Creación:</b>
-                                {{$permisos->first()->fechaCreacion_event->format("d/m/Y")}}
-                            </h6>
-                        </div>
+                    <div class="card-footer mx-5">
+                        <a href="{{route('permisos.permisoEmp',$permisos->first()->id_persona)}}"
+                            class="btn btn-outline-warning" title="Detalles">
+                            <i class='bx bxs-user-detail'></i>
+                        </a>
                     </div>
-
                 </div>
             </div>
         @endif

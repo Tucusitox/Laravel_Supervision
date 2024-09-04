@@ -52,8 +52,8 @@
                 </div>
     
                 <nav class="nav-links d-none opciones">
-                    <a href="#">Resumen</a>
-                    <a href="#">Solicitar un Reporte</a>
+                    <a href="{{route("infraestructura.index")}}">Resumen de Equipos</a>
+                    <a href="{{route("mantenimientos.index")}}">Mantenimientos de Fallas</a>
                 </nav>
             </div>
             <hr class="text-white">

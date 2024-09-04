@@ -8,6 +8,8 @@ use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\EvaluacionesEmpsController;
 use App\Http\Controllers\ProcesosController;
 use App\Http\Controllers\ProcesEvaluacionesController;
+use App\Http\Controllers\InfraestructuraController;
+use App\Http\Controllers\MantenimientosController;
 
 
 // RUTAS PARA REDIRECCIONAR ENTRE LAS INTERFACERS Y SECCIONES:
@@ -79,3 +81,23 @@ Route::get('/procesos/destacados', [ProcesEvaluacionesController::class,'procesD
 Route::get('/procesos/find/{id_proceso}', [ProcesEvaluacionesController::class,'find'])->name('procesos.evaluacionFind');
 Route::get('/procesos/show/{id_proceso}', [ProcesEvaluacionesController::class,'show'])->name('procesos.evaluacionShow');
 Route::post('/procesos/filtro', [ProcesEvaluacionesController::class,'filtro'])->name('procesos.evaluacionFiltro');
+
+// RUTAS PARA CRUD DE INFRAESTRUCTURA
+Route::get('/infraestructura/resumen', [InfraestructuraController::class,'index'])->name('infraestructura.index');
+Route::get('/infraestructura/create', [InfraestructuraController::class,'create'])->name('infraestructura.create');
+Route::post('/infraestructura/store', [InfraestructuraController::class,'store'])->name('infraestructura.store');
+Route::get('/infraestructura/edit/{id_elementInfra}', [InfraestructuraController::class,'edit'])->name('infraestructura.edit');
+Route::put('/infraestructura/update/{id_elementInfra}', [InfraestructuraController::class,'update'])->name('infraestructura.update');
+Route::get('/infraestructura/delete/{id_elementInfra}', [InfraestructuraController::class,'delete'])->name('infraestructura.delete');
+Route::delete('/infraestructura/destroy/{id_elementInfra}', [InfraestructuraController::class,'destroy'])->name('infraestructura.destroy');
+Route::post('/infraestructura/show', [InfraestructuraController::class,'show'])->name('infraestructura.show');
+
+// RUTAS PARA GENERA MANTENIMIENTOS PARA INFRAESTRUCTURAS
+Route::get('/matennimientos/resumen', [MantenimientosController::class,'index'])->name('mantenimientos.index');
+Route::get('/matennimientos/create', [MantenimientosController::class,'create'])->name('mantenimientos.create');
+Route::get('/matennimientos/createResum/{id_elementInfra}', [MantenimientosController::class,'createResum'])->name('mantenimientos.createResum');
+Route::post('/mantenimientos/store', [MantenimientosController::class,'store'])->name('mantenimientos.store');
+Route::get('/mantenimientos/edit/{id_eventualidad}', [MantenimientosController::class,'edit'])->name('mantenimientos.edit');
+Route::put('/mantenimientos/update/{id_eventualidad}', [MantenimientosController::class,'update'])->name('mantenimientos.update');
+Route::get('/mantenimientos/show/{id_elementInfra}', [MantenimientosController::class,'show'])->name('mantenimientos.show');
+Route::post('/mantenimientos/find', [MantenimientosController::class,'find'])->name('mantenimientos.find');

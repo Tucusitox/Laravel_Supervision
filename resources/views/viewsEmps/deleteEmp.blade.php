@@ -93,7 +93,7 @@
                         <div class="container text-center">
                             <p> El empelado <b class="text-danger">{{$deletEmp->first()->Nombre_Apellido}}</b> será eliminado
                                 permanentemente del sistema junto con toda la información relacionada
-                                con él a excepción de los procesos en los que participo.
+                                con él.
                             </p>
                         </div>
 

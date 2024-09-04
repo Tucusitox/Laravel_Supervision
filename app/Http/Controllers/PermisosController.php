@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Models\Eventualidade;
 use App\Models\EmpleadosXEventualidade;
-use Illuminate\Http\Request;
-use Mockery\Undefined;
 
 class PermisosController
 {
@@ -20,7 +19,9 @@ class PermisosController
         ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
         ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
         ->join("personas","personas.id_persona","=","empleados.fk_persona")
+        ->join("tipos_eventualidades","tipos_eventualidades.id_tipoEvent","=","eventualidades.fk_tipoEvent")
         ->orderBy("fechaCreacion_event","desc")
+        ->where("tipo_eventualidad","Permiso")
         ->get();
 
         $bolean = TRUE;
@@ -36,7 +37,7 @@ class PermisosController
 
         $codigoPermiso = $request->post("buscarCodigo"); 
         $permisos = Eventualidade::select("codigo_event","identificacion","asunto_event","descripcion_event",
-                                          "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event")
+                                          "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event","id_persona")
         ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
         ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
         ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
@@ -45,7 +46,6 @@ class PermisosController
         ->get();
 
         $bolean = FALSE;
-
         return view("viewsEmps.permisosResumen", compact("permisos","bolean"));
     }
 
