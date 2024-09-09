@@ -18,7 +18,7 @@
         <div class="d-flex justify-content-between my-4">
             <a class="btn btn-outline-warning me-3" href="{{route("crearEmp.index")}}">Crear Empleado</a>
 
-            <form class="d-flex from-createEmp flex-grow-1" action="{{ route('unEmp.findUnEmp') }}" method="POST">
+            <form class="d-flex from-createEmp flex-grow-1" id="formBusquedaCedula" action="{{ route('unEmp.findUnEmp') }}" method="POST">
                 @csrf
                 <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2"
                     placeholder="Buscar por Cédula" name="buscarUnEmp">
@@ -75,5 +75,18 @@
         </table>
 
     </div>
+
+    {{-- PREVENIR EL ENVIO DEl FORMULARIO DE BUSQUEDA --}}
+    <script>
+        const formBusquedaCedula = document.getElementById("formBusquedaCedula");
+        formBusquedaCedula.addEventListener("submit", (e) => {
+            const cedulaInput = formBusquedaCedula.querySelector('input[name="buscarUnEmp"]');
+            
+            if (!cedulaInput.value) {
+                e.preventDefault(); 
+                alertify.error('¡Ingresa una Cédula para poder Buscar!');
+            }
+        });
+    </script>
 
 @endsection

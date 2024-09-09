@@ -17,7 +17,7 @@
             @method("PUT")
 
             <div class="d-flex justify-content-between align-items-center container">
-                <h4 class="text-white">Actualizar Empleado</h4>
+                <h4 class="text-white">Actualizar la Información del Empleado: <b class="text-warning">{{$oldEmp->first()->nombre}}</b></h4>
 
                 {{-- BOTONES DEL FORMULARIO --}}
                 @if($bolean == TRUE)

@@ -36,6 +36,10 @@
                         <a href="{{route('permisos.index')}}" class="btn btn-outline-warning mx-1 my-1" title="Volver">
                             <i class='bx bx-arrow-back'></i>
                         </a> 
+                    @elseif($bolean === "inactivo")
+                        <a href="{{route('emps.inactivos')}}" class="btn btn-outline-warning mx-1 my-1" title="Volver">
+                            <i class='bx bx-arrow-back'></i>
+                        </a> 
                     @endif
                     <a href="{{route('permisos.show', $detallEmp->first()->id_persona)}}" class="btn btn-outline-success mx-1 my-1" title="Crear un Permiso">
                         <i class='bx bx-notepad' ></i>
@@ -61,32 +65,32 @@
                 <div class="d-flex container">
                     <div class="mt-4 mx-5">
                         <img src="{{ asset($detallEmp->first()->foto) }}" 
-                        style="max-width: 350px; max-height: 300px; border-radius: 10px; border: 2px solid #ffff;" id="img"/>
+                        style="max-width: 350px; max-height: 300px; border-radius: 10px; border: 1px solid #ffc107;;" id="img"/>
                     </div>
                     <div class="text-white border-end mt-3 px-1 w-50">
-                        <p><b>Cédula:</b>{{" ".$detallEmp->first()->identificacion}}</p>
-                        <p><b>Tipo de Cédula:</b>{{" ".$detallEmp->first()->tipo_identificacion}}</p>
-                        <p><b>Fecha de Nacimiento:</b>{{" ".$detallEmp->first()->fecha_nacimiento->format('Y-m-d')}}</p>
-                        <p><b>Edad:</b>{{" ".$detallEmp->first()->edad_empleado}}</p>
-                        <p><b>Género:</b>{{" ".$detallEmp->first()->nombre_genero}}</p>
-                        <p><b>Cargo:</b>{{" ".$detallEmp->first()->nombre_car}}</p>
-                        <p><b>Espacio Asignado:</b>{{" ".$detallEmp->first()->nombre_espacio}}</p>
-                        <p><b>Tipo de Empleado:</b>{{" ".$detallEmp->first()->tipo_empleado}}</p>
+                        <p><b>Cédula:</b><b class="text-warning">{{" ".$detallEmp->first()->identificacion}}</b></p>
+                        <p><b>Tipo de Cédula:</b><b class="text-warning">{{" ".$detallEmp->first()->tipo_identificacion}}</b></p>
+                        <p><b>Fecha de Nacimiento:</b><b class="text-warning">{{" ".$detallEmp->first()->fecha_nacimiento->format('Y-m-d')}}</b></p>
+                        <p><b>Edad:</b><b class="text-warning">{{" ".$detallEmp->first()->edad_empleado}}</b></p>
+                        <p><b>Género:</b><b class="text-warning">{{" ".$detallEmp->first()->nombre_genero}}</b></p>
+                        <p><b>Cargo:</b><b class="text-warning">{{" ".$detallEmp->first()->nombre_car}}</b></p>
+                        <p><b>Espacio Asignado:</b><b class="text-warning">{{" ".$detallEmp->first()->nombre_espacio}}</b></p>
+                        <p><b>Tipo de Empleado:</b><b class="text-warning">{{" ".$detallEmp->first()->tipo_empleado}}</b></p>
                     </div>
                     <div class="text-white mt-3 mx-4 w-50">
-                        <p><b>Horario del Empleado:</b>{{" ".$detallEmp->first()->nombre_horario." "."(".$detallEmp->first()->descripcion_horario.")"}}</p>
-                        <p><b>Teléfono Celular:</b>{{" ".$detallEmp->first()->tlf_celular}}</p>
-                        <p><b>Teléfono Local:</b>{{" ".$detallEmp->first()->tlf_local}}</p>
-                        <p><b>Dirección:</b>{{" ".$detallEmp->first()->direccion}}</p>
-                        <p><b>Fecha de Ingreso:</b>{{" ".$detallEmp->first()->fecha_ingreso}}</p>
+                        <p><b>Horario del Empleado:</b> <b class="text-warning">{{$detallEmp->first()->nombre_horario." ".$detallEmp->first()->descripcion_horario}}</b></p>
+                        <p><b>Teléfono Celular:</b><b class="text-warning">{{" ".$detallEmp->first()->tlf_celular}}</b></p>
+                        <p><b>Teléfono Local:</b> <b class="text-warning">{{" ".$detallEmp->first()->tlf_local}}</b></p>
+                        <p><b>Dirección:</b><b class="text-warning">{{" ".$detallEmp->first()->direccion}}</b></p>
+                        <p><b>Fecha de Ingreso:</b><b class="text-warning">{{" ".$detallEmp->first()->fecha_ingreso}}</b></p>
                         <p><b>Fecha de Egreso:</b>
                             @if(!$detallEmp->first()->fecha_egreso)
-                                No Definida
+                                <b class="text-warning">No Definida</b>
                             @else
-                                {{ $detallEmp->first()->fecha_egreso }}
+                                <b class="text-warning">{{ $detallEmp->first()->fecha_egreso }}</b>
                             @endif
                         </p>
-                        <p><b>Estado Laboral:</b>{{" ".$detallEmp->first()->estado_laboral}}</p>
+                        <p><b>Estado Laboral:</b><b class="text-warning">{{" ".$detallEmp->first()->estado_laboral}}</b></p>
                     </div>
                 </div>
 
@@ -190,7 +194,7 @@
             cursor: pointer;
         }
         h4:hover {
-            color: rgb(213, 207, 207);
+            color: #c8a53e;
         }
     </style>
 

@@ -16,7 +16,7 @@
         <hr class="text-white">
         <p class="mb-4 text-white">¿Seguro que deseas colocar <b class="text-warning">"Activo"</b> a este antiguo empleado?</p>
         <p class="mb-4 text-white"><b class="text-warning">Nota:</b> La fecha de ingreso y esgreso seran eliminadas ya que el 
-            empelado se estará reincorporando. Además se le creara una nueva fecha de ingreso con el día: 
+            empleado se estará reincorporando. Además se le creara una nueva fecha de ingreso con el día: 
             <b class="text-warning">{{ now()->setTimezone('America/Caracas')->format('Y/m/d') }}</b>
         </p>
         <hr class="text-white">

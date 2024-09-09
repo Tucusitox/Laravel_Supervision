@@ -9,7 +9,22 @@
 
 
     <div class="caja3 container p-5" id="contenedor">
+
+        {{-- MANEJAR LOS ERRORES DE LAS VALIDACIONES DE LOS FORMULARIOS --}}
+        @if ($errors->any())
+            <div id="error-alert" class="alert alert-danger w-50 container text-center" role="alert">
+                @foreach ($errors->all() as $error)
+                    <h6>{{ $error }}</h6>
+                @endforeach
+            </div>
         
+            <script>
+                setTimeout(function() {
+                    document.getElementById('error-alert').style.display = 'none';
+                }, 3000);
+            </script>
+        @endif
+
         <div class="d-flex w-100 text-center text-white">
             @if ($bolean == FALSE)
                 <div>

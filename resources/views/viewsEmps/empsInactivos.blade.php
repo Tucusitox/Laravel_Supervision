@@ -31,6 +31,7 @@
                     <th>Cedúla</th>
                     <th>Nombres y Apellido</th>
                     <th>Estado Laboral</th>
+                    <th>Detalles del Empleado</th>
                     <th>Cambiar Estatus</th>
                 </tr>
             </thead>
@@ -43,11 +44,16 @@
                         <td class="tdNombres">{{$item->Nombre_Apellido}}</td>
                         <td>{{$item->estado_laboral}}</td>
                         <td>
+                            <a href="{{route('empleado.empInactDetall', $item->id_persona)}}"
+                                class="btn btn-outline-warning mx-1 my-1" title="Detalles">
+                                <i class='bx bxs-user-detail'></i>
+                            </a>
+                        </td>
+                        <td>
                             <a  href="{{route('empleado.activo', $item->id_persona)}}"
                                 class="btn btn-outline-primary mx-1 my-1" title="Cambiar Estatus">
                                 <i class='bx bxs-user-plus' ></i>
                             </a>
-
                         </td>
                     </tr>
 

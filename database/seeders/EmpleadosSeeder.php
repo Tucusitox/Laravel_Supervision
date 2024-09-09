@@ -33,16 +33,16 @@ class EmpleadosSeeder extends Seeder
                 'fk_tipo_emp' => 3,
                 'fk_cargo' => 3,
                 'estado_laboral' => 'Inactivo',
-                'fecha_ingreso' => '2024-03-01',
-                'fecha_egreso' => '2024-06-01',
+                'fecha_ingreso' => '2022-03-01',
+                'fecha_egreso' => '2024-07-11',
             ],
             [
                 'fk_persona' => 4,
                 'fk_tipo_emp' => 2,
                 'fk_cargo' => 1,
                 'estado_laboral' => 'Inactivo',
-                'fecha_ingreso' => '2024-04-01',
-                'fecha_egreso' => null,
+                'fecha_ingreso' => '2023-04-01',
+                'fecha_egreso' => '2024-10-24',
             ],
             [
                 'fk_persona' => 5,
@@ -50,7 +50,7 @@ class EmpleadosSeeder extends Seeder
                 'fk_cargo' => 12,
                 'estado_laboral' => 'Activo',
                 'fecha_ingreso' => '2024-05-01',
-                'fecha_egreso' => '2024-08-11',
+                'fecha_egreso' => null,
             ],
         ]);
 

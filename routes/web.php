@@ -19,6 +19,7 @@ Route::get("/resumen/empelados",[ViewsController::class,"viewEmp"])->name("emp.v
 Route::get("/resumen/empeladosInactivos",[ViewsController::class,"empsInactivos"])->name("emps.inactivos");
 Route::post("/resumen/un/empelado",[ViewsController::class,"findUnEmp"])->name("unEmp.findUnEmp");
 Route::get('/activo/{id_persona}', [ViewsController::class,'activo'])->name('empleado.activo');
+Route::get('/empleado/inactivo/{id_persona}', [ViewsController::class,'empInactDetall'])->name('empleado.empInactDetall');
 
 // RUTAS PARA REDIRECCIONAR ENTRE LAS ASISTENCIAS Y CALCULO DE HORAS TOTALES:
 

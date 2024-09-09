@@ -18,7 +18,7 @@
                 </div>
             @else
                 <div>
-                    <a href="{{route('empleado.show', $deletEmp->first()->id_persona)}}" class="btn-outline-warning mx-1 my-1" title="Volver">
+                    <a href="{{route('empleado.show', $deletEmp->first()->id_persona)}}" class="btn btn-outline-warning mx-1 my-1" title="Volver">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
