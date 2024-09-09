@@ -81,7 +81,8 @@ class InfraestructuraController
         $elementInfra->descripcion_element = $request->post('descripcion_equipo');
         $elementInfra->save();
 
-        return redirect()->route('infraestructura.index')->with("success", "¡Equipo Registrado con Éxito!");
+        toastr()->success("¡Equipo Registrado con Éxito!");
+        return redirect()->route('infraestructura.index');
     }
 
     // IR A LA VISTA CON EL FORMULARIO DE ACTUAlIZACION DE EQUIPOS
@@ -147,7 +148,8 @@ class InfraestructuraController
         $elementInfra->descripcion_element = $request->post('descripcion_equipo');
         $elementInfra->save();
 
-        return redirect()->route('infraestructura.index')->with("success", "¡Equipo Actualizado con Éxito!");
+        toastr()->success("¡Equipo Actualizado con Éxito!");
+        return redirect()->route('infraestructura.index');
     }
 
     // IR A LA VISTA PARA ELIMINAR EQUIPOS
@@ -178,7 +180,8 @@ class InfraestructuraController
         $elementXevent->delete();
         $elementXfalla->delete();
         $elementDestroy->delete();
-        return redirect()->route('infraestructura.index')->with("success", "¡Equipo Elminado con Éxito!");
+        toastr()->success("¡Equipo Elminado con Éxito!");
+        return redirect()->route('infraestructura.index');
     }
 
     // LOGICA PARA BUSCAR POR TIPO DE ELEMENTO
@@ -198,9 +201,8 @@ class InfraestructuraController
             return view("viewsInfraestructura.infraestructuraResumen",compact("elementosInfras","tipoElement","bolean"));
         }
         else{
-            return redirect()->back()->withErrors([
-                'tipo_elemento' => '¡No Existen Equipos de este Tipo en el Sistema Actualmente!'
-            ]);
+            toastr()->warning("¡No Existen Equipos de este Tipo en el Sistema Actualmente!");
+            return redirect()->back();
         }
     }
 }

@@ -9,17 +9,6 @@
 
     <div class="caja3 container p-5" id="contenedor">
 
-        {{-- ALERTA CUANDO HAY UN REGISTRO EXITOSO --}}
-        @if ($mensaje = Session::get('success'))
-            <div class="alert alert-success text-center container w-50" role="alert">
-                {{$mensaje}}
-            </div>
-        @endif
-        {{-- ALERTA PARA ERRORES DE VALIDACION AL BUSCAR POR TIPO DE EQUIPO --}}
-        @error('tipo_elemento')
-            <div class="alert alert-danger text-center container w-50">{{ $message }}</div>
-        @enderror
-
         <div class="d-flex w-100 text-center text-white">
             @if ($bolean == FALSE)
                 <div>
@@ -36,25 +25,26 @@
                 </div>
             @endif
         </div>
-        
         <hr class="text-white">
 
-        <div class="d-flex align-items-center my-4">
-            <a class="btn btn-dark boton me-3" href="{{route("mantenimientos.create")}}">Reportar Falla</a>
-            {{-- BUSCADOR POR TIPO DE EQUIPO--}}
-            <form class="d-flex from-createEmp flex-grow-1" id="formBusquedaCodigo" action="{{ route('mantenimientos.find') }}" method="POST">
-                @csrf
-                <input type="date" class="form-control bg-transparent text-white me-2" 
-                    name="fecha_falla" value="{{ old('fecha_falla') }}">
+        @if ($bolean !== FALSE)
+            <div class="d-flex align-items-center my-4">
+                <a class="btn btn-outline-warning me-3" href="{{route("mantenimientos.create")}}">Reportar Falla</a>
+                {{-- BUSCADOR POR TIPO DE EQUIPO--}}
+                <form class="d-flex from-createEmp flex-grow-1" id="formBusquedaCodigo" action="{{ route('mantenimientos.find') }}" method="POST">
+                    @csrf
+                    <input type="date" class="form-control bg-transparent text-white me-2" 
+                        name="fecha_falla" value="{{ old('fecha_falla') }}">
 
-                <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2" placeholder="Buscar por Código" 
-                    name="buscarCodigo" value="{{ old('buscarCodigo') }}"> 
-                <button class="btn btn-dark boton" type="submit">
-                    <i class='bx bx-search-alt-2'></i>
-                </button>
-            </form>
-        </div>
-        <hr class="text-white">
+                    <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2" placeholder="Buscar por Código" 
+                        name="buscarCodigo" value="{{ old('buscarCodigo') }}"> 
+                    <button class="btn btn-outline-warning" type="submit">
+                        <i class='bx bx-search-alt-2'></i>
+                    </button>
+                </form>
+            </div>
+            <hr class="text-white">
+        @endif
 
         {{-- MOSTRAR LA INFORMACION EN CARDS ITERANDOLAS CON UN FOREACH --}}
         @foreach ($fallas as $item)
@@ -105,7 +95,6 @@
                 </div>
             </div>
         @endforeach
-
     </div>
 
     {{-- PREVENIR EL ENVIO DEl FORMULARIO DE BUSQUEDA --}}

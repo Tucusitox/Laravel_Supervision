@@ -12,13 +12,13 @@
         <div class="d-flex align-items-center w-100 text-center text-white">
             @if ($bolean == TRUE)
                 <div>
-                    <a href="{{route('emp.viewEmp')}}" class="btn btn-warning mx-1 my-1" title="Volver">
+                    <a href="{{route('emp.viewEmp')}}" class="btn btn-outline-warning mx-1 my-1" title="Volver">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
             @else
                 <div>
-                    <a href="{{route('empleado.show', $deletEmp->first()->id_persona)}}" class="btn btn-warning mx-1 my-1" title="Volver">
+                    <a href="{{route('empleado.show', $deletEmp->first()->id_persona)}}" class="btn-outline-warning mx-1 my-1" title="Volver">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
@@ -32,13 +32,13 @@
 
         <div class="d-flex justify-content-center w-100 p-3">
 
-            <button class="btn btn-dark p-4 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal_1">
+            <button class="btn btn-outline-dark text-white p-4 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal_1">
                 <p>Cambiar el estatus a <b class="text-warning">"Inactivo"</b> del empelado:</p>
                 <p><b class="text-warning">{{$deletEmp->first()->Nombre_Apellido}}</b></p>
                 <p>y asignarle la fecha de <b class="text-warning">Egreso</b> automáticamente.</p>
             </button>
     
-            <button class="btn btn-dark p-4 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal_2">
+            <button class="btn btn-outline-dark text-white p-4 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal_2">
                 <p>Eliminar <b class="text-danger">"Permanentemente"</b> del sistema al empelado:</p>
                 <p><b class="text-danger">{{$deletEmp->first()->Nombre_Apellido}}</b></p>
             </button>
@@ -49,7 +49,7 @@
         <div class="modal fade mt-5" id="exampleModal_1">
 
             <div class="modal-dialog">
-                <div class="modal-content bg-dark text-white">
+                <div class="modal-content bg-black text-white">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5">¿Estas Seguro?</h1>
                         <button class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -69,7 +69,7 @@
                         
                         <div class="mt-2 text-center text-white">
                             <button type="button" class="btn btn-danger mx-3" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-warning">Si, Estoy Seguro</button>
+                            <button type="submit" class="btn btn-outline-warning">Si, Estoy Seguro</button>
                         </div>
 
                     </form>
@@ -81,7 +81,7 @@
         <div class="modal fade mt-5" id="exampleModal_2">
 
             <div class="modal-dialog">
-                <div class="modal-content bg-dark text-white">
+                <div class="modal-content bg-black text-white">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5">¿Estas Seguro?</h1>
                         <button class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -93,13 +93,13 @@
                         <div class="container text-center">
                             <p> El empelado <b class="text-danger">{{$deletEmp->first()->Nombre_Apellido}}</b> será eliminado
                                 permanentemente del sistema junto con toda la información relacionada
-                                con él.
+                                con él/ella.
                             </p>
                         </div>
 
                         <div class="mt-2 text-center text-white">
                             <button type="button" class="btn btn-danger mx-3" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-warning">Si, Estoy Seguro</button>
+                            <button type="submit" class="btn btn-outline-warning">Si, Estoy Seguro</button>
                         </div>
                     </form>
                 </div>

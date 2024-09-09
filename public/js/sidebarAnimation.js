@@ -12,7 +12,7 @@ iconAbrir.forEach((icon, index) => {
         icon.classList.add("d-none");
         iconCerrar[index].classList.remove("d-none");
         cajaPadre[index].classList.remove("bg-black");
-        cajaPadre[index].classList.add("bg-dark");
+        cajaPadre[index].classList.add("bg-black");
     });
 });
 
@@ -23,7 +23,7 @@ iconCerrar.forEach((icon, index) => {
         lista[index].classList.add("d-none");
         iconAbrir[index].classList.remove("d-none");
         icon.classList.add("d-none");
-        cajaPadre[index].classList.remove("bg-dark");
+        cajaPadre[index].classList.remove("bg-black");
         cajaPadre[index].classList.add("bg-black");
     });
 });

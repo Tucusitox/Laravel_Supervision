@@ -41,9 +41,8 @@ class AsistenciasController
         ->get();
 
         if($fechaAsis->isEmpty()){
-            return redirect()->route('asistencias.index')->withErrors([
-                'identificacion' => '¡No exixte ninguna asistencia en la fecha Ingresada!'
-            ]);
+            toastr()->error("¡No Exixten Asistencias en la Fecha Ingresada!");
+            return redirect()->back();
         }
         else{
             $bolean = FALSE;
@@ -70,9 +69,8 @@ class AsistenciasController
 
         // VALIDAR SI LA CONSULTA EXISTE
         if($infoEmp->isEmpty()){
-            return redirect()->route('asistencias.index')->withErrors([
-                'identificacion' => '¡Este Empleado no existe en el Sistema!'
-            ]);
+            toastr()->error("¡Este Empleado no existe en el Sistema!");
+            return redirect()->back();
         }
         else{     
             // CAPTURAR EL ID DEL EMPLEADO
@@ -92,9 +90,8 @@ class AsistenciasController
                                 ->first();
 
             if($asisExis){
-                return redirect()->route('asistencias.index')->withErrors([
-                    'identificacion' => '¡La hora de entrada del empleado ya fue registrada en el sistema el día de hoy!'
-                ]);
+                toastr()->warning("¡La hora de entrada del empleado ya fue registrada en el sistema el día de hoy!");
+                return redirect()->back();
             }
             else{ 
                 $asistEmp = new Asistencia;
@@ -104,7 +101,8 @@ class AsistenciasController
                 $asistEmp->hora_salida = NULL;
                 $asistEmp->save();
     
-                return redirect()->route('asistencias.index')->with("success", "¡Hora de Entrada Registrada con Éxito!");
+                toastr()->success("¡Hora de Entrada Registrada con Éxito!");
+                return redirect()->back();
             }
         }
 
@@ -133,19 +131,17 @@ class AsistenciasController
                     $asistEmp->hora_salida = now()->setTimezone('America/Caracas')->format('H:i:s');
                     $asistEmp->save();
 
-                    return redirect()->route('asistencias.index')->with("success", "¡Hora de Salida Registrada con Éxito!");
-        
+                    toastr()->success("¡Hora de Salida Registrada con Éxito!");
+                    return redirect()->back();
                 }
                 else{
-                    return redirect()->route('asistencias.index')->withErrors([
-                        'identificacion' => '¡La hora de entrada de este empleado no ha sido registrada en el sistema en el día de hoy!'
-                    ]);
+                    toastr()->warning("¡La hora de entrada de este empleado no ha sido registrada en el sistema en el día de hoy!");
+                    return redirect()->back();
                 }
             }
             else{
-                return redirect()->route('asistencias.index')->withErrors([
-                    'identificacion' => '¡La hora de salida de este empleado ya ha sido registrada en el sistema el día de hoy!'
-                ]);
+                toastr()->warning("¡La hora de salida de este empleado ya ha sido registrada en el sistema el día de hoy!");
+                return redirect()->back();
             }
         }
     }
@@ -154,14 +150,13 @@ class AsistenciasController
 
     public function horasTotales(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'identificacion' => 'required|string|regex:/^[0-9]{2}[0-9]{3}[0-9]{3}$/',
             'fecha_primera' => 'required|string|regex:/^\d{4}\-\d{2}\-\d{2}$/',
             'fecha_segunda' => 'required|string|regex:/^\d{4}\-\d{2}\-\d{2}$/',
         ]);
 
         // VARIABLES A UTILIZAR
-
         $cedula = $request->post("identificacion");
         $fechaN1 = $request->post("fecha_primera");
         $fechaN2 = $request->post("fecha_segunda");
@@ -183,9 +178,8 @@ class AsistenciasController
             ->get();
 
             if($horaSalida->first()->hora_salida == NULL){
-                return redirect()->route('asistencias.index')->withErrors([
-                    'identificacion' => '¡Complete la asistencia del día del empleado antes de calcular sus Horas Totales!'
-                ]);
+                toastr()->info("¡Para Calcular las Horas Totales del Empleado debe Culminar la Asisencia del Día de Hoy!");
+                return redirect()->back();
             }
             else{
                 //CALCULAR LAS HORAS TRABAJADAS ENTRE DOS FECHAS
@@ -202,16 +196,14 @@ class AsistenciasController
                     return view("viewsEmps.asistenciasXhorasTotales", compact("horasTotales","infoEmpleado","fechaN1","fechaN2"));
                 }
                 else {
-                    return redirect()->route('asistencias.index')->withErrors([
-                        'identificacion' => '¡No existen asistencias en el rango de días indicado!'
-                    ]);
+                    toastr()->error("¡No Existen Asistencias en el Rango de Fechas Indicadas!");
+                    return redirect()->back();
                 }
             } 
         }
         else{
-            return redirect()->route('asistencias.index')->withErrors([
-                'identificacion' => '¡Este Empleado no existe en el Sistema!'
-            ]);
+            toastr()->error("¡Este Empleado no Existe en el Sistema!");
+            return redirect()->back();
         }
 
     }

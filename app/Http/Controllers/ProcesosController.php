@@ -102,7 +102,8 @@ class ProcesosController
             $espaProces->save();
 
             if($espaProces->save()){
-                return redirect()->route('procesos.index')->with("success", "¡Proceso Creado con Éxito!");
+                toastr()->success("¡Proceso Creado con Éxito!");
+                return redirect()->route('procesos.index');
             }
         }
     }
@@ -187,7 +188,8 @@ class ProcesosController
             $espaProces->save();
 
             if($espaProces->save()){
-                return redirect()->route('procesos.index')->with("success", "¡Proceso Actualizado con Éxito!");
+                toastr()->success("¡Proceso Actualizado con Éxito!");
+                return redirect()->route('procesos.index');
             }
         }
     }
@@ -234,7 +236,8 @@ class ProcesosController
         $procesoDelet->delete();
 
         // SI TODO SALE BIEN VOLVER A "RESUMEN DE PROCESOS"
-        return redirect()->route('procesos.index')->with("success", "¡Proceso Eliminado con Éxito!");
+        toastr()->success("¡Proceso Eliminado con Éxito!");
+        return redirect()->route('procesos.index');
     }
 
     // LOGICA PARA BUSCAR PROCESO POR CODIGO O POR FECHA
@@ -259,15 +262,13 @@ class ProcesosController
             if($procesos->isNotEmpty()){
                 return view("viewsProcesos.procesosResumen",compact("bolean","procesos"));
             }else{
-                return redirect()->route('procesos.index')->withErrors([
-                    'buscarCodigo' => '¡No se Encontraron Procesos con el Código ni con la Fecha Indicadas!'
-                ]);
+                toastr()->warning("¡No se Encontraron Procesos con el Código ni con la Fecha Indicadas!");
+                return redirect()->back();
             }
         }
         else{
-            return redirect()->route('procesos.index')->withErrors([
-                'buscarCodigo' => '¡El Código o La Fecha no conicide con el Formato Requerido!'
-            ]);
+            toastr()->warning("¡El Código o La Fecha no conicide con el Formato Requerido!");
+            return redirect()->back();
         }
     }
 

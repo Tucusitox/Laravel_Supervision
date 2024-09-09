@@ -45,7 +45,7 @@ class ProcesEvaluacionesController
         return view("viewsProcesos.procesoCrearEvaluacion",compact("codProces"));
     }
 
-    // LOGICA PARA CREAR EVALUACION APRA UN PROCESO
+    // LOGICA PARA CREAR EVALUACION PARA UN PROCESO
     public function store(Request $request)
     {
         $request->validate(
@@ -118,14 +118,14 @@ class ProcesEvaluacionesController
                 $empXeval->save();
 
                 if($empXeval->save()){
-                    return redirect()->route('procesos.evaluaciones')->with("success", "¡Evaluación Realizada con Éxito!");
+                    toastr()->success("¡Evaluación Realizada con Éxito!");
+                    return redirect()->route('procesos.evaluaciones');
                 }
             }
         }
         else{
-            return redirect()->back()->withErrors([
-                'proceso_codigo' => '¡Este Proceso no existe en el Sistema!'
-            ]);
+            toastr()->error("¡Este Proceso no Existe en el Sistema!");
+            return redirect()->back();
         }
     }
 
@@ -205,10 +205,13 @@ class ProcesEvaluacionesController
             if($notas->isNotEmpty() && $evaluaciones->isNotEmpty()){
                 return view("viewsProcesos.procesosEvaluaciones",compact("bolean","notas","evaluaciones"));
             }else{
-                return redirect()->route('evaluaciones.index')->withErrors([
-                    'buscarCodigo' => '¡No se Encontraron Evaluaciones con el Código ni con la Fecha Indicadas!'
-                ]);
+                toastr()->warning("¡No se Encontraron Evaluaciones en la Fecha o con el Código Indicados!");
+                return redirect()->back();
             }
+        }
+        else{
+            toastr()->warning("¡El Código o La Fecha no conicide con el Formato Requerido!");
+            return redirect()->back();
         }
     }
 }

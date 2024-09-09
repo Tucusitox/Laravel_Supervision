@@ -20,14 +20,14 @@
                     {{-- BOTONES DEL FORMULARIO --}}
                     <div class="d-flex justify-content-end nav-links">
                         <a class="btn btn-danger mx-3" href="{{ route('permisos.index') }}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Crear</button>
+                        <button type="submit" class="btn btn-outline-warning">Crear</button>
                     </div>
                 @else
                     <h4 class="text-white">Generar Permiso para el Empleado: <b class="text-warning">{{$ciEmp->first()->Nombre_Apellido}}</b></h4>
                     {{-- BOTONES DEL FORMULARIO --}}
                     <div class="d-flex justify-content-end nav-links">
                         <a class="btn btn-danger mx-2" href="{{ route('empleado.show',$ciEmp->first()->id_persona) }}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Crear</button>
+                        <button type="submit" class="btn btn-outline-warning">Crear</button>
                     </div>
                 @endif
             </div>

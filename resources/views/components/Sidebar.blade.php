@@ -3,8 +3,8 @@
 <div id="sideBar">
     <div class="w-25 bg-black text-white text-left offcanvas offcanvas-start" data-bs-scroll="true" id="offcanvasExample">
 
-        <div class="d-flex justify-content-start nav-links p-4 fs-3">
-            <a class="btn btn-dark" data-bs-dismiss="offcanvas">
+        <div class="d-flex justify-content-end p-4 fs-3">
+            <a class="btn btn-outline-warning" data-bs-dismiss="offcanvas">
                 <i class='bx bx-x'></i>
             </a>
         </div>

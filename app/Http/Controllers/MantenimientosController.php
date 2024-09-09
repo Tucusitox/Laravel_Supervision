@@ -83,13 +83,13 @@ class MantenimientosController
                 $elementXfalla->fk_eventualidad = $idEventualidad->id_eventualidad;
                 $elementXfalla->save();
 
-                return redirect()->route('mantenimientos.index')->with("success", "¡Falla Reportada con Éxito!");
+                toastr()->success("¡Falla Reportada con Éxito!");
+                return redirect()->route('mantenimientos.index');
             }
         }
         else{
-            return redirect()->back()->withErrors([
-                'id_elemento' => '¡Este Equipo no Existe en el Sistema Actualmente!'
-            ]);
+            toastr()->error("¡Este Equipo no Existe en el Sistema Actualmente!");
+            return redirect()->back();
         }
     }
 
@@ -126,11 +126,13 @@ class MantenimientosController
         if($estatus === "Solucionada"){
             $fallaUpdate->fecha_finEvent = now()->setTimezone("America/Caracas");
             $fallaUpdate->save();
-            return redirect()->route('mantenimientos.index')->with("success", "¡Estatus Actualizado con Éxito!");
+            toastr()->success("¡Estatus Actualizado con Éxito!");
+            return redirect()->route('mantenimientos.index');
         }
         else{
             $fallaUpdate->save();
-            return redirect()->route('mantenimientos.index')->with("success", "¡Estatus Actualizado con Éxito!");
+            toastr()->success("¡Estatus Actualizado con Éxito!");
+            return redirect()->route('mantenimientos.index');
         }
     }
 
@@ -172,15 +174,13 @@ class MantenimientosController
             if($fallas->isNotEmpty()){
                 return view("viewsInfraestructura.mantenimientosResumen",compact("fallas","bolean"));
             }else{
-                return redirect()->route('mantenimientos.index')->withErrors([
-                    'tipo_elemento' => '¡No se Encontraron Mantenimientos con el Código ni con la Fecha Indicadas!'
-                ]);
+                toastr()->info("¡No se Encontraron Mantenimientos con el Código ni con la Fecha Indicadas!");
+                return redirect()->back();
             }
         }
         else{
-            return redirect()->route('mantenimientos.index')->withErrors([
-                'tipo_elemento' => '¡El Código o La Fecha no conicide con el Formato Requerido!'
-            ]);
+            toastr()->warning("¡El Código o La Fecha no conicide con el Formato Requerido!");
+            return redirect()->back();
         }
     }
 }

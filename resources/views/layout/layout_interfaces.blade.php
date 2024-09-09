@@ -32,7 +32,6 @@
     <x-Footer/>
 </body>
 
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
     <script src="{{ asset('js/sidebarAnimation.js') }}"  ></script>
     <script src="{{ asset('js/busquedaIndex.js') }}"  ></script>
     <script src="{{ asset('js/preViewImg.js') }}"  ></script>
@@ -41,5 +40,6 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
         crossorigin="anonymous">
     </script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
 
 </html>

@@ -44,10 +44,6 @@ body::-webkit-scrollbar-thumb{
     color: #ffbc0e;
 }
 
-.boton:hover{
-    color: #ffbc0e;
-}
-
 .caja4{ /* PARA LA VISTA DE DELETE_EMP */
     width: 60%;
     transition: all 0.35s ease-in-out;
@@ -84,14 +80,34 @@ body::-webkit-scrollbar-thumb{
     display: none;
 }
 
-.detalleEmp{
-    display: flex;
-    flex-direction: column;
+/* ESTILOS PARA LAS TABLAS Y PARA LAS TABS DE LA VISTA DETALLES DE EMPLEADOS */
+.tab-content article {
+    display: none;
+}
+.tab-content .active {
+    display: block;
+}
+.tabs .active {
     color: white;
 }
 
+.tabla {
+    width: 100%;
+    border-collapse: collapse; 
+    text-align: center;
+    border-radius: 20px;
+    background: black;
+    color: #ffff;
+}
 
-
+.tabla th{
+    border: 1px solid #ffff; 
+    padding: 10px; 
+}
+.tabla td {
+    border: 1px solid #ffff; 
+    padding: 10px; 
+}
 
 
 

@@ -12,6 +12,7 @@ use App\Models\EmpleadosXEventualidade;
 use App\Models\Evaluacione;
 use App\Models\EmpleadosXEvaluacione;
 use App\Models\EvaluacionesXItemsemp;
+use Illuminate\Support\Facades\DB;
 
 
 class EmpleadosController
@@ -77,9 +78,8 @@ class EmpleadosController
         ->get();
 
         if($cedulaExis->isNotEmpty()){
-            return back()->withErrors([
-                'identificacion' => '¡La cédula ingresadasda ya se encuentra registrada en el sistema!'
-            ]);
+            toastr()->error("¡La cédula ingresadasda ya se encuentra registrada en el sistema!");
+            return redirect()->back();
         }
         else{
             $persona->identificacion = $request->post('identificacion');
@@ -100,9 +100,8 @@ class EmpleadosController
         if ($edad >= 18) {
             $persona->fecha_nacimiento = $request->post('fecha_nacimiento');
         } else {
-            return back()->withErrors([
-                'fecha_nacimiento' => '¡El empleado debe ser mayor de edad!'
-            ]);
+            toastr()->warning("¡El Empleado debe ser Mayor de Edad para ser Registrado en el Sistema!");
+            return redirect()->back();
         }
         
         // CAPTURAR EL GENERO DEL EMPLEADO
@@ -214,12 +213,13 @@ class EmpleadosController
 
             // SI TODO SALE BIEN REDIRECCIONAR A LA VISTA resumenEmps
             if($horarioEmp->save()){
-                return redirect()->route('emp.viewEmp')->with("success", "¡Empleado Registrado con Éxito!");
+                toastr()->success("¡Empleado Registrado con Éxito!");
+                return redirect()->route('emp.viewEmp');
             }
         }
     }
 
-    // OBTENER LOS DATOS DE UN SOLO EMPLEADO
+    // OBTENER LOS DATOS, EVLUACIONES Y PERMISOS DE UN SOLO EMPLEADO
     public function show($id_persona)
     {
         $bolean = TRUE;
@@ -239,7 +239,33 @@ class EmpleadosController
         ->where("id_persona","=", $id_persona)
         ->get();
 
-        return view("viewsEmps.detallesEmp",compact("detallEmp","bolean"));
+        $notasEmp = EvaluacionesXItemsemp::select("codigo_eval","fecha_evaluacion")
+        ->selectRaw('
+                MAX(CASE WHEN rn = 1 THEN nota_itemEmpleado END) AS nota1,
+                MAX(CASE WHEN rn = 2 THEN nota_itemEmpleado END) AS nota2,
+                MAX(CASE WHEN rn = 3 THEN nota_itemEmpleado END) AS nota3,
+                MAX(CASE WHEN rn = 4 THEN nota_itemEmpleado END) AS nota4,
+                MAX(CASE WHEN rn = 5 THEN nota_itemEmpleado END) AS nota5,
+                SUM(nota_itemEmpleado) AS suma_notas
+        ')
+        ->from(DB::raw('(SELECT fk_evaluacion, nota_itemEmpleado, ROW_NUMBER() OVER (PARTITION BY fk_evaluacion ORDER BY id_eval_itemEmp) AS rn FROM evaluaciones_x_itemsemps) AS subquery'))
+        ->groupBy('subquery.fk_evaluacion')
+        ->join("evaluaciones", "evaluaciones.id_evaluacion", "=", "subquery.fk_evaluacion")
+        ->join("empleados_x_evaluaciones", "empleados_x_evaluaciones.fk_evaluacion", "=", "evaluaciones.id_evaluacion")
+        ->join("empleados", "empleados_x_evaluaciones.fk_empleado", "=", "empleados.id_empleado")
+        ->join("personas", "empleados.fk_persona", "=", "personas.id_persona")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+
+        $permisosEmp = Eventualidade::select("codigo_event","asunto_event","descripcion_event",
+                                            "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event")
+        ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
+        ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
+        ->join("personas","personas.id_persona","=","empleados.fk_persona")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+        
+        return view("viewsEmps.detallesEmp",compact("detallEmp","notasEmp","permisosEmp","bolean"));
     }
 
     // OBTENER EL ID Y DATOS DEL EMPLEADO A ACTUALIZAR DESDE RESUMEN DE EMPLEADOS
@@ -337,10 +363,8 @@ class EmpleadosController
         if ($edad >= 18) {
             $persona->fecha_nacimiento = $request->post('fecha_nacimiento');
         } else {
-
-            return back()->withErrors([
-                'fecha_nacimiento' => '¡El empleado debe ser mayor de edad!'
-            ]);
+            toastr()->warning("¡El Empleado debe ser Mayor de Edad para ser Registrado en el Sistema!");
+            return redirect()->back();
         }
 
         // CAPTURAR LA IMAGEN DEL FORM PARA LA TABLA PERSONAS
@@ -463,9 +487,10 @@ class EmpleadosController
             // REALIZAR ACTUALIZACIÓN EN LA TABLA HORARIOS_X_EMPLEADOS
             $horarioEmp->save();
 
-            // SI TODO SALE BIEN REDIRECCIONAR A LA VISTA resumenEmps
+            // SI TODO SALE BIEN REDIRECCIONAR A LA VISTA detallesEmps
             if($horarioEmp->save()){
-                return redirect()->route('empleado.show', $id_persona)->with("success", "¡Actualizado con Éxito!");
+                toastr()->success("¡Empleado Actualizado con Éxito!");
+                return redirect()->route('empleado.show', $id_persona);
             }
         }
     }
@@ -479,7 +504,9 @@ class EmpleadosController
         $empleado->estado_laboral = "Inactivo";
         $empleado->fecha_egreso = now()->setTimezone('America/Caracas');
         $empleado->save();
-        return redirect()->route('empleado.show', $id_persona)->with("success", "¡Empleado Inactivo!");
+
+        toastr()->info("¡Este Empleado ahora está Inactivo en el Sistema!");
+        return redirect()->route('empleado.show', $id_persona);
 
     }
 
@@ -493,7 +520,9 @@ class EmpleadosController
         $empleado->fecha_ingreso = now()->setTimezone('America/Caracas')->format('Y-m-d');
         $empleado->fecha_egreso = NULL;
         $empleado->save();
-        return redirect()->route('empleado.show', $id_persona)->with("success", "¡Empleado nuevamente Activo!");
+
+        toastr()->info("¡Empleado Nuevamente Activo en el Sistema!");
+        return redirect()->route('empleado.show', $id_persona);
     }
 
     // IR A LA VISTA DE DELETE EMPLEADO DESDE RESUMEN EMPLEADO
@@ -561,6 +590,7 @@ class EmpleadosController
         $persona->delete();
 
         // SI TODO SALE BIEN REDIRECCIONAR A LA VISTA resumenEmps
-        return redirect()->route('emp.viewEmp')->with("success", "¡Empleado Eliminado del Sistema con Éxito!");
+        toastr()->success("¡Empleado Eliminado del Sistema con Éxito!");
+        return redirect()->route('emp.viewEmp');
     }
 }

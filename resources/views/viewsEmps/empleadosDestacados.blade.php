@@ -22,7 +22,7 @@
         <hr class="text-white">
 
         <!-- TABLA PARA MOSTRAR LA INFO DE LOS EMPLEADOS -->
-        <table class="table table-bordered table-dark border-white text-center mt-2">
+        <table class="tabla mt-2">
             <thead class="thead">
                 <tr id="trFifo">
                     <th>Cedúla</th>
@@ -40,7 +40,7 @@
                         <td>{{number_format($item->promedio_empleado)}}%</td>
                         <td>
                             <a href="{{route('evaluaciones.empDestac', $item->id_persona)}}"
-                                class="btn btn-warning mx-1 my-1" title="Detalles">
+                                class="btn btn-outline-warning mx-1 my-1" title="Detalles">
                                 <i class='bx bxs-user-detail'></i>
                             </a>
                         </td>

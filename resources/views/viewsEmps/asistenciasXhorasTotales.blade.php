@@ -10,28 +10,9 @@
 
     <div class="caja3 container p-5" id="contenedor">
 
-        {{-- ALERTA CUANDO HAY UN REGISTRO EXITOSO --}}
-
-        @if ($mensaje = Session::get('success'))
-
-            <div class="alert alert-success text-center container w-50" role="alert">
-                {{$mensaje}}
-            </div>
-
-        @endif
-
-        {{-- ALERTA PARA ERRORES DE VALIDACION --}}
-        @if ($errors->any())
-            <div class="alert alert-danger text-center container w-75">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                @endforeach
-            </div>
-        @endif
-
         <div class="d-flex w-100 text-white text-center">
             <div>
-                <a href="{{route('asistencias.index')}}" class="btn btn-warning mx-1 my-1" title="Resumen Asistencias">
+                <a href="{{route('asistencias.index')}}" class="btn btn-outline-warning mx-1 my-1" title="Resumen Asistencias">
                     <i class='bx bx-arrow-back'></i>
                 </a>
             </div>
@@ -47,7 +28,7 @@
 
         <!-- TABLA PARA MOSTRAR LA INFO DE LOS EMPLEADOS -->
 
-        <table class="table table-bordered table-dark border-white text-center mt-4">
+        <table class="tabla mt-4">
             <thead class="thead">
                 <tr id="trFifo">
                     <th>Fechas</th>

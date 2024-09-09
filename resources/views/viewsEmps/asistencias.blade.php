@@ -9,30 +9,11 @@
 
 
     <div class="caja3 container p-5" id="contenedor">
-
-        {{-- ALERTA CUANDO HAY UN REGISTRO EXITOSO --}}
-
-        @if ($mensaje = Session::get('success'))
-
-            <div class="alert alert-success text-center container w-50" role="alert">
-                {{$mensaje}}
-            </div>
-
-        @endif
-
-        {{-- ALERTA PARA ERRORES DE VALIDACION --}}
-        @if ($errors->any())
-            <div class="alert alert-danger text-center container w-75">
-                @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                @endforeach
-            </div>
-        @endif
         
         <div class="d-flex w-100 text-center text-white">
             @if ($bolean == FALSE)
                 <div>
-                    <a href="{{route('asistencias.index')}}" class="btn btn-warning mx-1 my-1" title="Resumen Asistencias">
+                    <a href="{{route('asistencias.index')}}" class="btn btn-outline-warning mx-1 my-1" title="Resumen Asistencias">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
@@ -50,22 +31,26 @@
         <hr class="text-white">
 
         <div class="d-flex flex-column mb-3"> 
-            <div class="col">
-                <a class="btn btn-dark mb-3 boton" data-bs-toggle="modal" data-bs-target="#exampleModal_3">Crear Asistencia</a>
-                <a class="btn btn-dark mb-3 boton mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal_4">Calcular Horas Totales de un Empleado</a>
-            </div>
+            @if ($bolean == TRUE)
+                <div class="col">
+                    <a class="btn btn-outline-warning mb-3 boton" data-bs-toggle="modal" data-bs-target="#exampleModal_3">Crear Asistencia</a>
+                    <a class="btn btn-outline-warning mb-3 boton mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal_4">Calcular Horas Totales de un Empleado</a>
+                </div>
+            @endif
 
             <div class="col">
-                <form class="d-flex from-createEmp" id="formBusquedaFecha" action="{{route("asistencias.fecha")}}" method="POST">
-                    @csrf
-                    <input type="date" class="form-control bg-transparent text-white me-2" 
-                    name="fecha_asistencia" value="{{ old('fecha_asistencia') }}">   
-                    <button class="btn btn-dark boton" type="submit">
-                        <i class='bx bx-search-alt-2'></i>
-                    </button>
-                </form>
+                @if ($bolean !== FALSE)
+                    <form class="d-flex from-createEmp" id="formBusquedaFecha" action="{{route("asistencias.fecha")}}" method="POST">
+                        @csrf
+                        <input type="date" class="form-control bg-transparent text-white me-2" 
+                        name="fecha_asistencia" value="{{ old('fecha_asistencia') }}">   
+                        <button class="btn btn-outline-warning boton" type="submit">
+                            <i class='bx bx-search-alt-2'></i>
+                        </button>
+                    </form>
+                @endif
                 @if ($bolean == FALSE)
-                    <input type="text" id="buscar" class="form-control bg-transparent border-white text-white mt-3"
+                    <input type="text" id="buscar" class="form-control bg-transparent border-white text-white"
                     placeholder="Busqueda Rápida por Cédula" name="buscarUnEmp">
                 @endif
             </div>
@@ -74,7 +59,7 @@
 
         <!-- TABLA PARA MOSTRAR LA INFO DE LOS EMPLEADOS -->
 
-        <table class="table table-bordered table-dark border-white text-center">
+        <table class="tabla mt-2">
             <thead class="thead">
                 <tr id="trFifo">
                     <th>Fecha</th>

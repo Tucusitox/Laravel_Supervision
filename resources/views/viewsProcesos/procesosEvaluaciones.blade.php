@@ -9,18 +9,6 @@
 
     <div class="caja3 container p-5" id="contenedor"">
 
-        {{-- ALERTA CUANDO HAY UN REGISTRO EXITOSO --}}
-        @if ($mensaje = Session::get('success'))
-            <div class="alert alert-success text-center container w-50" role="alert">
-                {{$mensaje}}
-            </div>
-        @endif
-
-        {{-- ALERTA SI EL USUARIO NO LLENA EL CAMPO DEL INPUT DE BUSQUEDA --}}
-        @error('buscarCodigo')
-            <div class="alert alert-danger text-center container w-75">{{ $message }}</div>
-        @enderror
-
         <div class="d-flex w-100 text-center text-white">
             @if ($bolean == TRUE)
                 <div class="flex-grow-1">
@@ -28,7 +16,7 @@
                 </div>
             @else
                 <div>
-                    <a href="{{route('procesos.evaluaciones')}}" class="btn btn-warning mx-1 my-1" title="Evaluaciones Procesos">
+                    <a href="{{route('procesos.evaluaciones')}}" class="btn btn-outline-warning mx-1 my-1" title="Evaluaciones Procesos">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
@@ -40,27 +28,29 @@
         <hr class="text-white">
 
         {{-- FORMULARIO PARA BUSCAR EVALUACION POR FECHA O CODIGO --}}
-        <div class="d-flex justify-content-between align-items-center py-2">
-            <a class="btn btn-dark boton me-3" href="{{route("procesos.evaluacionCreate")}}">Crear Evaluación</a>
+        @if ($bolean !== FALSE)
+            <div class="d-flex justify-content-between align-items-center py-2">
+                <a class="btn btn-outline-warning me-3" href="{{route("procesos.evaluacionCreate")}}">Crear Evaluación</a>
 
-            <form class="d-flex flex-grow-1 from-createEmp" id="formBusquedaCodigo" action="{{ route('procesos.evaluacionFiltro') }}" method="POST">
-                @csrf
-                <input type="date" class="form-control bg-transparent text-white me-2" 
-                    name="fecha_proceso" value="{{ old('fecha_proceso') }}">
+                <form class="d-flex flex-grow-1 from-createEmp" id="formBusquedaCodigo" action="{{ route('procesos.evaluacionFiltro') }}" method="POST">
+                    @csrf
+                    <input type="date" class="form-control bg-transparent text-white me-2" 
+                        name="fecha_proceso" value="{{ old('fecha_proceso') }}">
 
-                <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2" placeholder="Buscar por Código" 
-                    name="buscarCodigo" value="{{ old('buscarCodigo') }}"> 
+                    <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2" placeholder="Buscar por Código" 
+                        name="buscarCodigo" value="{{ old('buscarCodigo') }}"> 
 
-                <button class="btn btn-dark boton" type="submit">
-                    <i class='bx bx-search-alt-2'></i>
-                </button>
-            </form>
-        </div>
-        <hr class="text-white mb-4">
+                    <button class="btn btn-outline-warning" type="submit">
+                        <i class='bx bx-search-alt-2'></i>
+                    </button>
+                </form>
+            </div>
+            <hr class="text-white mb-4"> 
+        @endif
 
         <!-- TABLA PARA MOSTRAR LAS EVALUACIONES DE LOS PROCESOS -->
 
-        <table class="table table-bordered table-dark border-white text-center mt-2">
+        <table class="tabla mt-2">
             <thead class="thead">
                 <tr id="trFifo">
                     <th>Código</th>
@@ -88,7 +78,7 @@
                         <td>{{$notas[$index]->suma_notas}}</td>
                         <td>
                             <a href="{{route('procesos.unProceso', $item->id_proceso)}}"
-                                class="btn btn-primary mx-1 my-1" title="Detalles">
+                                class="btn btn-outline-primary mx-1 my-1" title="Detalles">
                                 <i class='bx bx-cog'></i>
                             </a>
                         </td>

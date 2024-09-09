@@ -17,7 +17,7 @@
                 <h3>Código de la Falla: <b class="text-warning">{{$falla->codigo_event}}</b></h3>
                 <div>
                     <a  href="{{ route('mantenimientos.index', $falla->id_eventualidad) }}"class="btn btn-danger">Cancelar</a> 
-                    <button class="btn btn-warning mx-2">Actualizar Estatus</button>
+                    <button class="btn btn-outline-warning mx-2">Actualizar Estatus</button>
                 </div>
             </div>
             <hr class="text-white">

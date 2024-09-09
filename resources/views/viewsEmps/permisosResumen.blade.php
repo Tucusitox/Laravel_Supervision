@@ -8,24 +8,10 @@
 @section('ContenidoInterfaces') {{-- AQUI SE INDICA LO QUE PONDREMOS DENTRO DEL LAYOUT --}}
 
     <div class="caja3 container p-5" id="contenedor">
-
-        {{-- ALERTA CUANDO HAY UN REGISTRO EXITOSO --}}
-
-        @if ($mensaje = Session::get('success'))
-            <div class="alert alert-success text-center container w-50" role="alert">
-                {{$mensaje}}
-            </div>
-        @endif
-
-        {{-- ALERTA PARA ERRORES DE VALIDACION AL BUSCAR POR CODIGO--}}
-        @error('buscarCodigo')
-            <div class="alert alert-danger text-center container w-50">{{ $message }}</div>
-        @enderror
-
         <div class="d-flex w-100 text-center text-white">
             @if ($bolean == FALSE)
                 <div>
-                    <a href="{{route('permisos.index')}}" class="btn btn-warning mx-1 my-1" title="Resumen Permisos">
+                    <a href="{{route('permisos.index')}}" class="btn btn-outline-warning mx-1 my-1" title="Resumen Permisos">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
@@ -39,23 +25,23 @@
             @endif
         </div>
         <hr class="text-white">
-        <div class="d-flex justify-content-between my-4">
-            <a class="btn btn-dark boton me-3" href="{{route("permisos.create")}}">Crear Permiso</a>
 
-            <form class="d-flex from-createEmp flex-grow-1" id="formBusquedaCodigo" action="{{ route('permisos.buscarCodigo') }}" method="POST">
-                @csrf
-                <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2"
-                placeholder="Buscar por Código" name="buscarCodigo" value="{{ old('buscarCodigo') }}">   
-                <button class="btn btn-dark boton" type="submit">
-                    <i class='bx bx-search-alt-2'></i>
-                </button>
-            </form>
-        </div>
+        @if ($bolean !== FALSE)
+            <div class="d-flex justify-content-between my-4">
+                <a class="btn btn-outline-warning me-3" href="{{route("permisos.create")}}">Crear Permiso</a>
 
-        @if ($bolean == FALSE)
-            <div class="mb-3 text-start text-white">
+                <form class="d-flex from-createEmp flex-grow-1" id="formBusquedaCodigo" action="{{ route('permisos.buscarCodigo') }}" method="POST">
+                    @csrf
+                    <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2"
+                    placeholder="Buscar por Código" name="buscarCodigo" value="{{ old('buscarCodigo') }}">   
+                    <button class="btn btn-outline-warning" type="submit">
+                        <i class='bx bx-search-alt-2'></i>
+                    </button>
+                </form>
             </div>
-        @else
+        @endif
+
+        @if ($bolean !== FALSE)
             {{-- BUSCADOR POR TIPO DE PERMISO --}}
             <div class="mb-3 text-start text-white">
                 <select class="form-select text-white bg-black" id="asuntoSelect">
@@ -65,8 +51,8 @@
                     @endforeach
                 </select>
             </div>
+            <hr class="text-white mb-4">
         @endif
-        <hr class="text-white mb-4">
         
         {{-- MOSTRAR LA INFORMACIÓN CON LA CONDICIONAL DE UN BOLEANO --}}
         @if ($bolean == TRUE)
@@ -83,27 +69,24 @@
                                 {{$item->descripcion_event}}
                             </p>
                         </div>
-                        <div class="card-body border-bottom">
-                            <h6 class="text-warning">Datos del Empleado Solicitante:</h6>
-                            <p>
-                                <b class="text-warning">Nombre y Apellido:</b> {{$item->Nombre_Apellido}}<br>
-                                <b class="text-warning">C.I:</b> {{$item->identificacion}}
-                            </p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center py-2">
-                            <div class="card-footer">
-                                <h6 class="card-title">Fecha de Incio de la Falla: <b class="text-warning">{{$item->fecha_inicioEvent->format("d/m/Y")}}</b></h6>
-                                @if ($item->fecha_finEvent !== NULL)
-                                    <h6 class="card-title">Fecha de Solución de la Falla: <b class="text-warning">{{$item->fecha_inicioEvent->format("d/m/Y")}}</b></h6>
-                                @else
-                                    <h6 class="card-title">Fecha de Solución de la Falla: <b class="text-warning">Por Definir</b></h6>
-                                @endif
+                        <div class="d-flex justify-content-between align-items-center card-body border-bottom py-2">
+                            <div class="text-start">
+                                <h5 class="text-warning">Datos del Empleado Solicitante:</h5>
+                                <h6 class="card-title">Nombre y Apellido: <b class="text-warning">{{$item->Nombre_Apellido}}</b></h6>
+                                <h6 class="card-title">C.I: <b class="text-warning">{{$item->identificacion}}</b></h6>
                             </div>
-                            <div class="card-footer mx-5">
-                                <a href="{{route('permisos.permisoEmp', $item->id_persona)}}"
+                            <div class="text-center">
+                                <h5 class="text-warning">Empleado</h5>
+                                <a href="{{route('permisos.permisoEmp',$permisos->first()->id_persona)}}"
                                     class="btn btn-outline-warning" title="Detalles">
                                     <i class='bx bxs-user-detail'></i>
                                 </a>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center py-2">
+                            <div class="card-footer">
+                                <h6 class="card-title">Fecha de Incio del Permiso: <b class="text-warning">{{$item->fecha_inicioEvent->format("d/m/Y")}}</b></h6>
+                                <h6 class="card-title">Fecha de Culminación del Permiso: <b class="text-warning">{{$item->fecha_inicioEvent->format("d/m/Y")}}</b></h6>
                             </div>
                         </div>
                     </div>
@@ -121,27 +104,24 @@
                         {{$permisos->first()->descripcion_event}}
                     </p>
                 </div>
-                <div class="card-body border-bottom">
-                    <h6 class="text-warning">Datos del Empleado Solicitante:</h6>
-                    <p>
-                        <b class="text-warning">Nombre y Apellido:</b> {{$permisos->first()->Nombre_Apellido}}<br>
-                        <b class="text-warning">C.I:</b> {{$permisos->first()->identificacion}}
-                    </p>
-                </div>
-                <div class="d-flex justify-content-between align-items-center py-2">
-                    <div class="card-footer">
-                        <h6 class="card-title">Fecha de Incio de la Falla: <b class="text-warning">{{$permisos->first()->fecha_inicioEvent->format("Y-m-d")}}</b></h6>
-                        @if ($permisos->first()->fecha_finEvent !== NULL)
-                            <h6 class="card-title">Fecha de Inicio: <b class="text-warning">{{$permisos->first()->fecha_finEvent->format("Y-m-d")}}</b></h6>
-                        @else
-                            <h6 class="card-title">Fecha de Culminación: <b class="text-warning">Por Definir</b></h6>
-                        @endif
+                <div class="d-flex justify-content-between align-items-center card-body border-bottom py-2">
+                    <div class="text-start">
+                        <h5 class="text-warning">Datos del Empleado Solicitante:</h5>
+                        <h6 class="card-title">Nombre y Apellido: <b class="text-warning">{{$permisos->first()->Nombre_Apellido}}</b></h6>
+                        <h6 class="card-title">C.I: <b class="text-warning">{{$permisos->first()->identificacion}}</b></h6>
                     </div>
-                    <div class="card-footer mx-5">
+                    <div class="text-center">
+                        <h5 class="text-warning">Empleado</h5>
                         <a href="{{route('permisos.permisoEmp',$permisos->first()->id_persona)}}"
                             class="btn btn-outline-warning" title="Detalles">
                             <i class='bx bxs-user-detail'></i>
                         </a>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center py-2">
+                    <div class="card-footer">
+                        <h6 class="card-title">Fecha de Incio del Permiso: <b class="text-warning">{{$permisos->first()->fecha_inicioEvent->format("d/m/Y")}}</b></h6>
+                        <h6 class="card-title">Fecha de Culminación del Permiso: <b class="text-warning">{{$permisos->first()->fecha_inicioEvent->format("d/m/Y")}}</b></h6>
                     </div>
                 </div>
             </div>

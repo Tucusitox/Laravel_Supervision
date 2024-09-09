@@ -18,16 +18,16 @@
                 @if($ciEmp == NULL)
                     <h4 class="text-white">Crear Evaluación para un Empleado</h4>
                     {{-- BOTONES DEL FORMULARIO --}}
-                    <div class="d-flex justify-content-end nav-links">
+                    <div class="d-flex justify-content-end">
                         <a class="btn btn-danger mx-3" href="{{ route('evaluaciones.index') }}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Crear</button>
+                        <button type="submit" class="btn btn-outline-warning">Crear</button>
                     </div>
                 @else
                     <h4 class="text-white">Crear Evaluación para: <b class="text-warning">{{$ciEmp->Nombre_Apellido}}</b></h4>
                     {{-- BOTONES DEL FORMULARIO --}}
-                    <div class="d-flex justify-content-end nav-links">
+                    <div class="d-flex justify-content-end">
                         <a class="btn btn-danger mx-2" href="{{ route('empleado.show',$ciEmp->id_persona) }}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Crear</button>
+                        <button type="submit" class="btn btn-outline-warning">Crear</button>
                     </div>
                 @endif
 

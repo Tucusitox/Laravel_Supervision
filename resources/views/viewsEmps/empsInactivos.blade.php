@@ -25,7 +25,7 @@
 
         <!-- TABLA PARA MOSTRAR LA INFO DE LOS EMPLEADOS -->
 
-        <table class="table mt-2 table-bordered table-dark border-white text-center">
+        <table class="tabla mt-2">
             <thead class="thead">
                 <tr id="trFifo">
                     <th>Cedúla</th>
@@ -44,7 +44,7 @@
                         <td>{{$item->estado_laboral}}</td>
                         <td>
                             <a  href="{{route('empleado.activo', $item->id_persona)}}"
-                                class="btn btn-primary mx-1 my-1" title="Cambiar Estatus">
+                                class="btn btn-outline-primary mx-1 my-1" title="Cambiar Estatus">
                                 <i class='bx bxs-user-plus' ></i>
                             </a>
 

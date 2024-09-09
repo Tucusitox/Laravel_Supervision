@@ -17,9 +17,9 @@
             <div class="d-flex justify-content-between align-items-center container">
                 <h4 class="text-white">Ingresa los Datos Solicitados para Crear el Proceso</h4>
                 {{-- BOTONES DEL FORMULARIO --}}
-                <div class="d-flex justify-content-end nav-links">
+                <div class="d-flex justify-content-end">
                     <a class="btn btn-danger mx-3" href="{{ route('procesos.index') }}">Cancelar</a>
-                    <button type="submit" class="btn btn-dark">Crear</button>
+                    <button type="submit" class="btn btn-outline-warning">Crear</button>
                 </div>
             </div>
             <hr class="text-white">

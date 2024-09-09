@@ -9,18 +9,6 @@
 
     <div class="caja3 container p-5" id="contenedor">
 
-        {{-- ALERTA CUANDO HAY UN REGISTRO EXITOSO --}}
-        @if ($mensaje = Session::get('success'))
-            <div class="alert alert-success text-center container w-50" role="alert">
-                {{$mensaje}}
-            </div>
-        @endif
-
-        {{-- ALERTA SI EL USUARIO NO LLENA EL CAMPO DEL INPUT DE BUSQUEDA --}}
-        @error('buscarCodigo')
-            <div class="alert alert-danger text-center container w-75">{{ $message }}</div>
-        @enderror
-
         <div class="d-flex w-100 text-center text-white">
             @if ($bolean === TRUE)
                 <div class="flex-grow-1">
@@ -28,7 +16,7 @@
                 </div>
             @elseif ($bolean === "evaluado")
                 <div>
-                    <a href="{{route('procesos.evaluaciones')}}" class="btn btn-warning mx-1 my-1" title="Resumen Evaluaciones">
+                    <a href="{{route('procesos.evaluaciones')}}" class="btn btn-outline-warning mx-1 my-1" title="Resumen Evaluaciones">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
@@ -37,7 +25,7 @@
                 </div>
             @elseif ($bolean === "procesDestac")
                 <div>
-                    <a href="{{route('procesos.procesDestac')}}" class="btn btn-warning mx-1 my-1" title="Procesos Destacados">
+                    <a href="{{route('procesos.procesDestac')}}" class="btn btn-outline-warning mx-1 my-1" title="Procesos Destacados">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
@@ -46,7 +34,7 @@
                 </div>
             @else
                 <div>
-                    <a href="{{route('procesos.index')}}" class="btn btn-warning mx-1 my-1" title="Resumen Procesos">
+                    <a href="{{route('procesos.index')}}" class="btn btn-outline-warning mx-1 my-1" title="Resumen Procesos">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
@@ -58,24 +46,26 @@
         <hr class="text-white">
 
         {{-- FORMULARIO PARA BUSCAR UN PROCESO POR FECHA O CODIGO --}}
-        <div class="d-flex justify-content-between align-items-center py-2">
-            <a class="btn btn-dark boton me-3" href="{{route("procesos.create")}}">Crear Proceso</a>
+        @if ($bolean === TRUE)
+            <div class="d-flex justify-content-between align-items-center py-2">
+                <a class="btn btn-outline-warning boton me-3" href="{{route("procesos.create")}}">Crear Proceso</a>
 
-            <form class="d-flex flex-grow-1 from-createEmp" id="formBusquedaCodigo" action="{{ route('procesos.show') }}" method="POST">
-                @csrf
-                <input type="date" class="form-control bg-transparent text-white me-2" 
-                    name="fecha_proceso" value="{{ old('fecha_proceso') }}">
+                <form class="d-flex flex-grow-1 from-createEmp" id="formBusquedaCodigo" action="{{ route('procesos.show') }}" method="POST">
+                    @csrf
+                    <input type="date" class="form-control bg-transparent text-white me-2" 
+                        name="fecha_proceso" value="{{ old('fecha_proceso') }}">
 
-                <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2" placeholder="Buscar por Código" 
-                    name="buscarCodigo" value="{{ old('buscarCodigo') }}"> 
+                    <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2" placeholder="Buscar por Código" 
+                        name="buscarCodigo" value="{{ old('buscarCodigo') }}"> 
 
-                <button class="btn btn-dark boton" type="submit">
-                    <i class='bx bx-search-alt-2'></i>
-                </button>
-            </form>
-        </div>
-        <hr class="text-white">
-
+                    <button class="btn btn-outline-warning boton" type="submit">
+                        <i class='bx bx-search-alt-2'></i>
+                    </button>
+                </form>
+            </div>
+            <hr class="text-white">
+        @endif
+        
         {{-- MOSTRAR LOS PROCESOS EN CARDS COON UN CONDICIONAL --}}
         @foreach ($procesos as $item)
             <div class="card w-100 my-3 bg-transparent border border-white text-white p-2">
@@ -107,14 +97,15 @@
                             </h6>
                         </div>
                         <div class="text-center">
-                            <a href="{{route("procesos.evaluacionShow",$item->id_proceso)}}" class="btn btn-primary mx-1 my-1" title="Crear una Evaluación">
+                            <a href="{{route("procesos.evaluacionShow",$item->id_proceso)}}" 
+                                class="btn btn-outline-primary mx-1 my-1" title="Crear una Evaluación">
                                 <i class='bx bxs-user-check'></i>
                             </a>
                             <a href="{{route("procesos.edit", $item->id_proceso)}}" 
-                                class="btn btn-info mx-1 my-1" title="Editar">
+                                class="btn btn-outline-info mx-1 my-1" title="Editar">
                                 <i class='bx bx-edit'></i>
                             </a>
-                            <a href="{{route("procesos.delete",$item->id_proceso)}}" class="btn btn-danger mx-1" title="Eliminar">
+                            <a href="{{route("procesos.delete",$item->id_proceso)}}" class="btn btn-outline-danger mx-1" title="Eliminar">
                                 <i class='bx bx-trash'></i>
                             </a>
                         </div>

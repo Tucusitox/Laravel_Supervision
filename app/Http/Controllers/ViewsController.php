@@ -88,24 +88,22 @@ class ViewsController
                 ->get();
             
                 if($detallEmp->isNotEmpty()) {
-                    return view("viewsEmps.detallesEmp", compact("detallEmp"));
+                    $bolean = TRUE;
+                    return view("viewsEmps.detallesEmp", compact("detallEmp","bolean"));
                 } 
                 else{
-                    return redirect()->route('emp.viewEmp')->withErrors([
-                        'buscarUnEmp' => '¡Empleado Inactivo! Búscalo en la Sección de "Empleados Inactivos"'
-                    ]);
+                    toastr()->error("¡Empleado Inactivo! Búscalo en la Sección de Empleados Inactivos");
+                    return redirect()->back();
                 }
             }
             else{
-                return redirect()->route('emp.viewEmp')->withErrors([
-                    'buscarUnEmp' => '¡Este Empleado no existe en el Sistema!'
-                ]);
+                toastr()->error("¡Este Empleado no existe en el Sistema!");
+                return redirect()->back();
             }
         }
         else{
-            return redirect()->route('emp.viewEmp')->withErrors([
-                'buscarUnEmp' => '¡Ingrese un valor en el Campo para Continuar!'
-            ]);
+            toastr()->error("¡Ingrese un valor en el Campo para Continuar!");
+            return redirect()->back();
         }
     }
 

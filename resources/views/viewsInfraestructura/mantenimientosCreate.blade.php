@@ -19,14 +19,14 @@
                     {{-- BOTONES DEL FORMULARIO --}}
                     <div class="d-flex justify-content-end nav-links">
                         <a class="btn btn-danger mx-3" href="{{ route('mantenimientos.index') }}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Reportar</button>
+                        <button type="submit" class="btn btn-outline-warning">Reportar</button>
                     </div>
                 @else
                     <h4 class="text-white">Reportar Falla para el Equipo: <b class="text-warning">{{$numEquipo->nombre_element}}</b></h4>
                     {{-- BOTONES DEL FORMULARIO --}}
                     <div class="d-flex justify-content-end nav-links">
                         <a class="btn btn-danger mx-2" href="{{ route('infraestructura.index') }}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Reportar</button>
+                        <button type="submit" class="btn btn-outline-warning">Reportar</button>
                     </div>
                 @endif
             </div>

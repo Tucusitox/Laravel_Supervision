@@ -2,7 +2,7 @@
 <div class="modal fade mt-5" id="exampleModal_4">
 
     <div class="modal-dialog">
-        <div class="modal-content bg-dark text-white">
+        <div class="modal-content bg-black text-white">
             <div class="modal-header">
                 <h1 class="modal-title fs-5">Ingrese los Datos Solicitados</h1>
                 <button class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -31,7 +31,7 @@
 
                 <div class="mt-2 text-center text-white">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success mx-2">Calcular Horas</button>
+                    <button type="submit" class="btn btn-outline-success mx-2">Calcular Horas</button>
                 </div>
 
             </form>

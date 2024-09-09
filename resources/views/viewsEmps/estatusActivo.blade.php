@@ -21,12 +21,12 @@
         </p>
         <hr class="text-white">
 
-        <table class="table table-bordered table-dark border-white text-center">
-            <thead >
+        <table class="tabla">
+            <thead class="text-warning">
                 <tr>
-                    <th scope="col">Identificación</th>
-                    <th scope="col">Nombre y Apellido</th>
-                    <th scope="col">Estado Laboral</th>
+                    <th>Identificación</th>
+                    <th>Nombre y Apellido</th>
+                    <th>Estado Laboral</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,7 +47,7 @@
                 <a  href="{{ route('emps.inactivos', $empInactivo->first()->id_persona) }}"
                 class="btn btn-danger">Cancelar</a> 
                 
-                <button class="btn btn-warning mx-2">Si, Estoy seguro</button>
+                <button class="btn btn-outline-warning mx-2">Si, Estoy seguro</button>
             </div>
 
         </form>

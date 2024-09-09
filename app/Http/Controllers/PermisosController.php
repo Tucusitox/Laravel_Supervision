@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Models\Eventualidade;
 use App\Models\EmpleadosXEventualidade;
+use App\Models\EvaluacionesXItemsemp;
+use Illuminate\Support\Facades\DB;
 
 class PermisosController
 {
@@ -31,22 +33,25 @@ class PermisosController
     // BUSCAR UN PERMISO POR EL CODIGO
     public function buscarCodigo(Request $request)
     {
-        $request->validate([
-            "buscarCodigo" => "required|regex:/^P-\d{4}$/"
-        ]);
-
         $codigoPermiso = $request->post("buscarCodigo"); 
-        $permisos = Eventualidade::select("codigo_event","identificacion","asunto_event","descripcion_event",
-                                          "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event","id_persona")
-        ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
-        ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
-        ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
-        ->join("personas","personas.id_persona","=","empleados.fk_persona")
-        ->where("codigo_event","=",$codigoPermiso)
-        ->get();
 
-        $bolean = FALSE;
-        return view("viewsEmps.permisosResumen", compact("permisos","bolean"));
+        if(preg_match('/^P-\d{4}$/', $codigoPermiso)){
+            $permisos = Eventualidade::select("codigo_event","identificacion","asunto_event","descripcion_event",
+                                              "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event","id_persona")
+            ->selectRaw("CONCAT(nombre,' ',apellido) AS Nombre_Apellido")
+            ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
+            ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
+            ->join("personas","personas.id_persona","=","empleados.fk_persona")
+            ->where("codigo_event","=",$codigoPermiso)
+            ->get();
+
+            $bolean = FALSE;
+            return view("viewsEmps.permisosResumen", compact("permisos","bolean"));
+        }
+        else{
+            toastr()->warning("¡El Código no conicide con el Formato Requerido!");
+            return redirect()->back();
+        }
     }
 
     // CREEAR PERMISO DESDE VISTA DETALLES EMPLEADOS
@@ -130,14 +135,14 @@ class PermisosController
                 $empXevent->fk_empleado = $idEmp->first()->id_persona;
                 $empXevent->fk_eventualidad = $idEvent;
                 $empXevent->save();
-
-                return redirect()->route('permisos.index')->with("success", "¡Permiso Registrado con Éxito!");
+                
+                toastr()->success("¡Permiso Registrado con Éxito!");
+                return redirect()->route('permisos.index');
             }
         }
         else{
-            return redirect()->back()->withErrors([
-                'identificacion' => '¡Este Empleado no existe en el Sistema!'
-            ]);
+            toastr()->error("¡Este Empleado no existe en el Sistema!");
+            return redirect()->back();
         }
     }
 
@@ -161,6 +166,32 @@ class PermisosController
         ->where("id_persona","=", $id_persona)
         ->get();
 
-        return view("viewsEmps.detallesEmp",compact("detallEmp","bolean"));
+        $notasEmp = EvaluacionesXItemsemp::select("codigo_eval","fecha_evaluacion")
+        ->selectRaw('
+                MAX(CASE WHEN rn = 1 THEN nota_itemEmpleado END) AS nota1,
+                MAX(CASE WHEN rn = 2 THEN nota_itemEmpleado END) AS nota2,
+                MAX(CASE WHEN rn = 3 THEN nota_itemEmpleado END) AS nota3,
+                MAX(CASE WHEN rn = 4 THEN nota_itemEmpleado END) AS nota4,
+                MAX(CASE WHEN rn = 5 THEN nota_itemEmpleado END) AS nota5,
+                SUM(nota_itemEmpleado) AS suma_notas
+        ')
+        ->from(DB::raw('(SELECT fk_evaluacion, nota_itemEmpleado, ROW_NUMBER() OVER (PARTITION BY fk_evaluacion ORDER BY id_eval_itemEmp) AS rn FROM evaluaciones_x_itemsemps) AS subquery'))
+        ->groupBy('subquery.fk_evaluacion')
+        ->join("evaluaciones", "evaluaciones.id_evaluacion", "=", "subquery.fk_evaluacion")
+        ->join("empleados_x_evaluaciones", "empleados_x_evaluaciones.fk_evaluacion", "=", "evaluaciones.id_evaluacion")
+        ->join("empleados", "empleados_x_evaluaciones.fk_empleado", "=", "empleados.id_empleado")
+        ->join("personas", "empleados.fk_persona", "=", "personas.id_persona")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+
+        $permisosEmp = Eventualidade::select("codigo_event","asunto_event","descripcion_event",
+                                            "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event")
+        ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
+        ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
+        ->join("personas","personas.id_persona","=","empleados.fk_persona")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+        
+        return view("viewsEmps.detallesEmp",compact("detallEmp","notasEmp","permisosEmp","bolean"));
     }
 }

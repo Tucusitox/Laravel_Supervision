@@ -23,12 +23,12 @@
                 @if($bolean == TRUE)
                     <div class="d-flex justify-content-end nav-links">
                         <a class="btn btn-danger mx-3" href="{{route('emp.viewEmp')}}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Guardar</button>
+                        <button type="submit" class="btn btn-outline-warning">Guardar</button>
                     </div>
                 @else
                     <div class="d-flex justify-content-end nav-links">
                         <a class="btn btn-danger mx-3" href="{{route('empleado.show', $oldEmp->first()->id_persona)}}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Guardar</button>
+                        <button type="submit" class="btn btn-outline-warning">Guardar</button>
                     </div>
                 @endif
     
@@ -51,7 +51,7 @@
 
                     <div class="container mb-5">
                         <img src="{{ asset($oldEmp->first()->foto) }}" 
-                        style="max-height: 250px; border-radius: 10px; border: 3px solid #ffff;" id="img"/>
+                        style="max-height: 250px; border-radius: 10px; border: 2px solid #ffff;" id="img"/>
                     </div>
     
                     <div class="d-flex justify-content-center container contenedor-btn-file bordeado w-75">

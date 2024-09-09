@@ -17,16 +17,16 @@
                 @if($codProces == NULL)
                     <h4 class="text-white">Crear Evaluación para un Proceso</h4>
                     {{-- BOTONES DEL FORMULARIO --}}
-                    <div class="d-flex justify-content-end nav-links">
+                    <div class="d-flex justify-content-end">
                         <a class="btn btn-danger mx-3" href="{{ route('procesos.evaluaciones') }}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Crear</button>
+                        <button type="submit" class="btn btn-outline-warning">Crear</button>
                     </div>
                 @else
                     <h4 class="text-white">Crear Evaluación para el Proceso: <b class="text-warning">{{$codProces->codigo_proces}}</b></h4>
                     {{-- BOTONES DEL FORMULARIO --}}
-                    <div class="d-flex justify-content-end nav-links">
+                    <div class="d-flex justify-content-end">
                         <a class="btn btn-danger mx-2" href="{{ route('procesos.index') }}">Cancelar</a>
-                        <button type="submit" class="btn btn-dark">Crear</button>
+                        <button type="submit" class="btn btn-outline-warning">Crear</button>
                     </div>
                 @endif
 

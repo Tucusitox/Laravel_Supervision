@@ -19,7 +19,7 @@
                 {{-- BOTONES DEL FORMULARIO --}}
                 <div class="d-flex justify-content-end nav-links">
                     <a class="btn btn-danger mx-3" href="{{ route('infraestructura.index') }}">Cancelar</a>
-                    <button type="submit" class="btn btn-dark">Registrar</button>
+                    <button type="submit" class="btn btn-outline-warning">Registrar</button>
                 </div>
             </div>
             <hr class="text-white">

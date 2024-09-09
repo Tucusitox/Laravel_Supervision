@@ -9,18 +9,6 @@
 
     <div class="caja3 container p-5" id="contenedor"">
 
-        {{-- ALERTA CUANDO HAY UN REGISTRO EXITOSO --}}
-        @if ($mensaje = Session::get('success'))
-            <div class="alert alert-success text-center container w-50" role="alert">
-                {{$mensaje}}
-            </div>
-        @endif
-
-        {{-- ALERTA SI EL USUARIO NO LLENA EL CAMPO DEL INPUT DE BUSQUEDA --}}
-        @error('buscarCodigo')
-            <div class="alert alert-danger text-center container w-75">{{ $message }}</div>
-        @enderror
-
         <div class="d-flex w-100 text-center text-white">
             @if ($bolean == TRUE)
                 <div class="flex-grow-1">
@@ -28,7 +16,7 @@
                 </div>
             @else
                 <div>
-                    <a href="{{route('evaluaciones.index')}}" class="btn btn-warning mx-1 my-1" title="Resumen Permisos">
+                    <a href="{{route('evaluaciones.index')}}" class="btn btn-outline-warning mx-1 my-1" title="Resumen Permisos">
                         <i class='bx bx-arrow-back'></i>
                     </a>
                 </div>
@@ -40,62 +28,56 @@
         <hr class="text-white">
 
         {{-- FORMULARIO PARA BUSCAR EVALUACION POR FECHA O CODIGO --}}
-        <div class="d-flex justify-content-between align-items-center py-2">
-            <a class="btn btn-dark boton me-3" href="{{route("evaluaciones.create")}}">Crear Evaluación</a>
+        @if ($bolean !== FALSE)
+            <div class="d-flex justify-content-between align-items-center py-2">
+                <a class="btn btn-outline-warning me-3" href="{{route("evaluaciones.create")}}">Crear Evaluación</a>
 
-            <form class="d-flex flex-grow-1 from-createEmp" id="formBusquedaCodigo" action="{{ route('evaluaciones.find') }}" method="POST">
-                @csrf
-                <input type="date" class="form-control bg-transparent text-white me-2" 
-                    name="fecha_evaluacion" value="{{ old('fecha_evaluacion') }}">
+                <form class="d-flex flex-grow-1 from-createEmp" id="formBusquedaCodigo" action="{{ route('evaluaciones.find') }}" method="POST">
+                    @csrf
+                    <input type="date" class="form-control bg-transparent text-white me-2" 
+                        name="fecha_evaluacion" value="{{ old('fecha_evaluacion') }}">
 
-                <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2" placeholder="Buscar por Código" 
-                    name="buscarCodigo" value="{{ old('buscarCodigo') }}"> 
+                    <input type="text" id="buscarForm" class="form-control bg-transparent border-white text-white me-2" placeholder="Buscar por Código" 
+                        name="buscarCodigo" value="{{ old('buscarCodigo') }}"> 
 
-                <button class="btn btn-dark boton" type="submit">
-                    <i class='bx bx-search-alt-2'></i>
-                </button>
-            </form>
-        </div>
-        <hr class="text-white mb-4">
+                    <button class="btn btn-outline-warning" type="submit">
+                        <i class='bx bx-search-alt-2'></i>
+                    </button>
+                </form>
+            </div>
+            <hr class="text-white mb-4"> 
+        @endif
 
-        <!-- TABLA PARA MOSTRAR LAS EVALUACIONES DE LOS EMPLEADOS -->
-
-        <table class="table table-bordered table-dark border-white text-center mt-2">
-            <thead class="thead">
-                <tr id="trFifo">
-                    <th>Código</th>
-                    <th>Fecha</th>
-                    <th>Higiene</th>
-                    <th>Vestimenta</th>
-                    <th>Buen Trato->Cliente</th>
-                    <th>Conocimiento->Menús</th>
-                    <th>Trabajo en Equipo</th>
-                    <th>Calificación</th>
-                    <th>Empleado</th>
-                </tr>
-            </thead>
-            {{-- PARA MOSTRAR LA INFORMCION ITERAMOS CON UN BUCLE FOREACH --}}
-            <tbody>
-                @foreach ($evaluaciones as $index => $item)
-                    <tr class="tr">
-                        <td>{{$item->codigo_eval}}</>
-                        <td>{{\Carbon\Carbon::parse($item->fecha_evaluacion)->format('d/m/Y')}}</td>
-                        <td>{{$notas[$index]->nota1}}</td>
-                        <td>{{$notas[$index]->nota2}}</td>
-                        <td>{{$notas[$index]->nota3}}</td>
-                        <td>{{$notas[$index]->nota4}}</td>
-                        <td>{{$notas[$index]->nota5}}</td>
-                        <td>{{$notas[$index]->suma_notas}}</td>
-                        <td>
+        <div class="d-flex flex-wrap justify-content-center mt-4">
+            @foreach ($evaluaciones as $item)
+                <div class="card bg-transparent text-white border mb-3 me-3" style="width: 500px;">
+                    <div class="card-header border-bottom d-flex justify-content-between">
+                        <h5>Código de la Evaluación: <b class="text-warning">{{$item->codigo_eval}}</b></h5>
+                    </div>
+                    <div class="card-body border-bottom d-flex justify-content-between">
+                        <div class="text-start">
+                            <h5 class="card-title text-warning">Aspectos Evaluados</h5>
+                            <h6 class="card-title">Higiene: <b class="text-warning">{{$item->nota1}}</b></h6>
+                            <h6 class="card-title">Vestimenta: <b class="text-warning">{{$item->nota2}}</b></h6>
+                            <h6 class="card-title">Buen Trato al Cliente: <b class="text-warning">{{$item->nota3}}</b></h6>
+                            <h6 class="card-title">Conocimiento de Menús: <b class="text-warning">{{$item->nota4}}</b></h6>
+                            <h6 class="card-title">Trabajo en Equipo: <b class="text-warning">{{$item->nota5}}</b></h6>
+                            <h6 class="card-title">Calificación Total: <b class="text-success">{{$item->suma_notas}}</b></h6>
+                        </div>
+                        <div class="text-center">
+                            <h5 class="card-title text-warning">Empleado</h5>
                             <a href="{{route('evaluaciones.showEmp', $item->id_persona)}}"
-                                class="btn btn-warning mx-1 my-1" title="Detalles">
-                                <i class='bx bxs-user-detail'></i>
+                                class="btn btn-outline-warning" title="Detalles">
+                                {{$item->identificacion}}
                             </a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <h6 class="card-title">Fecha de la Evaluación: <b class="text-warning">{{\Carbon\Carbon::parse($item->fecha_evaluacion)->format('d/m/Y')}}</b></h6>
+                    </div>
+                </div>
+            @endforeach
+        </div>
 
     </div>
 

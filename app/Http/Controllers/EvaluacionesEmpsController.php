@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Evaluacione;
 use App\Models\Persona;
+use App\Models\Eventualidade;
 use App\Models\EmpleadosXEvaluacione;
 use App\Models\EvaluacionesXItemsemp;
 use Illuminate\Support\Facades\DB;
@@ -15,29 +16,24 @@ class EvaluacionesEmpsController
     public function index()
     {
         $bolean = TRUE;
-        $notas = EvaluacionesXItemsemp::selectRaw('
-            fk_evaluacion,
-            MAX(CASE WHEN rn = 1 THEN nota_itemEmpleado END) AS nota1,
-            MAX(CASE WHEN rn = 2 THEN nota_itemEmpleado END) AS nota2,
-            MAX(CASE WHEN rn = 3 THEN nota_itemEmpleado END) AS nota3,
-            MAX(CASE WHEN rn = 4 THEN nota_itemEmpleado END) AS nota4,
-            MAX(CASE WHEN rn = 5 THEN nota_itemEmpleado END) AS nota5,
-            SUM(nota_itemEmpleado) AS suma_notas
+        $evaluaciones = EvaluacionesXItemsemp::select("codigo_eval","fecha_evaluacion","identificacion","id_persona")
+        ->selectRaw('
+                MAX(CASE WHEN rn = 1 THEN nota_itemEmpleado END) AS nota1,
+                MAX(CASE WHEN rn = 2 THEN nota_itemEmpleado END) AS nota2,
+                MAX(CASE WHEN rn = 3 THEN nota_itemEmpleado END) AS nota3,
+                MAX(CASE WHEN rn = 4 THEN nota_itemEmpleado END) AS nota4,
+                MAX(CASE WHEN rn = 5 THEN nota_itemEmpleado END) AS nota5,
+                SUM(nota_itemEmpleado) AS suma_notas
         ')
         ->from(DB::raw('(SELECT fk_evaluacion, nota_itemEmpleado, ROW_NUMBER() OVER (PARTITION BY fk_evaluacion ORDER BY id_eval_itemEmp) AS rn FROM evaluaciones_x_itemsemps) AS subquery'))
-        ->groupBy('fk_evaluacion')
+        ->groupBy('subquery.fk_evaluacion')
+        ->join("evaluaciones", "evaluaciones.id_evaluacion", "=", "subquery.fk_evaluacion")
+        ->join("empleados_x_evaluaciones", "empleados_x_evaluaciones.fk_evaluacion", "=", "evaluaciones.id_evaluacion")
+        ->join("empleados", "empleados_x_evaluaciones.fk_empleado", "=", "empleados.id_empleado")
+        ->join("personas", "empleados.fk_persona", "=", "personas.id_persona")
         ->get();
 
-        $evaluaciones = Persona::select("id_persona","id_evaluacion",
-                                        "codigo_eval","fecha_evaluacion")
-        ->join("empleados", "empleados.fk_persona","=","personas.id_persona")
-        ->join("empleados_x_evaluaciones","empleados_x_evaluaciones.fk_empleado","=","empleados.id_empleado")
-        ->join("evaluaciones","evaluaciones.id_evaluacion","=","empleados_x_evaluaciones.fk_evaluacion")
-        ->orderBy("fecha_evaluacion","desc")
-        ->get();
-
-        //return $notas;
-        return view("viewsEmps.evaluacionResumen",compact("notas","evaluaciones","bolean"));
+        return view("viewsEmps.evaluacionResumen",compact("evaluaciones","bolean"));
     }
 
     // VISTA PARA CREAR EVALUACION DE UN EMPLEADO
@@ -132,14 +128,14 @@ class EvaluacionesEmpsController
                 $empXeval->save();
 
                 if($empXeval->save()){
-                    return redirect()->route('evaluaciones.index')->with("success", "¡Evaluación Realizada con Éxito!");
+                    toastr()->success("¡Evaluación Realizada con Éxito!");
+                    return redirect()->route('evaluaciones.index');
                 }
             }
         }
         else{
-            return redirect()->back()->withErrors([
-                'identificacion' => '¡Este Empleado no existe en el Sistema!'
-            ]);
+            toastr()->error("¡Este Empleado no Existe en el Sistema!");
+            return redirect()->back();
         }
     }
 
@@ -152,43 +148,35 @@ class EvaluacionesEmpsController
 
         if (preg_match('/^E-\d{4}$/', $codigEvaL) || preg_match('/^\d{4}\-\d{2}\-\d{2}$/', $fechaEvaL)){
 
-            $notas = EvaluacionesXItemsemp::selectRaw('
-                fk_evaluacion,
-                MAX(CASE WHEN rn = 1 THEN nota_itemEmpleado END) AS nota1,
-                MAX(CASE WHEN rn = 2 THEN nota_itemEmpleado END) AS nota2,
-                MAX(CASE WHEN rn = 3 THEN nota_itemEmpleado END) AS nota3,
-                MAX(CASE WHEN rn = 4 THEN nota_itemEmpleado END) AS nota4,
-                MAX(CASE WHEN rn = 5 THEN nota_itemEmpleado END) AS nota5,
-                SUM(nota_itemEmpleado) AS suma_notas
+            $evaluaciones = EvaluacionesXItemsemp::select("codigo_eval","fecha_evaluacion","identificacion","id_persona")
+            ->selectRaw('
+                    MAX(CASE WHEN rn = 1 THEN nota_itemEmpleado END) AS nota1,
+                    MAX(CASE WHEN rn = 2 THEN nota_itemEmpleado END) AS nota2,
+                    MAX(CASE WHEN rn = 3 THEN nota_itemEmpleado END) AS nota3,
+                    MAX(CASE WHEN rn = 4 THEN nota_itemEmpleado END) AS nota4,
+                    MAX(CASE WHEN rn = 5 THEN nota_itemEmpleado END) AS nota5,
+                    SUM(nota_itemEmpleado) AS suma_notas
             ')
             ->from(DB::raw('(SELECT fk_evaluacion, nota_itemEmpleado, ROW_NUMBER() OVER (PARTITION BY fk_evaluacion ORDER BY id_eval_itemEmp) AS rn FROM evaluaciones_x_itemsemps) AS subquery'))
-            ->join('evaluaciones', 'evaluaciones.id_evaluacion', '=', 'subquery.fk_evaluacion')
-            ->groupBy('fk_evaluacion')
-            ->where("codigo_eval",$codigEvaL)
-            ->orwhere("fecha_evaluacion",$fechaEvaL)
-            ->get();
-            
-            $evaluaciones = Persona::select("id_persona","id_evaluacion",
-                                                "codigo_eval","fecha_evaluacion")
-            ->join("empleados", "empleados.fk_persona","=","personas.id_persona")
-            ->join("empleados_x_evaluaciones","empleados_x_evaluaciones.fk_empleado","=","empleados.id_empleado")
-            ->join("evaluaciones","evaluaciones.id_evaluacion","=","empleados_x_evaluaciones.fk_evaluacion")
+            ->groupBy('subquery.fk_evaluacion')
+            ->join("evaluaciones", "evaluaciones.id_evaluacion", "=", "subquery.fk_evaluacion")
+            ->join("empleados_x_evaluaciones", "empleados_x_evaluaciones.fk_evaluacion", "=", "evaluaciones.id_evaluacion")
+            ->join("empleados", "empleados_x_evaluaciones.fk_empleado", "=", "empleados.id_empleado")
+            ->join("personas", "empleados.fk_persona", "=", "personas.id_persona")
             ->where("codigo_eval",$codigEvaL)
             ->orwhere("fecha_evaluacion",$fechaEvaL)
             ->get();
                 
-            if($notas->isNotEmpty() && $evaluaciones->isNotEmpty()){
-                return view("viewsEmps.evaluacionResumen",compact("notas","evaluaciones","bolean"));
+            if($evaluaciones->isNotEmpty()){
+                return view("viewsEmps.evaluacionResumen",compact("evaluaciones","bolean"));
             }else{
-                return redirect()->route('evaluaciones.index')->withErrors([
-                    'buscarCodigo' => '¡No se Encontraron Evaluaciones con el Código ni con la Fecha Indicadas!'
-                ]);
+                toastr()->warning("¡No se Encontraron Evaluaciones en la Fecha o con el Código Indicados!");
+                return redirect()->back();
             }
         }
         else{
-            return redirect()->route('evaluaciones.index')->withErrors([
-                'buscarCodigo' => '¡El Código o La Fecha no conicide con el Formato Requerido!'
-            ]);
+            toastr()->warning("¡El Código o La Fecha no conicide con el Formato Requerido!");
+            return redirect()->back();
         }
     }
 
@@ -230,7 +218,33 @@ class EvaluacionesEmpsController
         ->where("id_persona","=", $id_persona)
         ->get();
 
-        return view("viewsEmps.detallesEmp",compact("detallEmp","bolean"));
+        $notasEmp = EvaluacionesXItemsemp::select("codigo_eval","fecha_evaluacion")
+        ->selectRaw('
+                MAX(CASE WHEN rn = 1 THEN nota_itemEmpleado END) AS nota1,
+                MAX(CASE WHEN rn = 2 THEN nota_itemEmpleado END) AS nota2,
+                MAX(CASE WHEN rn = 3 THEN nota_itemEmpleado END) AS nota3,
+                MAX(CASE WHEN rn = 4 THEN nota_itemEmpleado END) AS nota4,
+                MAX(CASE WHEN rn = 5 THEN nota_itemEmpleado END) AS nota5,
+                SUM(nota_itemEmpleado) AS suma_notas
+        ')
+        ->from(DB::raw('(SELECT fk_evaluacion, nota_itemEmpleado, ROW_NUMBER() OVER (PARTITION BY fk_evaluacion ORDER BY id_eval_itemEmp) AS rn FROM evaluaciones_x_itemsemps) AS subquery'))
+        ->groupBy('subquery.fk_evaluacion')
+        ->join("evaluaciones", "evaluaciones.id_evaluacion", "=", "subquery.fk_evaluacion")
+        ->join("empleados_x_evaluaciones", "empleados_x_evaluaciones.fk_evaluacion", "=", "evaluaciones.id_evaluacion")
+        ->join("empleados", "empleados_x_evaluaciones.fk_empleado", "=", "empleados.id_empleado")
+        ->join("personas", "empleados.fk_persona", "=", "personas.id_persona")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+
+        $permisosEmp = Eventualidade::select("codigo_event","asunto_event","descripcion_event",
+                                    "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event")
+        ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
+        ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
+        ->join("personas","personas.id_persona","=","empleados.fk_persona")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+
+        return view("viewsEmps.detallesEmp",compact("detallEmp","notasEmp","permisosEmp","bolean"));
     }
 
     // IR A LA VISTA DETALLES EMPLEADOS DESDE EMPLEADOS DESTACADOS
@@ -238,9 +252,9 @@ class EvaluacionesEmpsController
     {
         $bolean = "destacado";
         $detallEmp = Persona::select("id_persona","tipo_identificacion","identificacion","foto","nombre","apellido",
-                    "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
-                    "tipo_empleado","nombre_horario","descripcion_horario","estado_laboral","fecha_ingreso",
-                    "fecha_egreso","nombre_genero")
+                            "fecha_nacimiento","direccion","tlf_celular","tlf_local","nombre_car","nombre_espacio",
+                            "tipo_empleado","nombre_horario","descripcion_horario","estado_laboral","fecha_ingreso",
+                            "fecha_egreso","nombre_genero")
         ->selectRaw("TIMESTAMPDIFF(YEAR, fecha_nacimiento, NOW()) AS edad_empleado")
         ->join("empleados", "empleados.fk_persona","=","personas.id_persona")
         ->join("tipos_emps", "tipos_emps.id_tipo_emp","=","empleados.fk_tipo_emp")
@@ -253,6 +267,32 @@ class EvaluacionesEmpsController
         ->where("id_persona","=", $id_persona)
         ->get();
 
-        return view("viewsEmps.detallesEmp",compact("detallEmp","bolean"));
+        $notasEmp = EvaluacionesXItemsemp::select("codigo_eval","fecha_evaluacion")
+        ->selectRaw('
+            MAX(CASE WHEN rn = 1 THEN nota_itemEmpleado END) AS nota1,
+            MAX(CASE WHEN rn = 2 THEN nota_itemEmpleado END) AS nota2,
+            MAX(CASE WHEN rn = 3 THEN nota_itemEmpleado END) AS nota3,
+            MAX(CASE WHEN rn = 4 THEN nota_itemEmpleado END) AS nota4,
+            MAX(CASE WHEN rn = 5 THEN nota_itemEmpleado END) AS nota5,
+            SUM(nota_itemEmpleado) AS suma_notas
+        ')
+        ->from(DB::raw('(SELECT fk_evaluacion, nota_itemEmpleado, ROW_NUMBER() OVER (PARTITION BY fk_evaluacion ORDER BY id_eval_itemEmp) AS rn FROM evaluaciones_x_itemsemps) AS subquery'))
+        ->groupBy('subquery.fk_evaluacion')
+        ->join("evaluaciones", "evaluaciones.id_evaluacion", "=", "subquery.fk_evaluacion")
+        ->join("empleados_x_evaluaciones", "empleados_x_evaluaciones.fk_evaluacion", "=", "evaluaciones.id_evaluacion")
+        ->join("empleados", "empleados_x_evaluaciones.fk_empleado", "=", "empleados.id_empleado")
+        ->join("personas", "empleados.fk_persona", "=", "personas.id_persona")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+
+        $permisosEmp = Eventualidade::select("codigo_event","asunto_event","descripcion_event",
+                                        "fecha_inicioEvent","fecha_finEvent","fechaCreacion_event")
+        ->join("empleados_x_eventualidades","empleados_x_eventualidades.fk_eventualidad","=","eventualidades.id_eventualidad")
+        ->join("empleados","empleados.id_empleado","=","empleados_x_eventualidades.fk_empleado")
+        ->join("personas","personas.id_persona","=","empleados.fk_persona")
+        ->where("id_persona","=", $id_persona)
+        ->get();
+
+        return view("viewsEmps.detallesEmp",compact("detallEmp","notasEmp","permisosEmp","bolean"));
     }
 }
