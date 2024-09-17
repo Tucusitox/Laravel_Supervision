@@ -99,9 +99,9 @@
 
             <div class="mb-3 text-white">
                 <label class="form-label"><b>Dirección:</b></label>
-                <input type="text" class="form-control bg-transparent text-white" 
-                placeholder="Dirección de residencia" name="direccion" 
-                value="{{ old('direccion') }}"></input>
+                <textarea type="text" class="form-control bg-transparent text-white" 
+                placeholder="Dirección de residencia"rows="4" maxlength="2000"
+                 name="direccion">{{ old('direccion') }}</textarea>
             </div>
             @error('direccion')
                 <div class="alert alert-danger mt-3">{{ $message }}</div>

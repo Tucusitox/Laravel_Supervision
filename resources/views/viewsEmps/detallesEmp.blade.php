@@ -63,11 +63,11 @@
             <article class="active">
 
                 <div class="d-flex container">
-                    <div class="mt-4 mx-5">
+                    <div class="mt-4 mx-5" style="max-width: 400px">
                         <img src="{{ asset($detallEmp->first()->foto) }}" 
                         style="max-width: 350px; max-height: 300px; border-radius: 10px; border: 1px solid #ffc107;;" id="img"/>
                     </div>
-                    <div class="text-white border-end mt-3 px-1 w-50">
+                    <div class="w-50 text-white border-end mt-3 px-1">
                         <p><b>Cédula:</b><b class="text-warning">{{" ".$detallEmp->first()->identificacion}}</b></p>
                         <p><b>Tipo de Cédula:</b><b class="text-warning">{{" ".$detallEmp->first()->tipo_identificacion}}</b></p>
                         <p><b>Fecha de Nacimiento:</b><b class="text-warning">{{" ".$detallEmp->first()->fecha_nacimiento->format('Y-m-d')}}</b></p>
@@ -77,12 +77,12 @@
                         <p><b>Espacio Asignado:</b><b class="text-warning">{{" ".$detallEmp->first()->nombre_espacio}}</b></p>
                         <p><b>Tipo de Empleado:</b><b class="text-warning">{{" ".$detallEmp->first()->tipo_empleado}}</b></p>
                     </div>
-                    <div class="text-white mt-3 mx-4 w-50">
+                    <div class="w-50 text-white mt-3 mx-4">
                         <p><b>Horario del Empleado:</b> <b class="text-warning">{{$detallEmp->first()->nombre_horario." ".$detallEmp->first()->descripcion_horario}}</b></p>
                         <p><b>Teléfono Celular:</b><b class="text-warning">{{" ".$detallEmp->first()->tlf_celular}}</b></p>
                         <p><b>Teléfono Local:</b> <b class="text-warning">{{" ".$detallEmp->first()->tlf_local}}</b></p>
                         <p><b>Dirección:</b><b class="text-warning">{{" ".$detallEmp->first()->direccion}}</b></p>
-                        <p><b>Fecha de Ingreso:</b><b class="text-warning">{{" ".$detallEmp->first()->fecha_ingreso}}</b></p>
+                        <b>Fecha de Ingreso:</b><b class="text-warning">{{" ".$detallEmp->first()->fecha_ingreso}}</b></p>
                         <p><b>Fecha de Egreso:</b>
                             @if(!$detallEmp->first()->fecha_egreso)
                                 <b class="text-warning">No Definida</b>
